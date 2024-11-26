@@ -14,8 +14,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name="richiesta")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE) // Strategia di default
 @DiscriminatorColumn(name = "tipo_richiesta", discriminatorType = DiscriminatorType.STRING)
@@ -39,43 +43,5 @@ public class Richiesta {
 	private String referente;
 	private LocalDate dataCreazione;
 	private String testo;
-	
-	public Status getStatus() {
-		return status;
-	}
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
-	public String getOrganizzazione() {
-		return organizzazione;
-	}
-	public void setOrganizzazione(String organizzazione) {
-		this.organizzazione = organizzazione;
-	}
-	public String getReferente() {
-		return referente;
-	}
-	public void setReferente(String referente) {
-		this.referente = referente;
-	}
-	public LocalDate getDataCreazione() {
-		return dataCreazione;
-	}
-	public void setDataCreazione(LocalDate dataCreazione) {
-		this.dataCreazione = dataCreazione;
-	}
-	public String getTesto() {
-		return testo;
-	}
-	public void setTesto(String testo) {
-		this.testo = testo;
-	}
-
 
 }
