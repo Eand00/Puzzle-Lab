@@ -1,6 +1,6 @@
 package com.puzzle_lab.entities;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
@@ -11,13 +11,18 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+<<<<<<< Updated upstream
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+=======
+import jakarta.persistence.PrePersist;
+>>>>>>> Stashed changes
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
+@Data
 @Entity
+<<<<<<< Updated upstream
 @Getter
 @Setter
 @Table(name="richiesta")
@@ -36,12 +41,31 @@ public class Richiesta {
 	@Column(nullable = false)   // Campo obbligatorio
 	private Status status = Status.RICEVUTA; 
 	 
+=======
+@Table(name="richieste")
+public class Richiesta {
+
+>>>>>>> Stashed changes
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+
+	@Column(nullable = false)
+	private String nome;
+	@Column(nullable = false)
+	private String cognome;
+
 	private String organizzazione;
-	private String referente;
-	private LocalDate dataCreazione;
+	private LocalDateTime dataCreazione ;
 	private String testo;
+
+	@Enumerated(EnumType.STRING)
+	private Status status;
+
+	@PrePersist
+    protected void onCreate() {
+        this.dataCreazione = LocalDateTime.now();
+        this.status = Status.RICEVUTA;
+    }
 
 }
