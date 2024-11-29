@@ -1,16 +1,6 @@
 package com.puzzle_lab.entities;
 
 import java.time.LocalDate;
-<<<<<<< Updated upstream
-import java.util.List;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-=======
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -23,26 +13,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Data;
->>>>>>> Stashed changes
 
 @Data
 @Entity
-<<<<<<< Updated upstream
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@DiscriminatorValue("PRENOTAZIONE")
-public class Prenotazione extends Richiesta {
-	
-	private LocalDate dataInizio;
-	private LocalDate dataFine;
-	
-	@ElementCollection
-	private List<LocalDate> dateConfermate;
-	
-
-=======
 @Table(name="prenotazioni")
 public class Prenotazione {
 
@@ -71,6 +44,4 @@ public class Prenotazione {
         this.dataCreazione = LocalDateTime.now();
         this.status = Status.RICEVUTA;
     }
-
->>>>>>> Stashed changes
 }
