@@ -11,8 +11,25 @@
  * Date: 2024-11-25
  */
 
+@import "./utility.css";
+
+/* Global */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
 
 /* Main */
-main {
-    min-height: 100vh;
+
+/*XXX DEV: temp-rules, remove on deploy*/
+section .container-fluid {
+    min-height: 50vh;
+    display: grid;
+    place-items: center;
 }
+
+/*XXX DEV: END temp-rules*/
