@@ -21,7 +21,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const navbarToggle = document.querySelector('.navbar-toggle');
     const navbarCollapse = document.querySelector('.collapse');
 
-    navbarToggle.addEventListener('click', function () {
-        navbarCollapse.classList.toggle('show');
-    });
+    if (navbarToggle && navbarCollapse) {
+        navbarToggle.addEventListener('click', function () {
+            navbarCollapse.classList.toggle('show');
+        });
+    }
 });
