@@ -20,10 +20,48 @@
 
 html {
     font-size: 16px;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Header */
+header {
+    border-bottom: 1px solid var(--color-black);
+    padding: 3rem;
+    transition: padding 0.3s ease-in-out;
+}
+header.header-scroll {
+    padding-block: 1rem;
 }
 
 /* Main */
+
+/* Footer */
+footer {
+    border-top: 1px solid var(--color-light);
+}
+
+.logo-footer {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+.footer-nav {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+.footer-nav a {
+    display: block;
+    text-decoration: none;
+    font-size: 1.25rem;
+    text-align: center;
+}
+.copyright {
+    font-size: 0.875rem;
+    text-align: center;
+}
 
 /*XXX DEV: temp-rules, remove on deploy*/
 section .container-fluid {
