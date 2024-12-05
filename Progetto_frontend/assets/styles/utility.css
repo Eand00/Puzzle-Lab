@@ -1,6 +1,7 @@
 :root {
     --color-primary: #007bff;
     --color-secondary: #6c757d;
+    --color-tertiary: #b3b3b3;
     --color-success: #28a745;
     --color-warning: #ffc107;
     --color-danger: #dc3545;
@@ -17,6 +18,7 @@
 /* Colori di sfondo */
 .bg-primary {background-color: var(--color-primary);}
 .bg-secondary {background-color: var(--color-secondary);}
+.bg-tertiary {background-color: var(--color-tertiary);}
 .bg-success {background-color: var(--color-success);}
 .bg-warning {background-color: var(--color-warning);}
 .bg-danger {background-color: var(--color-danger);}
@@ -30,6 +32,7 @@
 /* Colori di sfondo subtle */
 .bg-primary-subtle {background-color: hsl(from var(--color-primary) h 100% 75%);}
 .bg-secondary-subtle {background-color: hsl(from var(--color-secondary) h 100% 75%);}
+.bg-tertiary-subtle {background-color: hsl(from var(--color-tertiary) h 100% 75%);}
 .bg-success-subtle {background-color: hsl(from var(--color-success) h 100% 75%);}
 .bg-warning-subtle {background-color: hsl(from var(--color-warning) h 100% 75%);}
 .bg-danger-subtle {background-color: hsl(from var(--color-danger) h 100% 75%);}
@@ -39,6 +42,7 @@
 /* Colori del testo */
 .text-primary {color: var(--color-primary);}
 .text-secondary {color: var(--color-secondary);}
+.text-tertiary {color: var(--color-tertiary);}
 .text-success {color: var(--color-success);}
 .text-warning {color: var(--color-warning);}
 .text-danger {color: var(--color-danger);}
