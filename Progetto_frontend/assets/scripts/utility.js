@@ -25,6 +25,9 @@ document.addEventListener('DOMContentLoaded', function () {
         navbarToggle.addEventListener('click', function () {
             [navbarCollapse, navbarToggle].forEach(element => element.classList.toggle('show'));
         });
+        navbarCollapse.addEventListener('click', function () {
+            [navbarCollapse, navbarToggle].forEach(element => element.classList.remove('show'));
+        });
     }
 });
 

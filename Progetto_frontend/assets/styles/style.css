@@ -115,6 +115,7 @@ header.header-scroll {
     position: absolute;
     padding: 3rem;
     transition: all 0.3s ease-in-out;
+    background-color: var(--color-dark);
 }
 #navbarText {
     top: 145px;
@@ -126,11 +127,21 @@ header.header-scroll {
 #navbarText.show {
     border-bottom: 1px solid var(--color-black);
 }
-
-#navbarText .social-icons-container{
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
+#navbarText::after{
+    content: "";
+    display: block;
+    background-color: hsl(from var(--color-dark) h s l / 0.25);
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    transition: all 0.3s ease-in-out;
+}
+#navbarText.show::after{
+    width: 200%;
+    height: 200%;
 }
 
 .navbar-nav {
@@ -141,12 +152,38 @@ header.header-scroll {
     margin: 0;
 }
 
+.nav-item {
+    color: var(--color-tertiary);
+}
+.nav-item.active {
+    color: var(--color-white);
+}
 .nav-link {
     text-decoration: none;
     color: inherit;
     display: block;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 700;
+    padding-block: 1rem;
+    text-align: center;
+}
+
+#navbarText .social-icons p {
+    color: var(--color-tertiary);
+    text-align: center;
+    margin: 3rem auto 1rem;
+}
+
+#navbarText .social-icons-container{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+#navbarText .social-icons-container a {
+    color: var(--color-tertiary);
+    text-decoration: none;
 }
 
 @media (min-width: 768px) {
@@ -154,7 +191,7 @@ header.header-scroll {
         display: none;
     }
     .collapse {
-        display: flex !important;
+        display: flex;
         flex-direction: row;
     }
     #navbarText {
