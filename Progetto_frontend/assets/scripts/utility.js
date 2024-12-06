@@ -18,12 +18,23 @@
  * Toggle the navbar collapse on click.
  */
 document.addEventListener('DOMContentLoaded', function () {
-    const navbarToggle = document.querySelector('.navbar-toggle');
-    const navbarCollapse = document.querySelector('.collapse');
+    const navbarToggle = document.getElementById('navbarBtn');
+    const navbarCollapse = document.getElementById('navbarText');
 
     if (navbarToggle && navbarCollapse) {
         navbarToggle.addEventListener('click', function () {
-            navbarCollapse.classList.toggle('show');
+            [navbarCollapse, navbarToggle].forEach(element => element.classList.toggle('show'));
+        });
+        navbarCollapse.addEventListener('click', function () {
+            [navbarCollapse, navbarToggle].forEach(element => element.classList.remove('show'));
         });
     }
+});
+
+/**
+ * Adjust the header height on scroll.
+ */
+window.addEventListener('scroll', function () {
+    const header = document.querySelector('header');
+    header.classList.toggle('header-scroll', window.scrollY > 0);
 });

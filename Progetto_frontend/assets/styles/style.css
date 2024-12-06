@@ -20,10 +20,224 @@
 
 html {
     font-size: 16px;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+    font-family: 'Montserrat', sans-serif;
 }
 
+/* Header */
+header {
+    border-bottom: 1px solid var(--color-black);
+    padding: 3rem;
+    transition: padding 0.3s ease-in-out;
+}
+header.header-scroll {
+    padding-block: 1rem;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-brand {
+    font-size: 2rem;
+    font-weight: 900;
+    text-decoration: none;
+    color: var(--color-black);
+}
+.navbar-brand a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.navbar-toggle {
+    width: 3rem;
+    height: 3rem;
+    display: block;
+    border: none;
+    background: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.navbar-toggler-icon {
+    display: block;
+    width: 2rem;
+    height: 2px;
+    background-color: var(--color-black);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar-toggler-icon::before,
+.navbar-toggler-icon::after {
+    content: "";
+    display: block;
+    width: 2.5rem;
+    height: 2px;
+    background-color: var(--color-black);
+    position: absolute;
+    right: 0;
+    top: -0.75rem;
+    transition: all 0.3s ease-in-out;
+}
+.navbar-toggler-icon::after {
+    top: 0.75rem;
+}
+
+.navbar-toggle.show .navbar-toggler-icon {
+    width: 2.5rem;
+    transform: translate(-50%, -50%) rotate(135deg);
+}
+.navbar-toggle.show .navbar-toggler-icon::before {
+    top: 0;
+    transform: rotate(90deg);
+}
+.navbar-toggle.show .navbar-toggler-icon::after {
+    top: 0;
+    opacity: 0;
+}
+
+.collapse {
+    right: -100%;
+}
+
+.collapse.show {
+    right: 0;
+}
+
+#navbarText {
+    position: absolute;
+    padding: 3rem;
+    transition: all 0.3s ease-in-out;
+    background-color: var(--color-dark);
+}
+#navbarText {
+    top: 145px;
+}
+.header-scroll #navbarText {
+    top: 81px;
+}
+
+#navbarText.show {
+    border-bottom: 1px solid var(--color-black);
+}
+#navbarText::after{
+    content: "";
+    display: block;
+    background-color: hsl(from var(--color-dark) h s l / 0.25);
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    transition: all 0.3s ease-in-out;
+}
+#navbarText.show::after{
+    width: 200%;
+    height: 200%;
+}
+
+.navbar-nav {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-item {
+    color: var(--color-tertiary);
+}
+.nav-item.active {
+    color: var(--color-white);
+}
+.nav-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding-block: 1rem;
+    text-align: center;
+}
+
+#navbarText .social-icons p {
+    color: var(--color-tertiary);
+    text-align: center;
+    margin: 3rem auto 1rem;
+}
+
+#navbarText .social-icons-container{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+#navbarText .social-icons-container a {
+    color: var(--color-tertiary);
+    text-decoration: none;
+}
+
+@media (min-width: 768px) {
+    .navbar-toggle {
+        display: none;
+    }
+    .collapse {
+        display: flex;
+        flex-direction: row;
+    }
+    #navbarText {
+        position: static;
+        padding: 0;
+    }
+    .navbar-nav {
+        flex-direction: row;
+        justify-content: flex-end;
+        gap: 1rem;
+    }
+    .nav-item {
+        margin-bottom: 0;
+    }
+}
+
+
 /* Main */
+
+/* Footer */
+footer {
+    border-top: 1px solid var(--color-light);
+}
+
+.logo-footer {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+.footer-nav {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+.footer-nav a {
+    display: block;
+    text-decoration: none;
+    font-size: 1.25rem;
+    text-align: center;
+}
+.copyright {
+    font-size: 0.875rem;
+    text-align: center;
+}
 
 /*XXX DEV: temp-rules, remove on deploy*/
 section .container-fluid {
