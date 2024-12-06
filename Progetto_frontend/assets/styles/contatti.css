@@ -1,0 +1,22 @@
+/** 
+ * File: contatti.css
+ * Description: Stylesheet for the contatti page.
+ * Version: 1.0.0
+ * 
+ * This file contains the styles for the contatti page.
+ * 
+ * Author: Puzzle Lab
+ * Contributors: Bonura Vincenzo, Lupano Alberto, Picciotto Luca
+ * Date: 2024-12-06
+ */
+
+h2 {
+    font-size: 2rem;
+    text-align: center;
+    text-transform: uppercase;
+ }
+ p {
+    font-size: 1.2rem;
+    line-height: 2rem;
+    padding: 3rem;
+ }
