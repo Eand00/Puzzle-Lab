@@ -140,7 +140,7 @@ header.header-scroll {
     transition: all 0.3s ease-in-out;
 }
 #navbarText.show::after{
-    width: 200%;
+    width: 300%;
     height: 200%;
 }
 
@@ -194,9 +194,23 @@ header.header-scroll {
         display: flex;
         flex-direction: row;
     }
+    .header-scroll #navbarText {
+        top: 0;
+    }
     #navbarText {
-        position: static;
+        position: relative;
+        top: unset;
+        left: unset;
+        right: unset;
+        bottom: unset;
+        background-color: transparent;
         padding: 0;
+    }
+    #navbarText::after {
+        display: none;
+    }
+    #navbarText.show {
+        border-bottom: none;
     }
     .navbar-nav {
         flex-direction: row;
@@ -205,6 +219,55 @@ header.header-scroll {
     }
     .nav-item {
         margin-bottom: 0;
+        color: var(--color-dark);
+    }
+    .nav-item.active {
+        position: relative;
+        color: var(--color-dark);
+    }
+    .nav-item.active::after {
+        content: "";
+        position: absolute;
+        inset: -0.5rem;
+        display: block;
+        width: calc(100% + 1rem);
+        height: calc(100% + 1rem);
+        backdrop-filter: invert(100%);
+    }
+    .nav-link {
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5rem;
+        padding-block: 0;
+        display: flex;
+        align-items: center;
+    }
+        
+    #navbarText .social-icons p {
+        display: none;
+    }
+
+    #navbarText .social-icons-container{
+        margin-top: 0;
+        margin-left: 1rem;
+        gap: 1rem;
+    }
+
+    #navbarText .social-icons-container a {
+        color: var(--color-dark);
+        text-decoration: none;
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+    #navbarText .social-icons-container a svg{
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .nav-link {
+        font-size: 1.2rem;
     }
 }
 
