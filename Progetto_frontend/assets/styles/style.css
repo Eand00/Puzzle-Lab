@@ -274,6 +274,29 @@ header.header-scroll {
 
 
 /* Main */
+.first-section {
+    padding-top: 145px;
+}
+.header-scroll .first-section {
+    padding-top: 81px;
+}
+p.follows {
+    padding-bottom: 0;
+}
+.cta-container {
+    display: flex;
+    justify-content: center;
+    padding-block: 3rem;
+}
+.cta-button {
+    text-decoration: none;
+    color: var(--color-white);
+    background-color: var(--color-black);
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 2rem;
+}
 
 /* Footer */
 footer {
@@ -302,12 +325,3 @@ footer {
     font-size: 0.875rem;
     text-align: center;
 }
-
-/*XXX DEV: temp-rules, remove on deploy*/
-section .container-fluid {
-    min-height: 50vh;
-    display: grid;
-    place-items: center;
-}
-
-/*XXX DEV: END temp-rules*/
