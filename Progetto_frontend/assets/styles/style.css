@@ -212,7 +212,6 @@ header.header-scroll {
     #navbarText.show {
         border-bottom: none;
     }
-
     .navbar-nav {
         flex-direction: row;
         justify-content: flex-end;

@@ -26,7 +26,10 @@ public class Richiesta {
 	private String nome;
 	@Column(nullable = false)
 	private String cognome;
-
+	@Column(nullable = false)
+	private String email;
+	
+	private String numero;
 	private String organizzazione;
 	private LocalDateTime dataCreazione ;
 	private String testo;
