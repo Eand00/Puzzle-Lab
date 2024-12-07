@@ -28,6 +28,9 @@ public class Prenotazione {
 	@Column(nullable = false)
 	private String cognome;
 	@Column(nullable = false)
+	private String email;
+	private String numero;
+	@Column(nullable = false)
 	private LocalDate dataInizio;
 	@Column(nullable = false)
 	private LocalDate dataFine;
