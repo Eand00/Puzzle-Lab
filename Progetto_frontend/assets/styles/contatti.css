@@ -20,3 +20,26 @@ h2 {
     line-height: 2rem;
     padding: 3rem;
  }
+ .contact-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 5rem;
+ }
+ .contact-container p {
+   font-weight: 700;
+   text-wrap: balance;
+ }
+ .cta-call {
+    font-size: 1rem;
+    text-decoration: none;
+    color: var(--color-dark);
+}
+.cta-call svg {
+   display: inline-block;
+   width: 2rem;
+   height: 2rem;
+   margin-right: 1rem;
+   vertical-align: middle;
+}
