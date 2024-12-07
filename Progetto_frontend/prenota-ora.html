@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="./assets/images/favicon-32x32_placeholder.png" type="image/x-icon">
-    <title>Chi Siamo - Caccia Saperi</title>
+    <title>Prenota ora - Caccia Saperi</title>
     <meta name="description" content="PLACEHOLDER DESCRIPTION">
     <meta name="robots" content="index, follow" />
     <meta name="author" content="Puzzle Lab Torino" />
@@ -15,7 +15,8 @@
     <!-- Custom styles -->
     <link rel="stylesheet" href="./assets/styles/normalize.css">
     <link rel="stylesheet" href="./assets/styles/style.css">
-    <link rel="stylesheet" href="./assets/styles/chi-siamo.css">
+    <link rel="stylesheet" href="./assets/styles/form.css">
+    <link rel="stylesheet" href="./assets/styles/contatti.css">
 </head>
 <body>
     <!-- header -->
@@ -31,13 +32,13 @@
                     <li class="nav-item">
                         <a class="nav-link" href="./index.html">HOME</a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="./chi-siamo.html">CHI SIAMO</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./attivita.html">ATTIVITÀ</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a class="nav-link" href="./prenota-ora.html">PRENOTA ORA!</a>
                     </li>
                     <li class="nav-item">
@@ -66,34 +67,67 @@
     <!-- Main -->
     <main>
         <section class="container-fluid first-section">
-            <h2 class="pt-5">Chi Siamo</h2>
-            <p>Cascina Caccia, un tempo proprietà della famiglia mafiosa Belfiore, è diventata un simbolo di riscatto e giustizia.</p>
-            <picture class="placeholder-image">
-                <source srcset="./assets/images/img_placeholder.svg" type="image/svg+xml">
-                <img src="./assets/images/img_placeholder.png" alt="Cascina Caccia">
-            </picture>
+            <p class="text-center claim">Compila il form per prenotare la tua nuova consapevolezza sulla mafia!</p>
         </section>
-        <section class="container-fluid">
-            <p>Confiscata nel 1996 e liberata definitivamente nel 2007, rappresenta la vittoria della società civile contro il crimine organizzato. Dedicata alla memoria del Procuratore Bruno Caccia, oggi è un luogo di memoria e impegno.</p>
-            <picture class="placeholder-image">
-                <source srcset="./assets/images/img_placeholder.svg" type="image/svg+xml">
-                <img src="./assets/images/img_placeholder.png" alt="Cascina Caccia">
-            </picture>
-        </section>
-        <section class="container-fluid">
-            <p class="follows">Grazie all’assegnazione al Gruppo Abele e alla gestione dell’Associazione ACMOS, la cascina è rinata come spazio di comunità e cultura.</p>
-            <p>Al suo interno, progetti sociali, iniziative educative e una comunità di residenti animano gli spazi, promuovendo legalità e partecipazione.</p>
-            <picture class="placeholder-image">
-                <source srcset="./assets/images/img_placeholder.svg" type="image/svg+xml">
-                <img src="./assets/images/img_placeholder.png" alt="Cascina Caccia">
-            </picture>
-        </section>
-        <section class="container-fluid">
-            <p class="follows">Scopri la storia che vive tra queste mura e immergiti nella pace e nella bellezza di Cascina Caccia. Prenota il tuo soggiorno e diventa parte di questa grande vittoria collettiva!</p>
-            <div class="cta-container">
-                <a href="./prenota-ora.html" class="cta-button" role="button">PRENOTA</a>
+        <form action="" method="post">
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" class="form-control" required placeholder="Mario">
             </div>
+            <div class="form-group">
+                <label for="cognome">Cognome</label>
+                <input type="text" id="cognome" name="cognome" class="form-control" required placeholder="Rossi">
+            </div>
+            <div class="form-group">
+                <label for="organizzazione">Organizzazione <span class="text-muted">(opzionale)</span></label>
+                <input type="text" id="organizzazione" name="organizzazione" class="form-control" placeholder="Istituto Comprensivo S. Pertini">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" class="form-control" required placeholder="email@example.com">
+            </div>
+            <div class="form-group">
+                <label for="telefono">Telefono <span class="text-muted">(opzionale)</span></label>
+                <input type="tel" id="telefono" name="telefono" class="form-control" placeholder="+39 987 654 3210">
+            </div>
+            <fieldset>
+                <div class="form-group">
+                    <label for="data">Data inizio disponibilità</label>
+                    <input type="date" id="data" name="data" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="data">Data fine disponibilità</label>
+                    <input type="date" id="data" name="data" class="form-control" required>
+                </div>
+            </fieldset>
+            <div class="form-group">
+                <label for="messaggio">Messaggio</label>
+                <textarea id="messaggio" name="messaggio" class="form-control" rows="10" placeholder="Buongionro, vi scrivo in merito a..."></textarea>
+            </div>
+            <div class="form-group checkbox-container">
+                <input type="checkbox" id="privacy" name="privacy" class="form-check-input" required>
+                <label for="privacy">Acconsento al trattamento dei miei dati personali ai sensi del Regolamento (UE) 2016/679 (GDPR) per la gestione e conferma della prenotazione.</label>
+            </div>
+            <div class="form-group checkbox-container">
+                <input type="checkbox" id="tos" name="tos" class="form-check-input" required>
+                <label for="tos">Dichiaro di aver letto e accettato i Termini e Condizioni del servizio. <a href="#">Link Informativa</a></label>
+            </div>
+            <div class="form-group checkbox-container">
+                <input type="checkbox" id="sensibleData" name="sensibleData" class="form-check-input">
+                <label for="sensibleData">Acconsento al trattamento dei dati sensibili forniti per finalità legate all’organizzazione del servizio richiesto (ad esempio esigenze alimentari o mediche).</label>
+            </div>
+            <section class="cta-container">
+                <button type="submit" class="cta-button">Invia</button>
+            </section>
+        </form>
+        <section class="container-fluid contact-container">
+            <p class="text-center follows">In alternativa puoi anche contattarci telefonicamente.</p>
+            <a href="tel:+393486425023" class="text-center cta-call">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
+                <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
+              </svg> +39 348 642 5023</a>
         </section>
+
     </main>
 
     <!-- Footer -->

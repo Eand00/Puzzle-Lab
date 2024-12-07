@@ -10,15 +10,25 @@
  * Date: 2024-12-06
  */
 
-h2 {
+main h2 {
     font-size: 2rem;
     text-align: center;
     text-transform: uppercase;
  }
- p {
+ main p {
     font-size: 1.2rem;
     line-height: 2rem;
     padding: 3rem;
+ }
+ main .claim {
+    font-weight: 700;
+    text-transform: uppercase;
+    text-wrap: balance;
+ }
+ fieldset {
+    border: none;
+    padding: 0;
+    padding-block: 3rem;
  }
  .contact-container {
     display: flex;
