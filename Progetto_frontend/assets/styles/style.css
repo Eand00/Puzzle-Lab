@@ -220,21 +220,31 @@ header.header-scroll {
         gap: 1rem;
     }
     .nav-item {
+        position: relative;
         margin-bottom: 0;
         color: var(--color-dark);
     }
+    .nav-item::after {
+        content: "";
+        position: absolute;
+        top: -0.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: block;
+        width: 0;
+        height: calc(100% + 1rem);
+        backdrop-filter: invert(100%);
+        transition: all 0.3s ease-in-out;
+        pointer-events: none;
+    }
+    .nav-item:hover::after {
+        width: calc(100% + 1rem);
+    }
     .nav-item.active {
-        position: relative;
         color: var(--color-dark);
     }
     .nav-item.active::after {
-        content: "";
-        position: absolute;
-        inset: -0.5rem;
-        display: block;
         width: calc(100% + 1rem);
-        height: calc(100% + 1rem);
-        backdrop-filter: invert(100%);
     }
     .nav-link {
         font-size: 1rem;
@@ -297,6 +307,7 @@ p.follows {
     font-size: 1.2rem;
     font-weight: bold;
     border-radius: 2rem;
+    border: none;
 }
 
 /* Footer */

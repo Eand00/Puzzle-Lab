@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="./assets/images/favicon-32x32_placeholder.png" type="image/x-icon">
-    <title>Contatti - Caccia Saperi</title>
+    <title>Prenota ora - Caccia Saperi</title>
     <meta name="description" content="PLACEHOLDER DESCRIPTION">
     <meta name="robots" content="index, follow" />
     <meta name="author" content="Puzzle Lab Torino" />
@@ -12,7 +12,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
     <!-- Custom styles -->
     <link rel="stylesheet" href="./assets/styles/normalize.css">
     <link rel="stylesheet" href="./assets/styles/style.css">
@@ -39,10 +38,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="./attivita.html">ATTIVITÀ</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a class="nav-link" href="./prenota-ora.html">PRENOTA ORA!</a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="./contatti.html">CONTATTI</a>
                     </li>
                 </ul>
@@ -68,8 +67,7 @@
     <!-- Main -->
     <main>
         <section class="container-fluid first-section">
-            <h2 class="pt-5">Contatti</h2>
-            <p class="text-center">Hai dei dubbi?<br>Non farti problemi a contattarci compilando il form!</p>
+            <p class="text-center claim">Compila il form per prenotare la tua nuova consapevolezza sulla mafia!</p>
         </section>
         <form action="" method="post">
             <div class="form-group">
@@ -92,6 +90,16 @@
                 <label for="telefono">Telefono <span class="text-muted">(opzionale)</span></label>
                 <input type="tel" id="telefono" name="telefono" class="form-control" placeholder="+39 987 654 3210">
             </div>
+            <fieldset>
+                <div class="form-group">
+                    <label for="data">Data inizio disponibilità</label>
+                    <input type="date" id="data" name="data" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="data">Data fine disponibilità</label>
+                    <input type="date" id="data" name="data" class="form-control" required>
+                </div>
+            </fieldset>
             <div class="form-group">
                 <label for="messaggio">Messaggio</label>
                 <textarea id="messaggio" name="messaggio" class="form-control" rows="10" placeholder="Buongionro, vi scrivo in merito a..."></textarea>

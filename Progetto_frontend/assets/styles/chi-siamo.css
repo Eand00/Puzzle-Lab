@@ -10,17 +10,17 @@
  * Date: 2024-11-25
  */
 
-h2 {
+main h2 {
    font-size: 2rem;
    text-align: center;
    text-transform: uppercase;
 }
-p {
+main p {
    font-size: 1.5rem;
    line-height: 2rem;
    padding: 3rem;
 }
-picture {
+main picture {
    display: flex;
    justify-content: center;
    align-items: center;
@@ -29,7 +29,7 @@ picture {
    margin-inline: 3rem;
    aspect-ratio: 4/3;
 }
-picture img {
+main picture img {
    width: 100%;
    height: auto;
    object-fit: cover;
