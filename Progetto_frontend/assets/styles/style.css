@@ -44,7 +44,6 @@ header.header-scroll {
 .navbar-brand {
     font-size: 2rem;
     font-weight: 900;
-    line-height: 3rem;
     text-decoration: none;
     color: var(--color-black);
 }
@@ -213,38 +212,27 @@ header.header-scroll {
     #navbarText.show {
         border-bottom: none;
     }
-
     .navbar-nav {
         flex-direction: row;
         justify-content: flex-end;
         gap: 1rem;
     }
     .nav-item {
-        position: relative;
         margin-bottom: 0;
         color: var(--color-dark);
     }
-    .nav-item::after {
-        content: "";
-        position: absolute;
-        top: -0.5rem;
-        left: 50%;
-        transform: translateX(-50%);
-        display: block;
-        width: 0;
-        height: calc(100% + 1rem);
-        backdrop-filter: invert(100%);
-        transition: all 0.3s ease-in-out;
-        pointer-events: none;
-    }
-    .nav-item:hover::after {
-        width: calc(100% + 1rem);
-    }
     .nav-item.active {
+        position: relative;
         color: var(--color-dark);
     }
     .nav-item.active::after {
+        content: "";
+        position: absolute;
+        inset: -0.5rem;
+        display: block;
         width: calc(100% + 1rem);
+        height: calc(100% + 1rem);
+        backdrop-filter: invert(100%);
     }
     .nav-link {
         font-size: 1rem;
@@ -307,13 +295,41 @@ p.follows {
     font-size: 1.2rem;
     font-weight: bold;
     border-radius: 2rem;
-    border: none;
 }
 
 /* Footer */
 footer {
     border-top: 1px solid var(--color-light);
 }
+
+.logo-footer {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+.footer-nav {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+.footer-nav a {
+    display: block;
+    text-decoration: none;
+    font-size: 1.25rem;
+    text-align: center;
+}
+.copyright {
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+/*XXX DEV: temp-rules, remove on deploy*/
+section .container-fluid {
+    min-height: 50vh;
+    display: grid;
+    place-items: center;
 
 .logo-footer {
     font-size: 1.5rem;
