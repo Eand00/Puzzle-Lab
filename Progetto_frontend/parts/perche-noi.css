@@ -62,7 +62,9 @@
 }
 .box {
   display: flex;
-  flex-wrap: nowrap;
+
+  flex-wrap: wrap;
+
   justify-content: center;
   gap: 20px;
   /* outline: 1px solid black; */
@@ -116,3 +118,26 @@
     line-height: 1.5;
   }
 }
+
+
+::-webkit-scrollbar {
+  width: 2px;
+  height: 0;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: #fcfcfc;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(13, 13, 13, 0.5);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(13, 13, 13, 0.6);
+}
+
