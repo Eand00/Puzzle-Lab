@@ -62,7 +62,7 @@
 }
 .box {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
   /* outline: 1px solid black; */
