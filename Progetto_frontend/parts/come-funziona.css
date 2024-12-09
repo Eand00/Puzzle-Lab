@@ -1,0 +1,80 @@
+/* 
+ *
+ *
+ */
+
+#come-funziona-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#come-funziona-container > div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+#come-funziona-container > div:nth-child(2) {
+    flex-direction: row-reverse;
+}
+
+#come-funziona-container > div > .container-num-black {
+    width: calc(100% / 5 * 2);
+    height: 5rem;
+    border-radius: 0 5rem 5rem 0;
+    background-color: #1E1E1E;
+}
+
+#come-funziona-container > div:nth-child(2) > .container-num-black {
+    border-radius: 5rem 0 0 5rem;
+}
+
+.container-num-black > div {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-family: Inter, sans-serif;
+    color: white;
+    font-weight: 500;
+    margin-left: auto;
+}
+
+div:nth-child(2) > .container-num-black > div {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+#come-funziona-container > div > div  {
+    width: calc(100% / 5 * 3);
+    height: 5rem;
+    display: flex;
+    flex-direction: column;
+    padding-left: 1rem;
+    justify-content: center;
+    align-items: start;
+}
+
+#come-funziona-container > div > div > h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1E1E1E;
+    font-family: Inter, sans-serif;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+#come-funziona-container > div > div > p {
+    font-size: 20px;
+    font-weight: 400;
+    color: #757575;
+    font-family: Inter, sans-serif;
+    margin: 0.5rem 0 0 0;
+}
