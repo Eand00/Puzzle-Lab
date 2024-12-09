@@ -62,7 +62,9 @@
 }
 .box {
   display: flex;
+
   flex-wrap: wrap;
+
   justify-content: center;
   gap: 20px;
   /* outline: 1px solid black; */
@@ -117,6 +119,7 @@
   }
 }
 
+
 ::-webkit-scrollbar {
   width: 2px;
   height: 0;
@@ -137,3 +140,4 @@
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(13, 13, 13, 0.6);
 }
+
