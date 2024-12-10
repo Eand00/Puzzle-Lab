@@ -1,0 +1,84 @@
+.inter {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.img-problema,
+.img-soluzione {
+  width: 500px;
+  height: 300px;
+  background-color: gray;
+}
+.problema,
+.soluzione {
+  /* outline: 1px solid black; */
+  /* padding: 10px; */
+}
+.problema-soluzione {
+  padding: 20px;
+  overflow: hidden;
+  /* outline: 1px solid black; */
+  font-size: 26px;
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+  height: 0;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: #fcfcfc;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(13, 13, 13, 0.5);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(13, 13, 13, 0.6);
+}
+@media screen and (max-width: 576px) {
+  .problema-soluzione {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .problema,
+  .soluzione {
+    position: relative;
+    padding: 10px;
+    margin: 20px; /* Rimuove margini */
+  }
+  /* .problema,
+  .soluzione:not(figure) {
+    overflow: hidden;
+  } */
+
+  .problema p,
+  .soluzione p {
+    word-wrap: break-word;
+    padding: 0 30px;
+  }
+  .img-problema {
+    text-align: right; /* Allinea il testo a destra */
+    direction: rtl; /* Imposta la direzione da destra verso sinistra */
+    /* float: right; */
+    /* right: calc(-50px - (30px)); */
+
+    border-radius: 171px 0 0 171px;
+  }
+  .img-soluzione {
+    float: left;
+    left: calc(-50px - (30px));
+    border-radius: 0 170px 170px 0;
+  }
+  .img-problema,
+  .img-soluzione {
+    position: relative;
+  }
+}
