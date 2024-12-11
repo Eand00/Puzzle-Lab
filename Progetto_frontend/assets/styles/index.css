@@ -10,11 +10,88 @@
  * Date: 2024-11-25
  */
 
-/*XXX DEV: temp-rules, remove on deploy*/
-section .container-fluid {
-    min-height: 50vh;
-    display: grid;
-    place-items: center;
+ 
+#hero > div {
+    position: relative;
+    height: calc(100vh - var(--navbar-height));
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#hero > div::before {
+    content:'';
+    position: absolute;
+    inset: 0;
+    background-image: url(../images/img_placeholder.svg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1;
+    opacity: 0.5;
+
 }
 
-/*XXX DEV: END temp-rules*/
+h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e1e1e;
+    text-align: center;
+    margin: 0.5rem 0;
+}
+
+#hero p {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e1e1e;
+    text-align: center;
+    margin: 0.5rem 0;
+}
+
+#hero a {
+    width: 80vw;
+    max-width: 400px;
+    height: 4rem;
+    margin: 0.5rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4rem;
+    background-color: #1e1e1e;
+    color: #FFFFFF;
+    font-size: 24px;
+    text-transform: uppercase;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+#hero > div > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem 0;
+}
+
+#hero > div > img {
+    width: 2rem;
+    height: 2rem;
+}
+
+.star-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0.5rem;
+}
+
+.star-container > img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+#hero-section > div > span {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e1e1e;
+}

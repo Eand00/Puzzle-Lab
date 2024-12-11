@@ -19,7 +19,7 @@
  * include homepage partials
  */
 document.addEventListener('DOMContentLoaded', function () {
-    const parts = ['hero', 'problema-soluzione', 'perche-noi', 'come-funziona', 'testimonianze', 'faq', 'cta'];
+    const parts = ['problema-soluzione', 'perche-noi', 'come-funziona', 'testimonianze', 'faq', 'cta'];
     let counter = 0;
 
     parts.forEach(part => {

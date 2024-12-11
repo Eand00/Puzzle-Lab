@@ -14,6 +14,11 @@
 @import "./utility.css";
 
 /* Global */
+:root {
+    --navbar-height: 145px;
+    --navbar-height-scroll: 81px;
+}
+
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -147,10 +152,10 @@ header.header-scroll {
     background-color: var(--color-dark);
 }
 #navbarText {
-    top: 145px;
+    top: var(--navbar-height);
 }
 .header-scroll #navbarText {
-    top: 81px;
+    top: var(--navbar-height-scroll);
 }
 
 #navbarText.show {
@@ -314,10 +319,10 @@ header.header-scroll {
 
 /* Main */
 .first-section {
-    padding-top: 145px;
+    padding-top: var(--navbar-height);
 }
 .header-scroll .first-section {
-    padding-top: 81px;
+    padding-top: var(--navbar-height-scroll);
 }
 p.follows {
     padding-bottom: 0;
