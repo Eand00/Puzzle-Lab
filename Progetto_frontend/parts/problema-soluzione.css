@@ -1,0 +1,58 @@
+.inter {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.img-problema,
+.img-soluzione {
+  width: 500px;
+  height: 300px;
+  background-color: gray;
+}
+.img-problema {
+  border-radius: 171px 0 0 171px;
+}
+.img-soluzione {
+  border-radius: 0 170px 170px 0;
+}
+.problema-soluzione {
+  padding: 20px;
+  overflow: hidden;
+  font-size: 26px;
+}
+
+@media screen and (max-width: 768px) {
+  .problema-soluzione {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .problema,
+  .soluzione {
+    position: relative;
+    padding: 10px;
+    margin: 20px; /* Rimuove margini */
+  }
+
+  .problema p,
+  .soluzione p {
+    word-wrap: break-word;
+    padding: 0 30px;
+    padding-left: 20px;
+  }
+  .img-problema {
+    text-align: right; /* Allinea il testo a destra */
+    direction: rtl; /* Imposta la direzione da destra verso sinistra */
+    /* float: right; */
+    right: calc(-50px - (30px));
+  }
+  .img-soluzione {
+    float: left;
+    left: calc(-50px - (30px));
+  }
+  .img-problema,
+  .img-soluzione {
+    position: relative;
+  }
+}
