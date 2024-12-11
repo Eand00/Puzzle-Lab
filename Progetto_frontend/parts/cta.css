@@ -1,0 +1,46 @@
+/* 
+ *
+ *
+ */
+
+#cta-section {
+    width: 100%;
+    padding: 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #1e1e1e;
+}
+
+#cta-section h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0.5rem 0;
+}
+
+#cta-section p {
+    font-size: 20px;
+    font-weight: 400;
+    color: #ffffff;
+    margin: 0.5rem 0;
+    text-align: center;
+}
+
+#cta-section a {
+    width: 80vw;
+    max-width: 400px;
+    height: 4rem;
+    margin: 0.5rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4rem;
+    background-color: #ffffff;
+    color: #1e1e1e;
+    font-size: 24px;
+    text-transform: uppercase;
+    font-weight: 500;
+    text-decoration: none;
+}
