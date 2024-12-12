@@ -13,3 +13,28 @@
  * 
  * @see README_FRONTEND.md for additional information.
  */
+
+const containerScroll = document.getElementById("testimonial-container");
+
+/**
+ * Scroll function
+ * @description Adds the scroll class to the testimonial-container element.
+ */
+function scroll() {
+    containerScroll.classList.add("scroll");
+}
+
+/**
+ * Carousel function
+ * @description Scrolls the carousel to the next card.
+ */
+function carousel() {
+    const firstElement = document.getElementsByClassName("card")[0];
+    containerScroll.classList.remove("scroll");
+    firstElement.remove();
+    containerScroll.appendChild(firstElement);
+    setTimeout(scroll, 4700);
+    setTimeout(carousel, 5000);
+}
+
+carousel();

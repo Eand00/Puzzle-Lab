@@ -235,3 +235,64 @@
 #come-funziona .right-attached .step-content {
     text-align: right;
 }
+
+/* testimonianze section */
+#testimonianze {
+    padding: 2rem;
+    overflow: hidden;
+}
+
+#testimonial-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-inline: -2rem;
+}
+
+#testimonial-container .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#testimonial-container figure.card-image {
+    margin: 0 0 1rem 0;
+    width: 50vw;
+}
+
+#testimonial-container figure.card-image picture {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    display: block;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+#testimonial-container figure.card-image picture img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+#testimonial-container figcaption {
+    text-align: center;
+    font-weight: 600;
+    color: var(--color-dark);
+    margin-top: 1rem;
+}
+
+#testimonial-container figcaption span {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--color-dark);
+}
+
+.scroll {
+    transform: translateX(-50vw);
+    transition-duration: 0.3s;
+}
