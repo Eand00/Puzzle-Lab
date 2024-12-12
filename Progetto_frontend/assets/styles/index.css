@@ -292,7 +292,77 @@
     color: var(--color-dark);
 }
 
-.scroll {
+#testimonial-container .scroll {
     transform: translateX(-50vw);
     transition-duration: 0.3s;
 }
+
+/* FAQ section */
+#faq {
+    padding: 2rem;
+}
+
+#faq details {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--color-dark);
+    border-radius: 2rem;
+    width: 80vw;
+    max-width: 400px;
+    margin-inline: auto;
+}
+
+#faq details summary {
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--color-dark);
+    list-style: none;
+    padding-left: 1rem;
+    position: relative;
+}
+
+#faq details summary::after {
+    content: '';
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: url(../images/dropdown-arrow.svg) no-repeat;
+    background-size: contain;
+    background-position: center;
+    transition: 0.2s;
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+}
+
+#faq details[open] > summary::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+/*
+summary {
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    padding: 10px;
+    font-weight: bold;
+  }
+  
+  summary::after {
+    content: '';
+    width: 18px;
+    height: 10px;
+    background: url('https://uploads.sitepoint.com/wp-content/uploads/2023/10/1697699669arrow.svg') no-repeat;
+    background-size: cover;
+    margin-left: .75em;
+    transition: 0.2s;
+  }
+  
+  details[open] > summary::after {
+    transform: rotate(180deg);
+  }
+  
+  summary::-webkit-details-marker {
+    display: none;
+  }
+    */
