@@ -1,6 +1,6 @@
 :root {
     --color-primary: #007bff;
-    --color-secondary: #6c757d;
+    --color-secondary: #757575;
     --color-tertiary: #b3b3b3;
     --color-success: #28a745;
     --color-warning: #ffc107;
@@ -55,6 +55,8 @@
 
 /* Testo */
 .text-center {text-align: center;}
+.text-right {text-align: right;}
+.text-uppercase {text-transform: uppercase;}
 
 /* Margini */
 .m-0 {margin: 0;}

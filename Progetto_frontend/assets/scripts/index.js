@@ -14,40 +14,27 @@
  * @see README_FRONTEND.md for additional information.
  */
 
+const containerScroll = document.getElementById("testimonial-container");
+
 /**
- * XXX DEV: this script must be deleted before the final release
- * include homepage partials
+ * Scroll function
+ * @description Adds the scroll class to the testimonial-container element.
  */
-document.addEventListener('DOMContentLoaded', function () {
-    const parts = ['hero', 'problema-soluzione', 'perche-noi', 'come-funziona', 'testimonianze', 'faq', 'cta'];
-    let counter = 0;
+function scroll() {
+    containerScroll.classList.add("scroll");
+}
 
-    parts.forEach(part => {
-        fetch(`./parts/${part}.html`)
-            .then(response => response.text())
-            .then(data => {
-                // include HTML partial
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(data, 'text/html');
-                const wrapper = doc.querySelector('#wrapper');
-                document.querySelector(`#${part}`).innerHTML = wrapper.innerHTML;
+/**
+ * Carousel function
+ * @description Scrolls the carousel to the next card.
+ */
+function carousel() {
+    const firstElement = document.getElementsByClassName("card")[0];
+    containerScroll.classList.remove("scroll");
+    firstElement.remove();
+    containerScroll.appendChild(firstElement);
+    setTimeout(scroll, 4700);
+    setTimeout(carousel, 5000);
+}
 
-                // include CSS
-                const link = document.createElement('link');
-                link.rel = 'stylesheet';
-                link.href = `./parts/${part}.css`;
-                document.head.appendChild(link);
-
-                // include JS
-                const script = document.createElement('script');
-                script.src = `./parts/${part}.js`;
-                document.body.appendChild(script);
-
-                counter++;
-                if (counter === parts.length) {
-                    console.log('All parts have been included.');
-                }
-            })
-            .catch(error => console.error('Error fetching part:', error));
-    });
-});
+carousel();
