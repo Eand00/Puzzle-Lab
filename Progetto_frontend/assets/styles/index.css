@@ -10,7 +10,7 @@
  * Date: 2024-11-25
  */
 
- 
+/* hero section */
 #hero > div {
     position: relative;
     height: calc(100vh - var(--navbar-height));
@@ -33,49 +33,42 @@
 
 }
 
-h1 {
-    font-size: 24px;
-    font-weight: 700;
-    color: #1e1e1e;
+#hero h2 {
+    color: var(--color-dark);
     text-align: center;
-    margin: 0.5rem 0;
+    margin: 1rem 0;
 }
 
 #hero p {
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: 600;
-    color: #1e1e1e;
+    color: var(--color-dark);
     text-align: center;
-    margin: 0.5rem 0;
+    margin: 1rem 0;
 }
 
 #hero a {
     width: 80vw;
     max-width: 400px;
     height: 4rem;
-    margin: 0.5rem 0;
+    margin: 1rem 0;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 4rem;
-    background-color: #1e1e1e;
-    color: #FFFFFF;
-    font-size: 24px;
+    background-color: var(--color-dark);
+    color: var(--color-light);
+    font-size: 1.5rem;
     text-transform: uppercase;
     font-weight: 500;
     text-decoration: none;
 }
 
-#hero > div > div {
+#hero .star-rating {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0.5rem 0;
-}
-
-#hero > div > img {
-    width: 2rem;
-    height: 2rem;
 }
 
 .star-container {
@@ -90,8 +83,73 @@ h1 {
     height: 1.5rem;
 }
 
-#hero-section > div > span {
-    font-size: 20px;
+.star-container .half-star {
+    width: 1.5rem;
+    height: 1.5rem;
+    clip-path: polygon(0% 0%, 0% 100%, 60% 100%, 60% 0%);
+}
+
+#hero .star-rating > span {
+    font-size: 1.25rem;
     font-weight: 600;
-    color: #1e1e1e;
+    color: var(--color-dark);
+}
+
+/* problema-soluzione section */
+#problema-soluzione .problema,
+#problema-soluzione .soluzione {
+    padding: 2rem;
+}
+
+#problema-soluzione p,
+#problema-soluzione li {
+    line-height: 1.5rem;
+    color: var(--color-secondary);
+}
+
+#problema-soluzione figure {
+    width: 80vw;
+    height: 360px;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    margin-top: 3rem;
+}
+
+#problema-soluzione .left-attached {
+    border-top-right-radius: 180px;
+    border-bottom-right-radius: 180px;
+    margin-left: -2rem;
+    margin-right: auto;
+}
+
+#problema-soluzione .right-attached {
+    border-top-left-radius: 180px;
+    border-bottom-left-radius: 180px;
+    margin-right: -2rem;
+    margin-left: auto;
+}
+
+#problema-soluzione figure img {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    
+}
+
+#problema-soluzione figure figcaption {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: var(--color-dark);
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 600;
 }
