@@ -364,6 +364,11 @@ p.follows {
 	border-radius: 2rem;
 	border: none;
 }
+.cta-button.inverse {
+	background-color: var(--color-white);
+	color: var(--color-black);
+}
+
 
 /* Footer */
 footer {
