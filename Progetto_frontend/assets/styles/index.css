@@ -292,7 +292,7 @@
     color: var(--color-dark);
 }
 
-#testimonial-container .scroll {
+#testimonial-container.scroll {
     transform: translateX(-50vw);
     transition-duration: 0.3s;
 }
