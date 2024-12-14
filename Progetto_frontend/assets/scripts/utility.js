@@ -1,22 +1,17 @@
 /**
  * @file utility.js
- * @description Utility script for the frontend of the service portal.
  * @version 1.0.0
- * 
- * This script handles the utility functions for the portal, like the navbar toggle.
- * 
  * @author Puzzle Lab
- * @author Bonura Vincenzo
- * @author Lupano Alberto
- * @author Picciotto Luca
+ * @contributors Bonura Vincenzo, Lupano Alberto, Picciotto Luca
  * @date 2024-11-29
- * 
+ * @description This script handles the utility functions for the portal, like the navbar toggle.
  * @see README_FRONTEND.md for additional information.
  */
 
 /**
  * Toggle the navbar collapse on click.
  */
+/*
 document.addEventListener('DOMContentLoaded', function () {
     const navbarToggle = document.getElementById('navbarBtn');
     const navbarCollapse = document.getElementById('navbarText');
