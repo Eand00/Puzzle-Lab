@@ -96,10 +96,16 @@ class HeaderComponent extends HTMLElement {
         const navbarToggle = document.querySelector('#navbarBtn');
         const navbarCollapse = document.querySelector('#navbarText');
 
-        //Attach event listeners to the toggler and the navbar
+        // Attach event listeners to the toggler and the navbar
         [navbarToggle, navbarCollapse]?.forEach(element => element.addEventListener('click', function () {
             [navbarCollapse, navbarToggle].forEach(element => element.classList.toggle('show'));
         }));
+
+        // Adjust the header height on scroll.
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('header');
+            header.classList.toggle('header-scroll', window.scrollY > 0);
+        });
     }
 }
 customElements.define("header-component", HeaderComponent);
