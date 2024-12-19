@@ -43,4 +43,12 @@ L'utilizzo dei Web Components per l'header e il footer nel sito frontend offre d
 ### Gestione Javascript disabilitato
 
 Per garantire una migliore esperienza utente, è stato implementato un sistema di fallback per la visualizzazione del sito quando il Javascript è disabilitato, utilizzando il tag `<noscript>` per i contenuti dinamici, quali i web components. Questo approccio consente di garantire una visualizzazione completa del sito anche in presenza di limitazioni imposte dall'utente. Inoltre, permette di mantenere un'indicizzazione completa del sito da parte dei motori di ricerca.
+
+### Creazione altri componenti
+- form-component.js
+  centralizzazione della validazione lato client, dell'invio dati, della gestione feedback
+- cta-component.js
+  centralizzazione stile CTA
+- faq-component.js
+  centralizzazione stile FAQ
 -->
