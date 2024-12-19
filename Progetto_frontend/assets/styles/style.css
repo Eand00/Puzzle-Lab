@@ -2,13 +2,11 @@
  * File: style.css
  * Description: Stylesheet for the service portal frontend.
  * Version: 1.0.0
- * 
- * This file contains the styles for the layout and design of the portal.
- * It includes styles for the main page, forms, and responsive design.
- * 
  * Author: Puzzle Lab
  * Contributors: Bonura Vincenzo, Lupano Alberto, Picciotto Luca
  * Date: 2024-11-25
+ * This file contains the styles for the layout and design of the portal.
+ * It includes styles for the main page, forms, and responsive design.
  */
 
 @import "./utility.css";

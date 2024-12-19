@@ -1,16 +1,10 @@
 /**
  * @file index.js
- * @description Scripts for the index page.
  * @version 1.0.0
- * 
- * This script handles the client-side logic for the index page
- * 
  * @author Puzzle Lab
- * @author Bonura Vincenzo
- * @author Lupano Alberto
- * @author Picciotto Luca
+ * @contributors Bonura Vincenzo, Lupano Alberto, Picciotto Luca
  * @date 2024-11-29
- * 
+ * @description This script handles the client-side logic for the index page
  * @see README_FRONTEND.md for additional information.
  */
 
