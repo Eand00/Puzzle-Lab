@@ -1,0 +1,346 @@
+/** 
+ * File: index.css
+ * Description: Stylesheet for the index page.
+ * Version: 1.0.0
+ * 
+ * This file contains the styles for the index page.
+ * 
+ * Author: Puzzle Lab
+ * Contributors: Bonura Vincenzo, Lupano Alberto, Picciotto Luca
+ * Date: 2024-11-25
+ */
+
+/* hero section */
+#hero > div {
+    position: relative;
+    height: calc(100vh - var(--navbar-height));
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#hero > div::before {
+    content:'';
+    position: absolute;
+    inset: 0;
+    background-image: url(../images/img_placeholder.svg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1;
+    opacity: 0.5;
+
+}
+
+#hero h3 {
+    color: var(--color-dark);
+    margin: 1rem 0;
+}
+
+#hero p {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-dark);
+    margin: 1rem 0;
+}
+
+#hero a {
+    width: 80vw;
+    max-width: 400px;
+    height: 4rem;
+    margin: 1rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4rem;
+    background-color: var(--color-dark);
+    color: var(--color-light);
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+#hero .star-rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem 0;
+}
+
+.star-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0.5rem;
+}
+
+.star-container > img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.star-container .half-star {
+    width: 1.5rem;
+    height: 1.5rem;
+    clip-path: polygon(0% 0%, 0% 100%, 60% 100%, 60% 0%);
+}
+
+#hero .star-rating > span {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-dark);
+}
+
+/* problema-soluzione section */
+#problema-soluzione .problema,
+#problema-soluzione .soluzione {
+    padding: 2rem;
+}
+
+
+
+#problema-soluzione figure {
+    width: 80vw;
+    height: 360px;
+    max-height: 50vw;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    margin-top: 3rem;
+}
+
+#problema-soluzione .left-attached {
+    border-top-right-radius: 180px;
+    border-bottom-right-radius: 180px;
+    margin-left: -2rem;
+    margin-right: auto;
+}
+
+#problema-soluzione .right-attached {
+    border-top-left-radius: 180px;
+    border-bottom-left-radius: 180px;
+    margin-right: -2rem;
+    margin-left: auto;
+}
+
+#problema-soluzione figure img {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    
+}
+
+#problema-soluzione figure figcaption {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: var(--color-dark);
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* perché noi section */
+#perche-noi {
+    padding: 2rem;
+}
+
+#perche-noi .benefit-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#perche-noi .benefit {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    width: 360px;
+}
+
+#perche-noi .benefit-icon {
+    width: 100px;
+    height: 100px;
+    background-color: var(--color-dark);
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+#perche-noi .benefit-icon::before {
+    content: 'ICONA / FOTO';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-light);
+}
+
+/* come funziona section */
+#come-funziona {
+    padding: 2rem;
+}
+
+#come-funziona .step-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 3rem;
+    margin-inline: -2rem;
+}
+
+#come-funziona .right-attached {
+    flex-direction: row-reverse;
+}
+
+#come-funziona .step-label {
+    width: 33vw;
+    height: 6rem;
+    background-color: var(--color-dark);
+    display: flex;
+    align-items: center;
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 6rem;
+    padding: 3rem;
+    color: var(--color-light);
+}
+
+#come-funziona .right-attached .step-label {
+    border-radius: 3rem 0 0 3rem;
+    margin-left: 2rem;
+}
+
+#come-funziona .left-attached .step-label {
+    border-radius: 0 45px 45px 0;
+    justify-content: flex-end;
+    margin-right: 2rem;
+}
+
+#come-funziona .right-attached .step-content {
+    text-align: right;
+}
+
+/* testimonianze section */
+#testimonianze {
+    padding: 2rem;
+    overflow: hidden;
+}
+
+#testimonial-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-inline: -2rem;
+}
+
+#testimonial-container .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#testimonial-container figure.card-image {
+    margin: 0 0 1rem 0;
+    width: 50vw;
+}
+
+#testimonial-container figure.card-image picture {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    display: block;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+#testimonial-container figure.card-image picture img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+#testimonial-container figcaption {
+    text-align: center;
+    font-weight: 600;
+    color: var(--color-dark);
+    margin-top: 1rem;
+}
+
+#testimonial-container figcaption span {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--color-dark);
+}
+
+#testimonial-container.scroll {
+    transform: translateX(-50vw);
+    transition-duration: 0.3s;
+}
+
+/* FAQ section */
+#faq {
+    padding: 2rem;
+}
+
+#faq details {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--color-dark);
+    border-radius: 2rem;
+    width: 80vw;
+    max-width: 400px;
+    margin-inline: auto;
+}
+
+#faq details summary {
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--color-dark);
+    list-style: none;
+    padding-left: 1rem;
+    position: relative;
+    cursor: pointer;
+}
+
+#faq details summary::after {
+    content: '';
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: url(../images/dropdown-arrow.svg) no-repeat;
+    background-size: contain;
+    background-position: center;
+    transition: 0.2s;
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+}
+
+#faq details[open] > summary::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+ /* section cta */
+ #cta {
+    padding: 2rem;
+ }
