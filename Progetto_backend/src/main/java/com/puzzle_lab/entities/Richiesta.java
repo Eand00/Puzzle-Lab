@@ -2,6 +2,9 @@ package com.puzzle_lab.entities;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -15,15 +18,24 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+@JsonTypeInfo(
+	    use = JsonTypeInfo.Id.NAME,
+	    include = JsonTypeInfo.As.PROPERTY,
+	    property = "tipo"
+	)
+	@JsonSubTypes({
+	    @JsonSubTypes.Type(value = Informazione.class, name = "informazione"),
+	    @JsonSubTypes.Type(value = Prenotazione.class, name = "prenotazione")
+	})
 @Data
 @Entity
 @Table(name="richieste")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Richiesta {
+public abstract class Richiesta {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
 	@Column(nullable = false)
 	private String nome;
@@ -31,9 +43,10 @@ public class Richiesta {
 	private String cognome;
 	@Column(nullable = false)
 	private String email;
-	
-	private String numero;
+    @Column(nullable = false)
 	private String organizzazione;
+    
+	private String numero;
 	private LocalDateTime dataCreazione ;
 
 	@Enumerated(EnumType.STRING)
