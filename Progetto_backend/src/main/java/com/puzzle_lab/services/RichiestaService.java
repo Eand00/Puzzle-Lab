@@ -3,6 +3,7 @@ package com.puzzle_lab.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.puzzle_lab.entities.Richiesta;
@@ -10,26 +11,33 @@ import com.puzzle_lab.repos.RichiestaDAO;
 
 @Service
 public class RichiestaService {
-	
+
+	@Autowired
 	private RichiestaDAO richiestaDAO;
 
 	// Convalida generale per le richieste
-    public void validaRichiesta(Richiesta richiesta) {
+    protected void validaRichiesta(Richiesta richiesta) {
         validaEmail(richiesta.getEmail());
-        validaNome(richiesta.getNome());
-        validaCognome(richiesta.getCognome());
-        validaTesto(richiesta.getTesto());
+        validaNomeCognome(richiesta.getNome());
+        validaNomeCognome(richiesta.getCognome());
+        validaNumero(richiesta.getNumero());
+
     }
 
-    // Validazione dell'email (esistenza e formato)
+    private void validaNumero(String numero) {
+		if (numero == null || numero.trim().isEmpty()) {
+			throw new IllegalArgumentException("Il numero non può essere vuoto.");
+		}
+		if (!numero.matches("^\\+?(?:[0-9] ?){6,14}[0-9]$")) {
+			throw new IllegalArgumentException("Il numero può contenere solo cifre.");
+		}
+
+	}
+
+	// Validazione dell'email (esistenza e formato)
     private void validaEmail(String email) {
         if (email == null || email.trim().isEmpty()) {
             throw new IllegalArgumentException("L'email non può essere vuota.");
-        }
-
-        // Verifica se l'email esiste già nel sistema
-        if (richiestaDAO.existsByEmail(email)) {
-            throw new IllegalArgumentException("L'email è già registrata.");
         }
 
         // Convalida il formato dell'email
@@ -39,85 +47,26 @@ public class RichiestaService {
     }
 
     // Validazione del nome
-    private void validaNome(String nome) {
+    private void validaNomeCognome(String nome) {
         if (nome == null || nome.trim().isEmpty()) {
-            throw new IllegalArgumentException("Il nome non può essere vuoto.");
+            throw new IllegalArgumentException("Il nome/cognome non può essere vuoto.");
         }
         if (!nome.matches("^[a-zA-Z\\s]+$")) {
-            throw new IllegalArgumentException("Il nome può contenere solo lettere e spazi.");
+            throw new IllegalArgumentException("Il nome/cognome può contenere solo lettere e spazi.");
         }
-    }
-
-    // Validazione del cognome
-    private void validaCognome(String cognome) {
-        if (cognome == null || cognome.trim().isEmpty()) {
-            throw new IllegalArgumentException("Il cognome non può essere vuoto.");
-        }
-        if (!cognome.matches("^[a-zA-Z\\s]+$")) {
-            throw new IllegalArgumentException("Il cognome può contenere solo lettere e spazi.");
-        }
-    }
-
-    // Validazione del testo
-    private void validaTesto(String testo) {
-        if (testo == null || testo.trim().isEmpty()) {
-            throw new IllegalArgumentException("Il testo non può essere vuoto.");
-        }
-    }
-
-    // Esegui la validazione di una richiesta
-    public void salvaRichiesta(Richiesta richiesta) {
-        validaRichiesta(richiesta); // Valida prima di salvare
-        richiestaDAO.save(richiesta);
-    }
-
-    // Metodo per aggiornare una richiesta esistente
-    public void updateRichiesta(long id, Richiesta richiesta) {
-        // Verifica se la richiesta esiste
-        Optional<Richiesta> existingRichiesta = richiestaDAO.findById(id);
-        if (!existingRichiesta.isPresent()) {
-            throw new IllegalArgumentException("La richiesta con ID " + id + " non esiste.");
-        }
-
-        // Convalida i dati prima di aggiornare
-        validaRichiesta(richiesta);
-
-        // Aggiorna i campi della richiesta esistente
-        Richiesta richiestaDaAggiornare = existingRichiesta.get();
-        richiestaDaAggiornare.setNome(richiesta.getNome());
-        richiestaDaAggiornare.setCognome(richiesta.getCognome());
-        richiestaDaAggiornare.setEmail(richiesta.getEmail());
-        richiestaDaAggiornare.setTesto(richiesta.getTesto());
-        richiestaDaAggiornare.setOrganizzazione(richiesta.getOrganizzazione());
-        richiestaDaAggiornare.setNumero(richiesta.getNumero());
-
-        // Salva la richiesta aggiornata
-        richiestaDAO.save(richiestaDaAggiornare);
-    }
-    
-    // Metodo per eliminare una richiesta
-    public void deleteRichiesta(long id) {
-        // Verifica se la richiesta esiste
-        Optional<Richiesta> existingRichiesta = richiestaDAO.findById(id);
-        if (!existingRichiesta.isPresent()) {
-            throw new IllegalArgumentException("La richiesta con ID " + id + " non esiste.");
-        }
-
-        // Elimina la richiesta dal database
-        richiestaDAO.deleteById(id);
     }
 
     // Trova tutte le richieste
-    public List<Richiesta> findAllRichieste() {
+    public List<Richiesta> trovaTutte() {
         return richiestaDAO.findAll();
     }
 
     // Trova una richiesta per ID
-    public Optional<Richiesta> findRichiestaById(long id) {
+    public Optional<Richiesta> trovaPerId(long id) {
         return richiestaDAO.findById(id);
     }
-    
-	public Optional<Richiesta> findByEmail(String email) {
+
+	public Optional<Richiesta> trovaPerEmail(String email) {
 		return richiestaDAO.findByEmail(email);
 	}
 
