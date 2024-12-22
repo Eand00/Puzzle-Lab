@@ -9,11 +9,11 @@ import lombok.Data;
 @Entity
 @Table(name="utenti")
 public class Utente {
-	
+
 	@Id
 	private String Email;
 	private String ruolo;
 	private String nome;
-	private String cognome; 
+	private String cognome;
 
 }

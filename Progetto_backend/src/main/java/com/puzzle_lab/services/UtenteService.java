@@ -10,19 +10,19 @@ import com.puzzle_lab.repos.UtenteDAO;
 
 @Service
 public class UtenteService {
-	
+
 	private UtenteDAO utenteDAO;
-	
+
 	public List<Utente> findAll(){
-		
+
 		return utenteDAO.findAll();
 	}
-	
+
 	public Optional<Utente> findByEmail(String email){
-		
+
 		return utenteDAO.findById(email);
 	}
-	
+
 	// Salva un utente nel database
     public Utente salvaUtente(Utente utente) {
         validaUtente(utente); // Effettua la convalida
