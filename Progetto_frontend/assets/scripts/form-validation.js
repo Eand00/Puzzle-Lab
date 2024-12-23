@@ -9,53 +9,94 @@
  */
 
 /**
+ * @constant {{RegExp, string, boolean}} VALIDATION_RULES
+ * @description The rules for the validation of the fields, with a feedback message
+ */
+const VALIDATION_RULES = {
+    nome: {
+        regex: /^[A-zÀ-ù'\s]+$/,
+        message: 'Il campo deve contenere solo lettere, spazi e segni di punteggiatura',
+        required: true
+    },
+    cognome: {
+        regex: /^[A-zÀ-ù'\s]+$/,
+        message: 'Il campo deve contenere solo lettere, spazi e segni di punteggiatura',
+        required: true
+    },
+    organizzazione: {
+        regex: /.+/,
+        message: 'Il campo non può essere vuoto',
+        required: true
+    },
+    email: {
+        regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        message: 'Il campo deve contenere un indirizzo email valido',
+        required: true
+    },
+    telefono: {
+        regex: /^[\+]?[0-9\s]{10,}$/,
+        message: 'Il campo deve contenere un numero di telefono valido',
+        required: false
+    },
+    'data-inizio': {
+        regex: /^\d{4}-\d{2}-\d{2}$/,
+        message: 'Il campo deve contenere una data valida',
+        required: true
+    },
+    'data-fine': {
+        regex: /^\d{4}-\d{2}-\d{2}$/,
+        message: 'Il campo deve contenere una data valida',
+        required: true
+    },
+    messaggio: {
+        regex: /.+/,
+        message: 'Il campo non può essere vuoto',
+        required: false
+    },
+    privacy: {
+        regex: 'on',
+        message: 'Il campo deve essere selezionato',
+        required: true
+    },
+    'sensible-data': {
+        regex: 'on',
+        message: 'Il campo deve essere selezionato',
+        required: true
+    },
+    'tos': {
+        regex: 'on',
+        message: 'Il campo deve essere selezionato',
+        required: true
+    }
+}
+
+/**
  * @function validate(data, type)
  * @param {string} data - The data to validate
  * @param {string} type - The type of the data to validate
+ * @returns {[boolean, string]} [isValid, message] - The result of the validation
  * @description Validates the data based on the type
  */
 function validate(data, type) {
-    let regex, message, skip = false;
-    switch(type) {
-        case 'nome':
-        case 'cognome':
-            regex = /^[A-zÀ-ù'\s]+$/;
-            message = 'Il campo deve contenere solo lettere, spazi e segni di punteggiatura';
-            break;
-        case 'organizzazione':
-            regex = /.+/;
-            message = 'Il campo non può essere vuoto';
-            break;
-        case 'email':
-            regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            message = 'Il campo deve contenere un indirizzo email valido';
-            break;
-        case 'telefono':
-            skip = true; //not required
-            /*
-            regex = /^[\+]?[0-9\s]{10,}$/;
-            message = 'Il campo deve contenere un numero di telefono valido';
-            */
-            break;
-        case 'data-inizio':
-        case 'data-fine':
-            regex = /^\d{4}-\d{2}-\d{2}$/;
-            message = 'Il campo deve contenere una data valida';
-            break;
-        case 'messaggio':
-            skip = true;
-            break;
-        case 'privacy':
-        case 'sensibleData':
-        case 'tos':
-            skip = data === 'on';
-            break;
-        default:
-            skip = false;
-            message = 'Campo non valido';
-            break;
+    const rule = VALIDATION_RULES[type];
+    
+    //checkboxes
+    if(['privacy', 'sensibleData', 'tos'].includes(type)) {
+        return [data === 'on', 'Campo obbligatorio'];
     }
-    return [skip || regex.test(data), message];
+
+    //not recognized fields
+    if(!rule) {
+        return [false, 'Campo non valido'];
+    }
+
+    //not required fields
+    if(!rule.required) {
+        return [true, ''];
+    }
+
+    //validation
+    return [rule.regex.test(data), rule.message];
 }
 
 /**
