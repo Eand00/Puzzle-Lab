@@ -54,17 +54,17 @@ const VALIDATION_RULES = {
         required: false
     },
     privacy: {
-        regex: 'on',
+        regex: 'checked',
         message: 'Il campo deve essere selezionato',
         required: true
     },
     'sensible-data': {
-        regex: 'on',
+        regex: 'checked',
         message: 'Il campo deve essere selezionato',
         required: true
     },
     'tos': {
-        regex: 'on',
+        regex: 'checked',
         message: 'Il campo deve essere selezionato',
         required: true
     }
@@ -81,13 +81,13 @@ function validate(data, type) {
     const rule = VALIDATION_RULES[type];
     
     //checkboxes
-    if(['privacy', 'sensibleData', 'tos'].includes(type)) {
-        return [data === 'on', 'Campo obbligatorio'];
+    if(['privacy', 'sensible-data', 'tos'].includes(type)) {
+        return [data === 'on' || data === true, 'Campo obbligatorio'];
     }
 
     //not recognized fields
     if(!rule) {
-        return [false, 'Campo non valido'];
+        return [false, 'Campo non riconosciuto'];
     }
 
     //not required fields
@@ -100,31 +100,52 @@ function validate(data, type) {
 }
 
 /**
- * @function formValitation
+ * @function updateFieldStatus(field, isValid, message)
+ * @param {string} field - The field to update
+ * @param {boolean} isValid - The validity of the field
+ * @param {string} message - The message to display
+ * @description Updates the status of the field
+ */
+function updateFieldStatus(field, isValid, message) {
+    document.getElementById(field).classList.toggle('invalid', !isValid);
+    document.getElementById(field).classList.toggle('valid', isValid);  
+}
+
+/**
+ * @function formValidation
  * @param {HTMLFormElement} form - The form to validate
  * @description Validates the form by iterating over the fields and checking the correctness of the data
  */
-function formValitation(form) {
+function formValidation(form) {
     const formData = new FormData(form);
     const formObject = Object.fromEntries(formData);
-    for(const [key, value] of Object.entries(formObject)) {
-        if(validate(value, key)[0]) {
-            document.getElementById(key).classList.remove('invalid');
-            document.getElementById(key).classList.add('valid');
-            console.log(`${key} is valid`);
-        } else {
-            document.getElementById(key).classList.remove('valid');
-            document.getElementById(key).classList.add('invalid');
-            console.log(`${key} is not valid: ${validate(value, key)[1]}`);
-        }
-    }
+    form.querySelectorAll('input, textarea').forEach(input => {
+        //get the value of the field OR the checkbox status
+        let value = input.type === 'checkbox' ? input.checked : formObject[input.name] || '';
+        const [isValid, message] = validate(value, input.name);
+        updateFieldStatus(input.name, isValid, message);
+    });
 }
 
 //initialize the form validation
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('form');
+
+    //handle real-time validation
+    form.addEventListener('blur', (event) => {
+        const input = event.target;
+
+        //filter for only input and textarea
+        if(['INPUT', 'TEXTAREA'].includes(input.tagName)) {
+            let value = input.type === 'checkbox' ? input.checked : input.value;
+            const [isValid, message] = validate(value, input.name);
+            updateFieldStatus(input.name, isValid, message);
+        }
+    }, true);
+
+    //handle the submission validation
     form.addEventListener('submit', (event) => {
         event.preventDefault();
-        formValitation(form);
+        formValidation(form);
     });
 });

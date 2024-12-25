@@ -103,7 +103,7 @@ form .form-group .invalid {
     border-color: var(--color-danger) !important;
 }
 form .form-group .invalid::after {
-    outline-color: var(--color-danger);
+    outline: 3px solid var(--color-danger);
     border-color: var(--color-danger);
 }
 form .form-group .valid {
@@ -111,7 +111,7 @@ form .form-group .valid {
     border-color: var(--color-success);
 }
 form .form-group .valid::after {
-    outline-color: var(--color-success);
+    outline: 3px solid var(--color-success);
     background-color: var(--color-success);
     border-color: var(--color-success);
 }
