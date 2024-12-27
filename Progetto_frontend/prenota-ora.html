@@ -30,7 +30,7 @@
             <section class="container-fluid first-section">
                 <p class="text-center claim">Compila il form per prenotare la tua nuova consapevolezza sulla mafia!</p>
             </section>
-            <form action="./feedback.html" method="post">
+            <form action="./feedback.html" method="post" data-validate>
                 <div class="form-group">
                     <label for="nome">Nome</label>
                     <input type="text" id="nome" name="nome" required minlength="2" pattern="[A-zÀ-ù'\s]+" placeholder="Mario">
@@ -40,8 +40,8 @@
                     <input type="text" id="cognome" name="cognome" required minlength="2" pattern="[A-zÀ-ù'\s]+" placeholder="Rossi">
                 </div>
                 <div class="form-group">
-                    <label for="organizzazione">Organizzazione <span class="text-muted">(opzionale)</span></label>
-                    <input type="text" id="organizzazione" name="organizzazione" placeholder="Istituto Comprensivo S. Pertini" minlength="2" maxlength="100" pattern="[A-zÀ-ù'\s]+">
+                    <label for="organizzazione">Organizzazione </label>
+                    <input type="text" id="organizzazione" name="organizzazione" placeholder="Istituto Comprensivo S. Pertini" minlength="2" maxlength="100" pattern="[A-zÀ-ù'\s]+" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>

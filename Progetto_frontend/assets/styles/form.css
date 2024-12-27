@@ -11,8 +11,14 @@
  */
 
 .form-group {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     padding-inline: 3rem;
+    position: relative;
+    transition: margin-bottom 0.3s ease-in-out;
+}
+
+.form-group:has(.invalid) {
+    margin-bottom: 3rem;
 }
 
 .form-group label {
@@ -49,6 +55,20 @@
     outline: none;
     border-color: var(--color-black);
     outline: 2px solid var(--color-black);
+}
+
+.form-group .error-message {
+    display: block;
+    position: absolute;
+    bottom: -0.5rem;
+    left: 50%;
+    transform: translate(-50%, 100%);
+    width: 100%;
+    padding-inline: 3rem;
+    color: var(--color-danger);
+    font-size: 0.8rem;
+    line-height: 1.2rem;
+    display: none;
 }
 
 .checkbox-container {
@@ -114,5 +134,8 @@ form .form-group .valid::after {
     outline: 3px solid var(--color-success);
     background-color: var(--color-success);
     border-color: var(--color-success);
+}
+.form-group .invalid + .error-message {
+    display: block;
 }
 

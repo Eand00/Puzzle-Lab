@@ -15,12 +15,12 @@
 const VALIDATION_RULES = {
     nome: {
         regex: /^[A-zÀ-ù'\s]+$/,
-        message: 'Il campo deve contenere solo lettere, spazi e segni di punteggiatura',
+        message: 'Il campo deve contenere solo lettere, apostrofi e spazi',
         required: true
     },
     cognome: {
         regex: /^[A-zÀ-ù'\s]+$/,
-        message: 'Il campo deve contenere solo lettere, spazi e segni di punteggiatura',
+        message: 'Il campo deve contenere solo lettere, apostrofi e spazi',
         required: true
     },
     organizzazione: {
@@ -71,6 +71,29 @@ const VALIDATION_RULES = {
 }
 
 /**
+ * @function getFieldValue(field)
+ * @param {HTMLInputElement} field - The field to get the value from
+ * @returns {string | boolean} - The value of the field
+ * @description Get the correct value of the field filtered by the type
+ */
+function getFieldValue(field) {
+    return field.type === 'checkbox' ? field.checked : field.value;
+}
+
+/**
+ * @function initErrorMessages(form)
+ * @param {HTMLFormElement} form - The form to initialize
+ * @description Insert the span elements for the error messages in the form
+ */
+function initErrorMessages(form) {
+    form.querySelectorAll('input, textarea').forEach(input => {
+        const errorMessage = document.createElement('span');
+        errorMessage.classList.add('error-message');
+        input.parentNode.appendChild(errorMessage);
+    });
+}
+
+/**
  * @function validate(data, type)
  * @param {string} data - The data to validate
  * @param {string} type - The type of the data to validate
@@ -107,8 +130,14 @@ function validate(data, type) {
  * @description Updates the status of the field
  */
 function updateFieldStatus(field, isValid, message) {
-    document.getElementById(field).classList.toggle('invalid', !isValid);
-    document.getElementById(field).classList.toggle('valid', isValid);  
+    const fieldElement = document.getElementById(field);
+
+    //update the field status
+    fieldElement.classList.toggle('invalid', !isValid);
+    fieldElement.classList.toggle('valid', isValid);  
+
+    //update the error message
+    fieldElement.parentNode.querySelector('.error-message').textContent = message;
 }
 
 /**
@@ -117,27 +146,59 @@ function updateFieldStatus(field, isValid, message) {
  * @description Validates the form by iterating over the fields and checking the correctness of the data
  */
 function formValidation(form) {
-    const formData = new FormData(form);
-    const formObject = Object.fromEntries(formData);
+    const errors = {};
+    let isValid = true;
     form.querySelectorAll('input, textarea').forEach(input => {
-        //get the value of the field OR the checkbox status
-        let value = input.type === 'checkbox' ? input.checked : formObject[input.name] || '';
-        const [isValid, message] = validate(value, input.name);
-        updateFieldStatus(input.name, isValid, message);
+        
+        if(input.required) {
+            //get the value of the field OR the checkbox status
+            let value = getFieldValue(input);
+            const [fieldValid, message] = validate(value, input.name);
+
+            //UI feedback
+            updateFieldStatus(input.name, fieldValid, message);
+
+            //Errors update
+            if(!fieldValid) {
+                errors[input.name] = message;
+                isValid = false;
+            }
+        }
     });
+
+    //error handling
+    if(Object.keys(errors).length > 0) {
+        
+        //Smooth scroll to the first invalid field
+        const invalidFields = form.querySelector('.invalid');
+        invalidFields.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+
+        //focus the first invalid field
+        setTimeout(() => invalidFields.focus(), 500);
+
+        return false;
+    }
+
+    console.log('valid');
 }
 
 //initialize the form validation
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.querySelector('form');
+    const form = document.querySelector('form[data-validate]');
 
-    //handle real-time validation
+    //disable HTML5 validation
+    form.setAttribute('novalidate', '');
+
+    //initialize the error messages containers
+    initErrorMessages(form);
+
+    //handle on blur validation
     form.addEventListener('blur', (event) => {
         const input = event.target;
 
-        //filter for only input and textarea
-        if(['INPUT', 'TEXTAREA'].includes(input.tagName)) {
-            let value = input.type === 'checkbox' ? input.checked : input.value;
+        //filter for only required input and textarea
+        if(['INPUT', 'TEXTAREA'].includes(input.tagName) && VALIDATION_RULES[input.name].required) {
+            let value = getFieldValue(input);
             const [isValid, message] = validate(value, input.name);
             updateFieldStatus(input.name, isValid, message);
         }
@@ -147,5 +208,5 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', (event) => {
         event.preventDefault();
         formValidation(form);
-    });
+    }, true);
 });

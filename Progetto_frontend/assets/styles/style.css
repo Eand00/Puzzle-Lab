@@ -361,6 +361,7 @@ p.follows {
 	font-weight: bold;
 	border-radius: 2rem;
 	border: none;
+	cursor: pointer;
 }
 .cta-button.inverse {
 	background-color: var(--color-white);
