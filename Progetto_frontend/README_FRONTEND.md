@@ -37,7 +37,13 @@ Per una migliore UX, la chiusura del menu è attivabile sia cliccando nuovamente
 
 ### Web Components
 
-L'utilizzo dei Web Components per l'header e il footer nel sito frontend offre diversi vantaggi: consente di creare componenti riutilizzabili e modulari, migliorando la manutenibilità del codice; ogni componente può essere sviluppato, testato e aggiornato in modo indipendente, riducendo il rischio di introdurre errori nel resto del codice; i Web Components permettono di incapsulare lo stile e il comportamento, evitando conflitti con altri elementi della pagina. Questo approccio facilita anche la collaborazione tra i membri del team, poiché ogni sviluppatore può concentrarsi su specifici componenti senza interferire con il lavoro degli altri.
+Si è optato per l'utilizzo dei Web Components per l'header e il footer nel sito frontend, dopo averne valutato i diversi vantaggi:
+- Modularità: consente un approccio DRY per le parti comuni del sito
+- Manutenibilità: si può sviluppare e modificare un componente in modo indipendente
+- Organizzazione: la logica centralizzata rende più semplice la gestione del codice
+- Progressive Enhancement: se JS è disabilitato dall'utente, un fallback permette l'usabilità del sito
+
+**Nota**: I componenti attuali non utilizzano Shadow DOM, condividendo lo scope CSS globale dell'applicazione. Questo è una scelta progettuale intenzionale per mantenere la coerenza stilistica con il resto del sito, sfruttando il CSS già presente.
 
 <!-- TODO:
 ### Gestione Javascript disabilitato
@@ -52,3 +58,21 @@ Per garantire una migliore esperienza utente, è stato implementato un sistema d
 - faq-component.js
   centralizzazione stile FAQ
 -->
+
+### Validazione forms
+
+La validazione lato client dei form è implementata secondo il principio di Progressive enhancement, con un controllo in JavaScript che si occupa di validare il valore degli input al blur sul singolo campo oltre che al submit del form, e un fallback per la validazione nativa HTML5.  
+La validazione Javascript viene applicata selettivamente ai form che hanno l'attributo `data-validate`, evitando di applicarla anche a form che non ne necessitano.
+
+#### Regole di validazione
+
+Le regole di validazione sono centralizzate e dichiarate per ogni campo nell'oggetto `VALIDATION_RULES`, definito globalmente nel file `form-validation.js`. L'oggetto contiene, per ogni campo: 
+- il pattern regex di validazione
+- un flag `required` per indicare se il campo è obbligatorio
+- un messaggio di errore
+
+#### Feedback all'utente
+
+Il feedback visivo è gestito tramite il file `form.css` che definisce gli stili per lo stato valid/invalid dei campi e dalla funzione `updateFieldStatus` che aggiorna lo stato del campo obbligatorio in base alla validità del valore inserito.
+In fase di submit del form, in caso di campi non validi, il feedback include anche uno scroll e un focus verso il primo campo invalid, per migliorare l'esperienza utente.
+
