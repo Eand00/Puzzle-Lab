@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="it">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="shortcut icon" href="./assets/images/favicon-32x32_placeholder.png" type="image/x-icon" />
+		<title>Laboratori - Caccia Saperi</title>
+		<meta name="description" content="PLACEHOLDER DESCRIPTION" />
+		<meta name="robots" content="index, follow" />
+		<meta name="author" content="Puzzle Lab Torino" />
+		<!-- Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+		<!-- Custom styles -->
+		<link rel="stylesheet" href="./assets/styles/normalize.css" />
+		<link rel="stylesheet" href="./assets/styles/style.css" />
+		<link rel="stylesheet" href="./assets/styles/laboratori.css" />
+		<!-- Custom components -->
+		<script src="./components/header-component.js" type="module"></script>
+		<script src="./components/footer-component.js" type="module"></script>
+		<script src="./components/lab-card-component.js" type="module"></script>
+	</head>
+	<body>
+		<!-- header -->
+		<header-component active-page="index"></header-component>
+		
+		<!-- Main -->
+		<main>
+            <section class="container-fluid first-section">
+                <h1 class="pt-5">Laboratori</h1>
+                <div class="laboratories-grid">
+                    <lab-card-component title="Storia della Cascina" image="../images/img_placeholder.svg" href="laboratorio-1.html"></lab-card-component>
+                    <lab-card-component title="Bruno Caccia" image="../images/img_placeholder.svg" href="laboratorio-2.html"></lab-card-component>
+                    <lab-card-component title="Regolegalità" image="../images/img_placeholder.svg" href="laboratorio-3.html"></lab-card-component>
+                    <lab-card-component title="I Beni Confiscati" image="../images/img_placeholder.svg" href="laboratorio-2.html"></lab-card-component>
+                    <lab-card-component title="Le Mafie & Il Cibo" image="../images/img_placeholder.svg" href="laboratorio-3.html"></lab-card-component>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+		<footer-component></footer-component>
+
+		<!-- Custom scripts -->
+		<script src="./assets/scripts/main.js"></script>
+	</body>
+</html>
