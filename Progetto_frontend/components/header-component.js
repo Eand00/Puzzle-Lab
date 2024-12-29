@@ -29,6 +29,9 @@ class HeaderComponent extends HTMLElement {
                                 <a class="nav-link" href="./index.html">HOME</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="./laboratori.html">LABORATORI</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="./chi-siamo.html">CHI SIAMO</a>
                             </li>
                             <li class="nav-item">
@@ -64,7 +67,7 @@ class HeaderComponent extends HTMLElement {
      * It is used to initialize the component.
      */
     connectedCallback() {
-        // Clone the template content and append it to the shadow DOM
+        // Clone the template content and append it to the DOM
         const content = this.template.content.cloneNode(true);
         this.appendChild(content);
 
