@@ -20,6 +20,7 @@
 		<script src="./components/header-component.js" type="module"></script>
 		<script src="./components/footer-component.js" type="module"></script>
 		<script src="./components/lab-card-component.js" type="module"></script>
+		<script src="./components/lab-grid-component.js" type="module"></script>
 	</head>
 	<body>
 		<!-- header -->
@@ -29,13 +30,45 @@
 		<main>
             <section class="container-fluid first-section">
                 <h1 class="pt-5">Laboratori</h1>
-                <div class="laboratories-grid">
-                    <lab-card-component title="Storia della Cascina" image="../images/img_placeholder.svg" href="laboratorio-1.html"></lab-card-component>
-                    <lab-card-component title="Bruno Caccia" image="../images/img_placeholder.svg" href="laboratorio-2.html"></lab-card-component>
-                    <lab-card-component title="Regolegalità" image="../images/img_placeholder.svg" href="laboratorio-3.html"></lab-card-component>
-                    <lab-card-component title="I Beni Confiscati" image="../images/img_placeholder.svg" href="laboratorio-2.html"></lab-card-component>
-                    <lab-card-component title="Le Mafie & Il Cibo" image="../images/img_placeholder.svg" href="laboratorio-3.html"></lab-card-component>
-                </div>
+				<lab-grid-component data-labs='[
+					{
+						"title": "Storia di Cascina - Carla e Bruno Caccia", 
+						"image": "../images/img_placeholder.svg",
+						"href": "laboratorio-1.html"
+					}, {
+						"title": "Bruno Caccia",
+						"image": "../images/img_placeholder.svg",
+						"href": "laboratorio-1.html"
+					}, {
+						"title": "Introduzione al tema Mafia", 
+						"image": "../images/img_placeholder.svg", 
+						"href": "laboratorio-1.html"
+					}, {
+						"title": "I beni confiscati", 
+						"image": "../images/img_placeholder.svg", 
+						"href": "laboratorio-1.html"
+					}, {
+						"title": "Le mafie in Piemonte", 
+						"image": "../images/img_placeholder.svg", 
+						"href": "laboratorio-1.html"
+					}, {
+						"title": "Sostenibilità ambientale", 
+						"image": "../images/img_placeholder.svg", 
+						"href": "laboratorio-1.html"
+					}, {
+						"title": "La Mafia attraverso il cinema", 
+						"image": "../images/img_placeholder.svg", 
+						"href": "laboratorio-1.html"
+					}, {
+						"title": "Il gioco non è un azzardo", 
+						"image": "../images/img_placeholder.svg", 
+						"href": "laboratorio-1.html"
+					}, {
+						"title": "Chi non gioca vince", 
+						"image": "../images/img_placeholder.svg", 
+						"href": "laboratorio-1.html"
+					}
+				]'><!--TODO: noscript--></lab-grid-component>
             </section>
         </main>
 
