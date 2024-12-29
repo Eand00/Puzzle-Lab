@@ -30,52 +30,52 @@
             <section class="container-fluid first-section">
                 <p class="text-center claim">Compila il form per prenotare la tua nuova consapevolezza sulla mafia!</p>
             </section>
-            <form action="./feedback.html" method="post">
+            <form action="./feedback.html" method="post" data-validate>
                 <div class="form-group">
                     <label for="nome">Nome</label>
-                    <input type="text" id="nome" name="nome" class="form-control" required placeholder="Mario">
+                    <input type="text" id="nome" name="nome" required minlength="2" pattern="[A-zÀ-ù'\s]+" placeholder="Mario">
                 </div>
                 <div class="form-group">
                     <label for="cognome">Cognome</label>
-                    <input type="text" id="cognome" name="cognome" class="form-control" required placeholder="Rossi">
+                    <input type="text" id="cognome" name="cognome" required minlength="2" pattern="[A-zÀ-ù'\s]+" placeholder="Rossi">
                 </div>
                 <div class="form-group">
-                    <label for="organizzazione">Organizzazione <span class="text-muted">(opzionale)</span></label>
-                    <input type="text" id="organizzazione" name="organizzazione" class="form-control" placeholder="Istituto Comprensivo S. Pertini">
+                    <label for="organizzazione">Organizzazione </label>
+                    <input type="text" id="organizzazione" name="organizzazione" placeholder="Istituto Comprensivo S. Pertini" minlength="2" maxlength="100" pattern="[A-zÀ-ù'\s]+" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" class="form-control" required placeholder="email@example.com">
+                    <input type="email" id="email" name="email" required placeholder="email@example.com">
                 </div>
                 <div class="form-group">
                     <label for="telefono">Telefono <span class="text-muted">(opzionale)</span></label>
-                    <input type="tel" id="telefono" name="telefono" class="form-control" placeholder="+39 987 654 3210">
+                    <input type="tel" id="telefono" name="telefono" pattern="[\+]?[0-9\s]{10,}" placeholder="+39 987 654 3210">
                 </div>
                 <fieldset>
                     <div class="form-group">
-                        <label for="data">Data inizio disponibilità</label>
-                        <input type="date" id="data" name="data" class="form-control" required>
+                        <label for="data-inizio">Data inizio disponibilità</label>
+                        <input type="date" id="data-inizio" name="data-inizio" required>
                     </div>
                     <div class="form-group">
-                        <label for="data">Data fine disponibilità</label>
-                        <input type="date" id="data" name="data" class="form-control" required>
+                        <label for="data-fine">Data fine disponibilità</label>
+                        <input type="date" id="data-fine" name="data-fine" required>
                     </div>
                 </fieldset>
                 <div class="form-group">
                     <label for="messaggio">Messaggio</label>
-                    <textarea id="messaggio" name="messaggio" class="form-control" rows="10" placeholder="Buongionro, vi scrivo in merito a..."></textarea>
+                    <textarea id="messaggio" name="messaggio" rows="10" placeholder="Buongionro, vi scrivo in merito a..."></textarea>
                 </div>
                 <div class="form-group checkbox-container">
-                    <input type="checkbox" id="privacy" name="privacy" class="form-check-input" required>
+                    <input type="checkbox" id="privacy" name="privacy" class="form-check-input" required value="checked">
                     <label for="privacy">Acconsento al trattamento dei miei dati personali ai sensi del Regolamento (UE) 2016/679 (GDPR) per la gestione e conferma della prenotazione.</label>
                 </div>
                 <div class="form-group checkbox-container">
-                    <input type="checkbox" id="tos" name="tos" class="form-check-input" required>
+                    <input type="checkbox" id="tos" name="tos" class="form-check-input" required value="checked">
                     <label for="tos">Dichiaro di aver letto e accettato i Termini e Condizioni del servizio. <a href="#">Link Informativa</a></label>
                 </div>
                 <div class="form-group checkbox-container">
-                    <input type="checkbox" id="sensibleData" name="sensibleData" class="form-check-input">
-                    <label for="sensibleData">Acconsento al trattamento dei dati sensibili forniti per finalità legate all’organizzazione del servizio richiesto (ad esempio esigenze alimentari o mediche).</label>
+                    <input type="checkbox" id="sensible-data" name="sensible-data" class="form-check-input" required value="checked">
+                    <label for="sensible-data">Acconsento al trattamento dei dati sensibili forniti per finalità legate all’organizzazione del servizio richiesto (ad esempio esigenze alimentari o mediche).</label>
                 </div>
                 <section class="cta-container">
                     <button type="submit" class="cta-button">Invia</button>
@@ -96,5 +96,6 @@
 
 		<!-- Custom scripts -->
 		<script src="./assets/scripts/main.js"></script>
+        <script src="./assets/scripts/form-validation.js"></script>
 	</body>
 </html>
