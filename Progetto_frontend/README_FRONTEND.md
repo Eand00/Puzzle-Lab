@@ -37,13 +37,30 @@ Per una migliore UX, la chiusura del menu è attivabile sia cliccando nuovamente
 
 ### Web Components
 
-Si è optato per l'utilizzo dei Web Components per l'header e il footer nel sito frontend, dopo averne valutato i diversi vantaggi:
+Si è optato per l'utilizzo dei Web Components per le parti di codice che si ripetono più volte nel sito, al fine di garantire e migliorare:
 - Modularità: consente un approccio DRY per le parti comuni del sito
 - Manutenibilità: si può sviluppare e modificare un componente in modo indipendente
 - Organizzazione: la logica centralizzata rende più semplice la gestione del codice
 - Progressive Enhancement: se JS è disabilitato dall'utente, un fallback permette l'usabilità del sito
 
 **Nota**: I componenti attuali non utilizzano Shadow DOM, condividendo lo scope CSS globale dell'applicazione. Questo è una scelta progettuale intenzionale per mantenere la coerenza stilistica con il resto del sito, sfruttando il CSS già presente.
+
+#### Componenti utilizzati
+
+- header-components.js
+  header e menu di navigazione del sito
+- footer-components.js
+  footer del sito
+- lab-grid-component.js
+  visualizzazione delle card dei laboratori
+  Proprietà:
+  - data-labs: array di oggetti con le proprietà title, image, href
+- lab-card-component.js
+  card di laboratorio
+  Proprietà:
+  - title: stringa
+  - image: stringa
+  - href: stringa
 
 <!-- TODO:
 ### Gestione Javascript disabilitato

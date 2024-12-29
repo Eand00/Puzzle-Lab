@@ -6,6 +6,9 @@
  * @date 2024-12-27
  * @description A custom element that displays a laboratory card
  * @extends HTMLElement
+ * @property {string} title - The title of the laboratory
+ * @property {string} image - The image of the laboratory
+ * @property {string} href - The link to the laboratory
  * @see README_FRONTEND.md for additional information.
  */
 

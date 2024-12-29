@@ -6,6 +6,7 @@
  * @date 2024-12-29
  * @description A custom element that renders iterated lab-card-component elements
  * @extends HTMLElement
+ * @property {string} data-labs - The data of the laboratories
  * @see README_FRONTEND.md for additional information.
  */
 
