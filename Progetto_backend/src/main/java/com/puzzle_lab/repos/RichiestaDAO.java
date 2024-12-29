@@ -11,5 +11,5 @@ public interface RichiestaDAO extends JpaRepository<Richiesta,Long> {
 	Optional<Richiesta> findByEmail(String email);
 
 	boolean existsByEmail(String email);
-	
+
 }
