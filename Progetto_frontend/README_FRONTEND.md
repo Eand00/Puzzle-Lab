@@ -42,6 +42,7 @@ Per una migliore UX, la chiusura del menu è attivabile sia cliccando nuovamente
 ### Web Components
 
 Si è scelto l'utilizzo dei Web Components per le parti di codice che si ripetono più volte nel sito, al fine di garantire e migliorare:
+
 - Modularità: consente un approccio DRY per le parti comuni del sito
 - Manutenibilità: si può sviluppare e modificare un componente in modo indipendente
 - Organizzazione: la logica centralizzata rende più semplice la gestione del codice
@@ -96,7 +97,5 @@ Le regole di validazione sono centralizzate e dichiarate per ogni campo nell'ogg
 
 Il feedback visivo è gestito tramite il file `form.css` che definisce gli stili per lo stato valid/invalid dei campi e dalla funzione `updateFieldStatus` che aggiorna lo stato del campo obbligatorio in base alla validità del valore inserito.
 In fase di submit del form, in caso di campi non validi, il feedback include anche uno scroll e un focus verso il primo campo invalid, per migliorare l'esperienza utente.
-
-### Template Laboratori
 
 Si è scelto di realizzare pagine statiche per i laboratori, con un template base in `laboratori/_modello.html` e un file per ogni laboratorio in `laboratori/`. Tale scelta è stata fatta in ottica di ottimizzazione SEO dei contenuti; la presenza del template è utile al fine di mantenere la coerenza di presentazione in eventuali futuri aggiornamenti dei contenuti.

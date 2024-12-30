@@ -13,6 +13,7 @@ class HeaderComponent extends HTMLElement {
     constructor() {
         super();
         const basePath = this.getAttribute('base-path') || '.';
+
         this.template = document.createElement('template');
         this.template.innerHTML = `
             <header class="bg-white fixed-top">
