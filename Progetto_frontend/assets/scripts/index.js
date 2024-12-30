@@ -8,6 +8,11 @@
  * @see README_FRONTEND.md for additional information.
  */
 
+/**
+ * @constant containerScroll
+ * @type {HTMLElement}
+ * @description The container element for the testimonial carousel.
+ */
 const containerScroll = document.getElementById("testimonial-container");
 
 /**
