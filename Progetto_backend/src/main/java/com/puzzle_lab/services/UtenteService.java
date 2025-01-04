@@ -3,6 +3,8 @@ package com.puzzle_lab.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.puzzle_lab.entities.Utente;
@@ -11,8 +13,12 @@ import com.puzzle_lab.repos.UtenteDAO;
 @Service
 public class UtenteService {
 
+    @Autowired
 	private UtenteDAO utenteDAO;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    
 	public List<Utente> findAll(){
 
 		return utenteDAO.findAll();
@@ -25,7 +31,8 @@ public class UtenteService {
 
 	// Salva un utente nel database
     public Utente salvaUtente(Utente utente) {
-        validaUtente(utente); // Effettua la convalida
+        //validaUtente(utente); // Effettua la convalida
+    	utente.setPassword(passwordEncoder.encode(utente.getPassword()));
         return utenteDAO.save(utente); // Salva nel database
     }
 
