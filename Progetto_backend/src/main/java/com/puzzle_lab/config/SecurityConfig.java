@@ -39,8 +39,8 @@ public class SecurityConfig {
             )
             .httpBasic(Customizer.withDefaults())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Stateless authentication
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class) // Add JWT filter
-            .build(); // Return the configured filter chain
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // Add JWT filter
+        
         return http.build(); // Build and return the security filter chain
 
     }
