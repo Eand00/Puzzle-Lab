@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .requestMatchers("/login", "/logout").permitAll() // Public access to login/logout
                 .anyRequest().authenticated() // All other requests require authentication
             )
-            .httpBasic(Customizer.withDefaults())
+            //.httpBasic(Customizer.withDefaults())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Stateless authentication
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // Add JWT filter
         
