@@ -147,9 +147,11 @@ function updateFieldStatus(field, isValid, message) {
  */
 function formValidation(form) {
     const errors = {};
+    const formData = {};
     let isValid = true;
     form.querySelectorAll('input, textarea').forEach(input => {
-        
+        formData[input.name] = getFieldValue(input);
+
         if(input.required) {
             //get the value of the field OR the checkbox status
             let value = getFieldValue(input);
@@ -179,7 +181,19 @@ function formValidation(form) {
         return false;
     }
 
-    console.log('valid');
+    //create JSON object
+    const jsonFormData = JSON.stringify(formData);
+
+    //create API request POST
+    const url = '';
+    fetch(url, {
+        method: 'POST',
+        body: jsonFormData
+    }).then(response => response.json()).then(data => {
+        console.log(data);
+    }).catch(error => {
+        console.error('Error:', error);
+    });
 }
 
 //initialize the form validation
@@ -192,8 +206,8 @@ document.addEventListener('DOMContentLoaded', () => {
     //initialize the error messages containers
     initErrorMessages(form);
 
-    //handle on blur validation
-    form.addEventListener('blur', (event) => {
+    //handle validation on input
+    form.addEventListener('input', (event) => {
         const input = event.target;
 
         //filter for only required input and textarea
