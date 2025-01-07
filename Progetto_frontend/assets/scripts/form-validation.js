@@ -148,11 +148,8 @@ function updateFieldStatus(field, isValid, message) {
 function formValidation(form) {
     const errors = {};
     const formData = {};
-    const formData = {};
     let isValid = true;
     form.querySelectorAll('input, textarea').forEach(input => {
-        formData[input.name] = getFieldValue(input);
-
         formData[input.name] = getFieldValue(input);
 
         if(input.required) {
