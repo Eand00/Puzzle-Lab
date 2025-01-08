@@ -11,14 +11,17 @@
  */
 
 .form-group {
-  margin-bottom: 1.5rem;
-  padding-inline: 3rem;
-  position: relative;
-  transition: margin-bottom 0.3s ease-in-out;
+
+
+    margin-bottom: 1.5rem;
+    padding-inline: 3rem;
+    position: relative;
+    transition: margin-bottom 0.3s ease-in-out;
 }
 
 .form-group:has(.invalid) {
-  margin-bottom: 3rem;
+    margin-bottom: 3rem;
+
 }
 
 .form-group label {
@@ -72,6 +75,20 @@
   font-size: 0.8rem;
   line-height: 1.2rem;
   display: none;
+}
+
+.form-group .error-message {
+    display: block;
+    position: absolute;
+    bottom: -0.5rem;
+    left: 50%;
+    transform: translate(-50%, 100%);
+    width: 100%;
+    padding-inline: 3rem;
+    color: var(--color-danger);
+    font-size: 0.8rem;
+    line-height: 1.2rem;
+    display: none;
 }
 
 .checkbox-container {
@@ -141,3 +158,24 @@ form .form-group .valid::after {
 .form-group .invalid + .error-message {
   display: block;
 }
+form .form-group .invalid {
+    outline: 3px solid var(--color-danger);
+    border-color: var(--color-danger) !important;
+}
+form .form-group .invalid::after {
+    outline: 3px solid var(--color-danger);
+    border-color: var(--color-danger);
+}
+form .form-group .valid {
+    outline: 3px solid var(--color-success);
+    border-color: var(--color-success);
+}
+form .form-group .valid::after {
+    outline: 3px solid var(--color-success);
+    background-color: var(--color-success);
+    border-color: var(--color-success);
+}
+.form-group .invalid + .error-message {
+    display: block;
+}
+

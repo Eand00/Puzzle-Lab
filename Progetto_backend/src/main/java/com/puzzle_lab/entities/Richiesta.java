@@ -45,7 +45,7 @@ public abstract class Richiesta {
 	private String email;
     @Column(nullable = false)
 	private String organizzazione;
-    
+
 	private String numero;
 	private LocalDateTime dataCreazione ;
 

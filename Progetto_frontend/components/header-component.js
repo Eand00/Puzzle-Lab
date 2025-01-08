@@ -12,6 +12,8 @@
 class HeaderComponent extends HTMLElement {
     constructor() {
         super();
+        const basePath = this.getAttribute('base-path') || '.';
+
         this.template = document.createElement('template');
         this.template.innerHTML = `
             <header class="bg-white fixed-top">
@@ -26,16 +28,19 @@ class HeaderComponent extends HTMLElement {
                     <div class="collapse navbar-collapse" id="navbarText">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="./index.html">HOME</a>
+                                <a class="nav-link" href="${basePath}/index.html">HOME</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="./chi-siamo.html">CHI SIAMO</a>
+                                <a class="nav-link" href="${basePath}/laboratori.html">LABORATORI</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="./prenota-ora.html">PRENOTA ORA!</a>
+                                <a class="nav-link" href="${basePath}/chi-siamo.html">CHI SIAMO</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="./contatti.html">CONTATTI</a>
+                                <a class="nav-link" href="${basePath}/prenota-ora.html">PRENOTA ORA!</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="${basePath}/contatti.html">CONTATTI</a>
                             </li>
                         </ul>
                         <div class="social-icons">
@@ -64,7 +69,7 @@ class HeaderComponent extends HTMLElement {
      * It is used to initialize the component.
      */
     connectedCallback() {
-        // Clone the template content and append it to the shadow DOM
+        // Clone the template content and append it to the DOM
         const content = this.template.content.cloneNode(true);
         this.appendChild(content);
 

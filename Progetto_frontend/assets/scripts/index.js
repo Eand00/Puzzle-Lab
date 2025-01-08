@@ -8,10 +8,15 @@
  * @see README_FRONTEND.md for additional information.
  */
 
+/**
+ * @constant containerScroll
+ * @type {HTMLElement}
+ * @description The container element for the testimonial carousel.
+ */
 const containerScroll = document.getElementById("testimonial-container");
 
 /**
- * Scroll function
+ * @function scroll
  * @description Adds the scroll class to the testimonial-container element.
  */
 function scroll() {
@@ -19,7 +24,7 @@ function scroll() {
 }
 
 /**
- * Carousel function
+ * @function carousel
  * @description Scrolls the carousel to the next card.
  */
 function carousel() {

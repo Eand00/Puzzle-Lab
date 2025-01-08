@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="it">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="shortcut icon" href="../assets/images/favicon-32x32_placeholder.png" type="image/x-icon" />
+		<title>Laboratori - Caccia Saperi</title>
+		<meta name="description" content="PLACEHOLDER DESCRIPTION" />
+		<meta name="robots" content="index, follow" />
+		<meta name="author" content="Puzzle Lab Torino" />
+		<!-- Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+		<!-- Custom styles -->
+		<link rel="stylesheet" href="../assets/styles/normalize.css" />
+		<link rel="stylesheet" href="../assets/styles/style.css" />
+		<link rel="stylesheet" href="../assets/styles/laboratori.css" />
+		<!-- Custom components -->
+		<script src="../components/header-component.js" type="module"></script>
+		<script src="../components/footer-component.js" type="module"></script>
+		<script src="../components/lab-card-component.js" type="module"></script>
+		<script src="../components/lab-grid-component.js" type="module"></script>
+	</head>
+	<body>
+		<!-- header -->
+		<header-component active-page="laboratori" base-path=".."></header-component>
+		
+		<!-- Main -->
+		<main>
+            <!-- Hero -->
+            <section class="container-fluid first-section lab-hero" style="--url-image: url('../images/img_placeholder.svg');">
+                <h1>[TITOLO_LABORATORIO]</h1>
+            </section>
+
+            <!-- Info Box -->
+            <section class="container-fluid lab-info-box">
+                <div class="lab-info__grid">
+                    <div class="lab-info__item">
+                        <h3>Destinatari</h3>
+                        <p>[target]</p>
+                    </div>
+                    <div class="lab-info__item">
+                        <h3>Partecipanti</h3>
+                        <p>[numero]</p>
+                    </div>
+                    <div class="lab-info__item">
+                        <h3>Durata</h3>
+                        <p>[tempo]</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Description -->
+            <section class="container-fluid lab-description">
+                <div class="container">
+                    <h2>[TITOLO_DESCRIZIONE]</h2>
+                    <div class="lab-description__content">
+                        [CONTENUTO]
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA -->
+            <section class="container-fluid lab-cta">
+                <div class="cta-container">
+					<a href="../prenota-ora.html" class="cta-button" role="button">PRENOTA ORA</a>
+				</div>
+            </section>
+
+            <!-- Related Labs -->
+            <section class="container-fluid lab-related">
+                <h2>Altri laboratori</h2>
+                <lab-grid-component data-labs='[
+                    {
+                        "title": "Storia di Cascina - Carla e Bruno Caccia", 
+                        "image": "../images/img_placeholder.svg",
+                        "href": "laboratorio-1.html"
+                    }, {
+                        "title": "Bruno Caccia",
+                        "image": "../images/img_placeholder.svg",
+                        "href": "laboratorio-1.html"
+                    }, {
+                        "title": "Introduzione al tema Mafia", 
+                        "image": "../images/img_placeholder.svg", 
+                        "href": "laboratorio-1.html"
+                    }, {
+                        "title": "I beni confiscati", 
+                        "image": "../images/img_placeholder.svg", 
+                        "href": "laboratorio-1.html"
+                    }, {
+                        "title": "Le mafie in Piemonte", 
+                        "image": "../images/img_placeholder.svg", 
+                        "href": "laboratorio-1.html"
+                    }, {
+                        "title": "Sostenibilità ambientale", 
+                        "image": "../images/img_placeholder.svg", 
+                        "href": "laboratorio-1.html"
+                    }, {
+                        "title": "La Mafia attraverso il cinema", 
+                        "image": "../images/img_placeholder.svg", 
+                        "href": "laboratorio-1.html"
+                    }, {
+                        "title": "Il gioco non è un azzardo", 
+                        "image": "../images/img_placeholder.svg", 
+                        "href": "laboratorio-1.html"
+                    }, {
+                        "title": "Chi non gioca vince", 
+                        "image": "../images/img_placeholder.svg", 
+                        "href": "laboratorio-1.html"
+                    }
+                ]'><!--TODO: noscript--></lab-grid-component>
+            </section>
+        </main>
+
+        <!-- Footer -->
+		<footer-component></footer-component>
+
+		<!-- Custom scripts -->
+		<script src="../assets/scripts/main.js"></script>
+	</body>
+</html>
