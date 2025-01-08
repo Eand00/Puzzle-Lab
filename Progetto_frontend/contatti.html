@@ -50,6 +50,8 @@
             name="nome"
             class="form-control"
             required
+            minlength="2"
+            pattern="[A-zÀ-ù'\s]+"
             placeholder="Mario"
           />
         </div>
@@ -61,6 +63,8 @@
             name="cognome"
             class="form-control"
             required
+            minlength="2"
+            pattern="[A-zÀ-ù'\s]+"
             placeholder="Rossi"
           />
         </div>
@@ -72,6 +76,9 @@
             name="organizzazione"
             class="form-control"
             required
+            minlength="2"
+            maxlength="100"
+            pattern="[A-zÀ-ù'\s]+"
             placeholder="Istituto Comprensivo S. Pertini"
           />
         </div>
@@ -95,6 +102,7 @@
             id="telefono"
             name="telefono"
             class="form-control"
+            pattern="[\+]?[0-9\s]{10,}"
             placeholder="+39 987 654 3210"
           />
         </div>
