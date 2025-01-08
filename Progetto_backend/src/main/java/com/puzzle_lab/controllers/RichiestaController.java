@@ -31,18 +31,6 @@ public class RichiestaController {
     @Autowired
     private PrenotazioneService prenotazioneService;
 
-    @Operation(summary = "Ottieni tutte le informazioni", description = "Recupera tutte le informazioni disponibili")
-    @ApiResponse(responseCode = "200", description = "Lista di informazioni recuperata con successo")
-    @ApiResponse(responseCode = "500", description = "Errore interno del server")
-    @GetMapping("/informazioni")
-    public ResponseEntity<List<Informazione>> getTutteInformazioni() {
-        try {
-            List<Informazione> informazioni = informazioneService.trovaTutteInformazioni();
-            return ResponseEntity.ok(informazioni);
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
 
     @Operation(summary = "Crea una nuova informazione", description = "Crea e salva una nuova informazione")
     @ApiResponse(responseCode = "201", description = "Informazione creata con successo")
@@ -57,18 +45,6 @@ public class RichiestaController {
         }
     }
 
-    @Operation(summary = "Ottieni tutte le prenotazioni", description = "Recupera tutte le prenotazioni disponibili")
-    @ApiResponse(responseCode = "200", description = "Lista di prenotazioni recuperata con successo")
-    @ApiResponse(responseCode = "500", description = "Errore interno del server")
-    @GetMapping("/prenotazioni")
-    public ResponseEntity<List<Prenotazione>> getTuttePrenotazioni() {
-        try {
-            List<Prenotazione> prenotazioni = prenotazioneService.trovaTuttePrenotazioni();
-            return ResponseEntity.ok(prenotazioni);
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
 
     @Operation(summary = "Crea una nuova prenotazione", description = "Crea e salva una nuova prenotazione")
     @ApiResponse(responseCode = "201", description = "Prenotazione creata con successo")

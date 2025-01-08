@@ -1,5 +1,7 @@
 package com.puzzle_lab.services;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.puzzle_lab.entities.Richiesta;
+import com.puzzle_lab.entities.Status;
 import com.puzzle_lab.repos.RichiestaDAO;
 
 @Service
@@ -65,9 +68,54 @@ public class RichiestaService {
     public Optional<Richiesta> trovaPerId(long id) {
         return richiestaDAO.findById(id);
     }
-
-	public Optional<Richiesta> trovaPerEmail(String email) {
-		return richiestaDAO.findByEmail(email);
+    
+    //ricerche testuali tutte case sensitive
+    public List<Richiesta> trovaPerNome(String nome) {
+    	List<Richiesta> richieste = richiestaDAO.findAll();
+    	List<Richiesta> elenco = new ArrayList<Richiesta>();
+    	for (Richiesta richiesta : richieste) {
+			if(richiesta.getNome().contains(nome))
+				elenco.add(richiesta);
+		}
+    	return elenco;
+    }
+    
+    public List<Richiesta> trovaPerCognome(String cognome) {
+    	List<Richiesta> richieste = richiestaDAO.findAll();
+    	List<Richiesta> elenco = new ArrayList<Richiesta>();
+    	for (Richiesta richiesta : richieste) {
+			if(richiesta.getCognome().contains(cognome))
+				elenco.add(richiesta);
+		}
+    	return elenco;
+    }
+    
+    public List<Richiesta> trovaPerEmail(String email) {
+    	List<Richiesta> richieste = richiestaDAO.findAll();
+    	List<Richiesta> elenco = new ArrayList<Richiesta>();
+    	for (Richiesta richiesta : richieste) {
+			if(richiesta.getEmail().contains(email))
+				elenco.add(richiesta);
+		}
+    	return elenco;
+    }
+    
+    public List<Richiesta> trovaPerOrganizzazione(String organizzazione) {
+    	List<Richiesta> richieste = richiestaDAO.findAll();
+    	List<Richiesta> elenco = new ArrayList<Richiesta>();
+    	for (Richiesta richiesta : richieste) {
+			if(richiesta.getOrganizzazione().contains(organizzazione))
+				elenco.add(richiesta);
+		}
+    	return elenco;
+    }
+    
+    public Optional<Richiesta> trovaPerData(LocalDateTime data) {
+		return richiestaDAO.findByDataCreazione(data);
+	}
+	
+	public Optional<Richiesta> trovaPerStatus(String status) {
+		return richiestaDAO.findByStatus(Status.valueOf(status));
 	}
 
 }
