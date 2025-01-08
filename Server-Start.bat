@@ -1,6 +1,6 @@
 SET "BASE_DIR=%~dp0"
 
-cd /d "%BASE_DIR%target"
+cd /d "%BASE_DIR%"
 
 IF NOT EXIST "cascina-caccia-0.0.1-SNAPSHOT.jar" (
     echo ERROR: JAR file not found in the target directory!
