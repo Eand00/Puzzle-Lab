@@ -1,3 +1,17 @@
+/**
+ * @file form-validation.js
+ * @version 1.0.0
+ * @author Puzzle Lab
+ * @contributors Bonura Vincenzo, Lupano Alberto, Picciotto Luca
+ * @date 2024-12-21
+ * @description This script handles the client-side logic for the form validation
+ * @see README_FRONTEND.md for additional information.
+ */
+
+/**
+ * @constant {{RegExp, string, boolean}} VALIDATION_RULES
+ * @description The rules for the validation of the fields, with a feedback message
+ */
 const VALIDATION_RULES = {
   nome: {
     regex: /^[A-zÀ-ù'\s]+$/,
@@ -24,6 +38,16 @@ const VALIDATION_RULES = {
     message: "Il campo deve contenere un numero di telefono valido",
     required: false,
   },
+  "data-inizio": {
+    regex: /^\d{4}-\d{2}-\d{2}$/,
+    message: "Il campo deve contenere una data valida",
+    required: true,
+  },
+  "data-fine": {
+    regex: /^\d{4}-\d{2}-\d{2}$/,
+    message: "Il campo deve contenere una data valida",
+    required: true,
+  },
   messaggio: {
     regex: /.+/,
     message: "Il campo non può essere vuoto",
@@ -46,26 +70,21 @@ const VALIDATION_RULES = {
   },
 };
 
-// Descrizione: Restituisce il valore di un campo, considerando
-// il tipo del campo (testo o checkbox).
-
-// Parametri:
-
-// field (HTMLInputElement): Il campo di cui ottenere il valore.
-// Ritorno:
-
-// (string | boolean): Il valore del campo o lo stato di selezione
-// (per i checkbox).
+/**
+ * @function getFieldValue(field)
+ * @param {HTMLInputElement} field - The field to get the value from
+ * @returns {string | boolean} - The value of the field
+ * @description Get the correct value of the field filtered by the type
+ */
 function getFieldValue(field) {
   return field.type === "checkbox" ? field.checked : field.value;
 }
 
-// Descrizione: Aggiunge elementi span accanto ai campi
-// del form per mostrare i messaggi di errore.
-
-// Parametri:
-
-// form (HTMLFormElement): Il form da inizializzare
+/**
+ * @function initErrorMessages(form)
+ * @param {HTMLFormElement} form - The form to initialize
+ * @description Insert the span elements for the error messages in the form
+ */
 function initErrorMessages(form) {
   form.querySelectorAll("input, textarea").forEach((input) => {
     const errorMessage = document.createElement("span");
@@ -74,38 +93,13 @@ function initErrorMessages(form) {
   });
 }
 
-// Descrizione: Valida il valore di un campo in base
-// alle regole definite nell'oggetto VALIDATION_RULES.
-// Questo processo verifica:
-
-// Se il campo è obbligatorio e il valore è presente.
-// Se il valore corrisponde all'espressione regolare
-// specificata per il tipo.
-// Se la validazione fallisce, restituisce il messaggio
-// di errore associato.
-// Parametri:
-
-// data (string): Il valore del campo da validare.
-// type (string): Il nome del campo, che corrisponde
-// a una chiave in VALIDATION_RULES.
-// Ritorno:
-
-// [boolean, string]: Un array con:
-// boolean: true se la validazione ha successo,
-// altrimenti false.
-// string: Un messaggio di errore se la validazione
-// fallisce.
-// Dettagli Operativi:
-
-// Recupera le regole di validazione per il tipo
-// specificato dall'oggetto VALIDATION_RULES.
-// Controlla se il campo è obbligatorio (required) e
-// se il dato è vuoto. Se sì, restituisce un errore
-// immediato.
-// Verifica il dato contro l'espressione regolare (regex).
-// Se una delle verifiche fallisce, restituisce false
-// e il messaggio di errore; altrimenti, true e una
-// stringa vuota.
+/**
+ * @function validate(data, type)
+ * @param {string} data - The data to validate
+ * @param {string} type - The type of the data to validate
+ * @returns {[boolean, string]} [isValid, message] - The result of the validation
+ * @description Validates the data based on the type
+ */
 function validate(data, type) {
   const rule = VALIDATION_RULES[type];
 
@@ -124,20 +118,17 @@ function validate(data, type) {
     return [true, ""];
   }
 
+  //validation
   return [rule.regex.test(data), rule.message];
 }
 
-// Descrizione: Aggiorna lo stato visivo di un campo
-// in base al risultato della validazione. Se il campo
-// non è valido, aggiunge una classe CSS per evidenziare
-// l'errore e mostra il messaggio corrispondente.
-
-// Parametri:
-
-// field (string): L'ID del campo da aggiornare.
-// isValid (boolean): Indica se il campo è valido.
-// message (string): Il messaggio di errore da mostrare
-// in caso di validazione fallita.
+/**
+ * @function updateFieldStatus(field, isValid, message)
+ * @param {string} field - The field to update
+ * @param {boolean} isValid - The validity of the field
+ * @param {string} message - The message to display
+ * @description Updates the status of the field
+ */
 function updateFieldStatus(field, isValid, message) {
   const fieldElement = document.getElementById(field);
 
@@ -149,6 +140,11 @@ function updateFieldStatus(field, isValid, message) {
   fieldElement.parentNode.querySelector(".error-message").textContent = message;
 }
 
+/**
+ * @function formValidation
+ * @param {HTMLFormElement} form - The form to validate
+ * @description Validates the form by iterating over the fields and checking the correctness of the data
+ */
 function formValidation(form) {
   const errors = {};
   let isValid = true;
