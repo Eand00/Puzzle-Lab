@@ -33,9 +33,10 @@ public class SecurityConfig {
         http
             .csrf(AbstractHttpConfigurer::disable) // Disables CSRF
             .authorizeHttpRequests(authorize -> authorize
+            		.requestMatchers("/login", "/logout", "/resources/**", "/v3/api-docs/**", 
+                            "/swagger-ui/**", "/swagger-ui.html").permitAll() // Public access to login/logout
                 .requestMatchers("/back-office/**").authenticated() // Secure paths
-                .requestMatchers("/login", "/logout","/swagger-ui/**").permitAll() // Public access to login/logout
-                .anyRequest().authenticated() // All other requests require authentication
+                .anyRequest().permitAll() // All other requests require authentication
             )
             //.httpBasic(Customizer.withDefaults())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Stateless authentication
