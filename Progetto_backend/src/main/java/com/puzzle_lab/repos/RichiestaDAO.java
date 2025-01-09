@@ -1,6 +1,7 @@
 package com.puzzle_lab.repos;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,15 +15,17 @@ public interface RichiestaDAO extends JpaRepository<Richiesta,Long> {
 
 	Optional<Richiesta> findByEmail(String email);
 	
-    @Query("SELECT r FROM Richiesta r WHERE r.status = :status")
-    Optional<Richiesta> findByStatus(@Param("status") Status status);
+    //@Query("SELECT r FROM Richiesta r WHERE r.status = :status")
+    List<Richiesta> findByStatus(Status status);
+    List<Richiesta> findByStatusNot(Status status);
+    
 	
 	Optional<Richiesta> findByDataCreazione(LocalDateTime data);
 
 	boolean existsByEmail(String email);
 
 	@Query("SELECT r FROM Richiesta r WHERE r.nome LIKE CONCAT('%', :nome, '%')")
-	Optional<Richiesta> findByNome(@Param("nome")String nome);
+	Optional<List<Richiesta>> findByNome(@Param("nome")String nome);
 	
 	Optional<Richiesta> findByNomeContainingIgnoreCase(String nome);
 
