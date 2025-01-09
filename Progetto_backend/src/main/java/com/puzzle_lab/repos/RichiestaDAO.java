@@ -20,5 +20,11 @@ public interface RichiestaDAO extends JpaRepository<Richiesta,Long> {
 	Optional<Richiesta> findByDataCreazione(LocalDateTime data);
 
 	boolean existsByEmail(String email);
+
+	@Query("SELECT r FROM Richiesta r WHERE r.nome LIKE CONCAT('%', :nome, '%')")
+	Optional<Richiesta> findByNome(@Param("nome")String nome);
+	
+	Optional<Richiesta> findByNomeContainingIgnoreCase(String nome);
+
 	
 }
