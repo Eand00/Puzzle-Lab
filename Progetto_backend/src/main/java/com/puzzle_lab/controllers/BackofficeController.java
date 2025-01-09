@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.puzzle_lab.entities.Informazione;
@@ -143,6 +144,30 @@ public class BackofficeController {
         }
     }
     
+    @Operation(summary = "Modifica una informazione", description = "Permette di aggiornare i dati relativi a una informazione")
+    @ApiResponse(responseCode = "200", description = "informazione aggiornata")
+    @ApiResponse(responseCode = "500", description = "Errore interno del server")
+    @PutMapping("/informazioni")
+    public ResponseEntity<String> updateInformazione(@RequestBody Informazione infoAggiornata) {
+        try {
+            Optional<Richiesta> infoVecchia = informazioneService.trovaPerId(infoAggiornata.getId());
+            if (infoVecchia.isPresent()) {
+                Informazione informazione = (Informazione) infoVecchia.get();
+                informazione.setStatus(infoAggiornata.getStatus());
+                informazione.setCognome(infoAggiornata.getCognome());
+                informazione.setNome(infoAggiornata.getNome());
+                informazione.setEmail(infoAggiornata.getEmail());
+                informazione.setOrganizzazione(infoAggiornata.getOrganizzazione());
+                informazione.setNumero(infoAggiornata.getNumero());
+                informazioneService.save(informazione);
+            }
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Informazione aggiornata con successo.");
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+    
+    
     @Operation(summary = "Ottieni tutte le prenotazioni", description = "Recupera tutte le prenotazioni disponibili")
     @ApiResponse(responseCode = "200", description = "Lista di prenotazioni recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
@@ -153,6 +178,31 @@ public class BackofficeController {
             return ResponseEntity.ok(prenotazioni);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @Operation(summary = "Modifica una prenotazione", description = "Permette di aggiornare i dati relativi a una preno")
+    @ApiResponse(responseCode = "200", description = "Prenotazione aggiornata")
+    @ApiResponse(responseCode = "500", description = "Errore interno del server")
+    @PutMapping("/prenotazioni")
+    public ResponseEntity<String> updatePrenotazione(@RequestBody Prenotazione prenoAggiornata) {
+        try {
+            Optional<Richiesta> prenoVecchia = prenotazioneService.trovaPerId(prenoAggiornata.getId());
+            if (prenoVecchia.isPresent()) {
+                Prenotazione prenotazione = (Prenotazione) prenoVecchia.get();
+                prenotazione.setStatus(prenoAggiornata.getStatus());
+                prenotazione.setCognome(prenoAggiornata.getCognome());
+                prenotazione.setNome(prenoAggiornata.getNome());
+                prenotazione.setEmail(prenoAggiornata.getEmail());
+                prenotazione.setOrganizzazione(prenoAggiornata.getOrganizzazione());
+                prenotazione.setNumero(prenoAggiornata.getNumero());
+                prenotazione.setDataInizio(prenoAggiornata.getDataInizio());
+                prenotazione.setDataFine(prenoAggiornata.getDataFine());
+                prenotazioneService.save(prenotazione);
+            }
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Prenotazione aggiornata con successo.");
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
     
