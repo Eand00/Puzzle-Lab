@@ -1,18 +1,34 @@
 :root {
-    --color-primary: #007bff;
-    --color-secondary: #757575;
-    --color-tertiary: #b3b3b3;
+    /* Color Palette principale */
+    --color-accent-orange: #FAB700;
+    --color-accent-magenta: #E3007D;
+    --color-accent-yellow: #FEDD00;
+    --color-base-primary: #1F2041;
+    --color-base-secondary: #101021;
+    
+    /* Color Palette generale */
+    --color-primary: var(--color-accent-yellow);
+    --color-secondary: var(--color-accent-magenta);
+    --color-tertiary: var(--color-accent-orange);
     --color-success: #28a745;
     --color-warning: #ffc107;
     --color-danger: #dc3545;
     --color-info: #17a2b8;
     --color-light: #f8f9fa;
-    --color-dark: #252525;
-    --color-white: #fff;
+    --color-dark: var(--color-base-secondary);
+    --color-white: #ffffff;
+    --color-black: #000000;
     --color-transparent: transparent;
-    --color-black: #000;
+    
+    /* Color Palette Testi */
+    --color-text: var(--color-base-primary);
+    
+    /* Dimensioni */
+    --text-size-base: 16px;
     --container-max-width: 100%;
     --container-padding-x: 1rem;
+    --border-radius-big: 2.5rem;
+    --border-radius-small: 1.25rem;
 }
 
 /* Colori di sfondo */
@@ -40,6 +56,7 @@
 .bg-light-subtle {background-color: hsl(from var(--color-light) h 50% 75%);}
 
 /* Colori del testo */
+.text-base {color: var(--color-text);}
 .text-primary {color: var(--color-primary);}
 .text-secondary {color: var(--color-secondary);}
 .text-tertiary {color: var(--color-tertiary);}
