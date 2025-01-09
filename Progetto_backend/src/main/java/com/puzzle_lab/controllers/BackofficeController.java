@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.puzzle_lab.entities.Informazione;
 import com.puzzle_lab.entities.Prenotazione;
 import com.puzzle_lab.entities.Richiesta;
+import com.puzzle_lab.entities.Utente;
 import com.puzzle_lab.services.InformazioneService;
 import com.puzzle_lab.services.PrenotazioneService;
 import com.puzzle_lab.services.RichiestaService;
+import com.puzzle_lab.services.UtenteService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -38,6 +41,9 @@ public class BackofficeController {
     
     @Autowired
     private RichiestaService richiestaService;
+    
+    @Autowired
+    private UtenteService utenteService;
     
     
     @Operation(summary = "Ottieni tutte le richieste", description = "Recupera tutte le richieste")
@@ -201,6 +207,32 @@ public class BackofficeController {
                 prenotazioneService.save(prenotazione);
             }
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Prenotazione aggiornata con successo.");
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+    
+    @Operation(summary = "Crea nuovo utente", description = "Crea e salva un nuovo utente")
+    @ApiResponse(responseCode = "201", description = "Utente aggiunto con successo")
+    @ApiResponse(responseCode = "400", description = "Richiesta non valida")
+    @PostMapping("/utente")
+    public ResponseEntity<String> creaUtente(@RequestBody Utente utente) {
+        try {
+            utenteService.salvaUtente(utente);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Utente creato con successo.");
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+    
+    @Operation(summary = "Modifica utente", description = "Modifica i dati di un utente")
+    @ApiResponse(responseCode = "201", description = "Utente aggiornato con successo")
+    @ApiResponse(responseCode = "400", description = "Richiesta non valida")
+    @PutMapping("/utente")
+    public ResponseEntity<String> modificaUtente(@RequestBody Utente utente) {
+        try {
+            utenteService.aggiornaUtente(utente);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Utente aggiornato con successo.");
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
