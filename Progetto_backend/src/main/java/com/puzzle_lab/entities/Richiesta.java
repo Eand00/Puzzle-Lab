@@ -2,6 +2,8 @@ package com.puzzle_lab.entities;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.SQLRestriction;
+
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -29,6 +31,7 @@ import lombok.Data;
 	})
 @Data
 @Entity
+@SQLRestriction("cancellato = false")
 @Table(name="richieste")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Richiesta {
@@ -45,9 +48,10 @@ public abstract class Richiesta {
 	private String email;
     @Column(nullable = false)
 	private String organizzazione;
-
 	private String numero;
 	private LocalDateTime dataCreazione ;
+	private boolean cancellato = false;
+    private LocalDateTime dataPrevistaCancellazione;
 
 	@Enumerated(EnumType.STRING)
 	private Status status;
