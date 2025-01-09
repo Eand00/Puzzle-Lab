@@ -1,5 +1,9 @@
 package com.puzzle_lab.entities;
 
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.SQLRestriction;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -8,6 +12,7 @@ import lombok.Data;
 
 @Data
 @Entity
+@SQLRestriction("cancellato = false")
 @Table(name="utenti")
 public class Utente {
 
@@ -22,6 +27,8 @@ public class Utente {
 	private String cognome;
 	@Column(nullable = false)
 	private String password;
+	private boolean cancellato = false;
+    private LocalDateTime dataPrevistaCancellazione;
 	
 
 }
