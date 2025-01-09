@@ -123,4 +123,7 @@ public class RichiestaService {
 		return richiestaDAO.findByStatus(Status.valueOf(status));
 	}
 
+	public Richiesta save(Richiesta richiesta) {
+		return richiestaDAO.save(richiesta);
+	}
 }
