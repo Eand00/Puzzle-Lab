@@ -27,7 +27,7 @@ import com.puzzle_lab.services.UtenteService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.models.parameters.RequestBody;
+
 
 @RestController
 @RequestMapping("/back-office")
@@ -45,14 +45,39 @@ public class BackofficeController {
     @Autowired
     private UtenteService utenteService;
     
+    @Operation(summary = "Ottieni le richieste", description = "Recupera tutte le richieste non archiviate")
+    @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
+    @ApiResponse(responseCode = "500", description = "Errore interno del server")
+    @GetMapping("/richieste")
+    public ResponseEntity<List<Richiesta>> getRichieste() {
+        try {
+            List<Richiesta> richieste = richiestaService.trovaRichieste();
+            return ResponseEntity.ok(richieste);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
     
     @Operation(summary = "Ottieni tutte le richieste", description = "Recupera tutte le richieste")
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
-    @GetMapping("/richieste")
+    @GetMapping("/richieste/tutte")
     public ResponseEntity<List<Richiesta>> getTutteRichieste() {
         try {
             List<Richiesta> richieste = richiestaService.trovaTutte();
+            return ResponseEntity.ok(richieste);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @Operation(summary = "Ottieni le richieste archiviate", description = "Recupera tutte le richieste archiviate")
+    @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
+    @ApiResponse(responseCode = "500", description = "Errore interno del server")
+    @GetMapping("/richieste/archivio")
+    public ResponseEntity<List<Richiesta>> getRichiesteArchiviate() {
+        try {
+            List<Richiesta> richieste = richiestaService.trovaRichiesteArchiviate();
             return ResponseEntity.ok(richieste);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -63,9 +88,9 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/richieste/status")
-    public ResponseEntity<Optional<Richiesta>> getRichiestePerStatus(@RequestParam(required = false) String status) {
+    public ResponseEntity<List<Richiesta>> getRichiestePerStatus(@RequestParam(required = false) String status) {
         try {
-            Optional<Richiesta> richieste = richiestaService.trovaPerStatus(status);
+            List<Richiesta> richieste = richiestaService.trovaPerStatus(status);
             return ResponseEntity.ok(richieste);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -137,13 +162,39 @@ public class BackofficeController {
         }
     }
     
-    @Operation(summary = "Ottieni tutte le informazioni", description = "Recupera tutte le informazioni disponibili")
+    @Operation(summary = "Ottieni le informazioni", description = "Recupera tutte le informazioni non archiviate")
     @ApiResponse(responseCode = "200", description = "Lista di informazioni recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/informazioni")
+    public ResponseEntity<List<Informazione>> getInformazioni() {
+        try {
+            List<Informazione> informazioni = informazioneService.trovaInformazioni();
+            return ResponseEntity.ok(informazioni);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @Operation(summary = "Ottieni tutte le informazioni", description = "Recupera tutte le informazioni disponibili")
+    @ApiResponse(responseCode = "200", description = "Lista di informazioni recuperata con successo")
+    @ApiResponse(responseCode = "500", description = "Errore interno del server")
+    @GetMapping("/informazioni/tutte")
     public ResponseEntity<List<Informazione>> getTutteInformazioni() {
         try {
             List<Informazione> informazioni = informazioneService.trovaTutteInformazioni();
+            return ResponseEntity.ok(informazioni);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @Operation(summary = "Ottieni solo le informazioni archiviate", description = "Recupera tutte le informazioni in archivio")
+    @ApiResponse(responseCode = "200", description = "Lista di informazioni recuperata con successo")
+    @ApiResponse(responseCode = "500", description = "Errore interno del server")
+    @GetMapping("/informazioni/archivio")
+    public ResponseEntity<List<Informazione>> getInformazioniArchiviate() {
+        try {
+            List<Informazione> informazioni = informazioneService.trovaInformazioniArchiviate();
             return ResponseEntity.ok(informazioni);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -173,14 +224,39 @@ public class BackofficeController {
         }
     }
     
+    @Operation(summary = "Ottieni le prenotazioni", description = "Recupera le prenotazioni non archiviate")
+    @ApiResponse(responseCode = "200", description = "Lista di prenotazioni recuperata con successo")
+    @ApiResponse(responseCode = "500", description = "Errore interno del server")
+    @GetMapping("/prenotazioni")
+    public ResponseEntity<List<Prenotazione>> getPrenotazioni() {
+        try {
+            List<Prenotazione> prenotazioni = prenotazioneService.trovaPrenotazioni();
+            return ResponseEntity.ok(prenotazioni);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
     
     @Operation(summary = "Ottieni tutte le prenotazioni", description = "Recupera tutte le prenotazioni disponibili")
     @ApiResponse(responseCode = "200", description = "Lista di prenotazioni recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
-    @GetMapping("/prenotazioni")
+    @GetMapping("/prenotazioni/tutte")
     public ResponseEntity<List<Prenotazione>> getTuttePrenotazioni() {
         try {
             List<Prenotazione> prenotazioni = prenotazioneService.trovaTuttePrenotazioni();
+            return ResponseEntity.ok(prenotazioni);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @Operation(summary = "Ottieni le prenotazioni archiviate", description = "Recupera tutte le prenotazioni archiviate")
+    @ApiResponse(responseCode = "200", description = "Lista di prenotazioni recuperata con successo")
+    @ApiResponse(responseCode = "500", description = "Errore interno del server")
+    @GetMapping("/prenotazioni/archivio")
+    public ResponseEntity<List<Prenotazione>> getPrenotazioniArchiviate() {
+        try {
+            List<Prenotazione> prenotazioni = prenotazioneService.trovaPrenotazioniArchiviate();
             return ResponseEntity.ok(prenotazioni);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
