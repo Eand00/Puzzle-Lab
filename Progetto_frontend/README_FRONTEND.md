@@ -17,16 +17,10 @@
 
 - index.html
 - components/
-    - header-components.js
-    - footer-components.js
 - assets/
     - images/
-        - favicon.ico
     - styles/
-        - style.css
     - scripts/
-        - script.js
-
 
 ## Informazioni generali
 
@@ -38,6 +32,11 @@ Il portale è sviluppato in HTML, CSS e Javascript, con l'utilizzo della libreri
 
 Su dispositivi mobili, si è optato per un menu a comparsa laterale attivabile da un pulsante hamburger.
 Per una migliore UX, la chiusura del menu è attivabile sia cliccando nuovamente sul pulsante, sia cliccando al di fuori del menu.
+
+### Icone SVG
+
+Per gestire le icone del sito si è scelto di utilizzare uno sprite SVG per centralizzare il codice e migliorare sia le performance del sito, sia la manutenibilità.
+Sono poi inserite nel codice HTML tramite l'attributo `use` del tag `<svg>`.
 
 ### Web Components
 
