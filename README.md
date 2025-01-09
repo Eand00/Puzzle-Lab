@@ -24,7 +24,7 @@
    - Scegli la directory di installazione (di default: `C:\xampp` su Windows).
 3. Completa l'installazione.
 
-### Passo 3: Avviare XAMPP
+### Passo 4: Avviare XAMPP
 1. Apri il pannello di controllo di XAMPP.
 2. Avvia i servizi necessari:
    - **Apache**: per eseguire un server web.
@@ -40,8 +40,31 @@
    - metti come nome del database caccia_saperi in questo modo e poi clicca su crea:
    ![Screenshot della pagina creazione database](img/creazioneDatabase.png "XAMPP database")
 ---
+## 2. Importazione del Dump del Database
 
-## 2. Installazione di Java 17
+Per configurare il database, segui questi passaggi per importare il file dump:
+
+### Passo 1: Preparazione
+1. Assicurati che **MySQL** sia avviato dal pannello di controllo di XAMPP.
+2. Individua il file del dump del database. Dovrebbe avere un'estensione come `.sql`.
+
+### Passo 2: Accedi a phpMyAdmin
+1. Apri il browser e vai su [http://localhost/phpmyadmin](http://localhost/phpmyadmin).
+2. Seleziona il database **caccia_saperi** creato in precedenza.
+
+### Passo 3: Importa il file
+1. Clicca sulla scheda **Importa** nel menu superiore.
+2. Sotto "File da importare":
+   - Clicca su **Scegli file** e seleziona il file dump `.sql`.
+3. Controlla che il formato sia impostato su `SQL`.
+4. Clicca su **Esegui** per avviare l'importazione.
+
+Se l'importazione ha successo, vedrai un messaggio di conferma. Il database è ora pronto per essere utilizzato con il server.
+
+
+---
+
+## 3. Installazione di Java 17
 
 ### Passo 1: Scaricare Java 17
 1. Vai al sito ufficiale di Oracle: [https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
@@ -62,23 +85,13 @@
 
 ---
 
-## 3. Avvio del File JAR con Java 17
+## 4. Avvio del server
 
-### Passo 1: Preparazione
-1. Assicurati che il file JAR sia nella directory desiderata.
-2. Verifica che il file JAR sia eseguibile (ad esempio, creato correttamente con un punto di ingresso definito).
+Nella directory principale della repository troverai un file chiamato **Server-Start.bat**. Per avviare il server, segui questi passi:
 
-### Passo 2: Eseguire il File JAR
-1. Apri un terminale (o prompt dei comandi su Windows).
-2. Spostati nella directory contenente il file JAR usando il comando `cd`. Ad esempio:
-   ```bash
-   cd C:\percorso\alla\cartella
-   ```
-3. Esegui il file JAR con il comando:
-   ```bash
-   java -jar nomefile.jar
-   ```
-   Sostituisci `nomefile.jar` con il nome effettivo del tuo file.
-4. Dopo aver avviato il jar per andare su swagger vai all'indirizzo:[http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)  
+1. **Individua il file**: Vai nella cartella della repository del progetto.
+2. **Esegui il file**: Fai doppio clic su **Server-Start.bat**.
+3. **Mantieni la finestra aperta**: Assicurati che la finestra che si apre rimanga aperta. Questo indica che il server è in esecuzione.
+   - Se chiudi questa finestra, il server smetterà di funzionare.
 
-
+Verifica il corretto avvio controllando eventuali messaggi di log nella finestra.
