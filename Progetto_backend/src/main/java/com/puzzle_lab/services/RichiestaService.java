@@ -1,5 +1,6 @@
 package com.puzzle_lab.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,6 +69,16 @@ public class RichiestaService {
 
 	public Optional<Richiesta> trovaPerEmail(String email) {
 		return richiestaDAO.findByEmail(email);
+	}
+	
+	public void cancellaPerId(long id) {
+		if (!richiestaDAO.existsById(id)) {
+			throw new IllegalArgumentException("La richiesta non esiste.");
+		}
+		Richiesta richiesta = richiestaDAO.findById(id).get();
+		richiesta.setCancellato(true);
+		richiesta.setDataPrevistaCancellazione(LocalDateTime.now().plusYears(1));
+		richiestaDAO.save(richiesta);
 	}
 
 }
