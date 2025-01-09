@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.puzzle_lab.entities.Informazione;
+import com.puzzle_lab.entities.Status;
 import com.puzzle_lab.repos.InformazioneDAO;
 
 @Service
@@ -35,6 +36,14 @@ public class InformazioneService extends RichiestaService {
 	// Trova tutte le informazioni
 	public List<Informazione> trovaTutteInformazioni() {
 		return informazioneDAO.findAll();
+	}
+	// Trova le informazioni NON archiviate
+	public List<Informazione> trovaInformazioni() {
+		return informazioneDAO.findByStatusNot(Status.ARCHIVIATA);
+	}
+	// Trova solo le informazioni archiviate
+	public List<Informazione> trovaInformazioniArchiviate() {
+		return informazioneDAO.findByStatus(Status.ARCHIVIATA);
 	}
 
 }
