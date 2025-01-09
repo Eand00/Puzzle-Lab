@@ -51,7 +51,7 @@ public class RichiestaService {
         if (nome == null || nome.trim().isEmpty()) {
             throw new IllegalArgumentException("Il nome/cognome non può essere vuoto.");
         }
-        if (!nome.matches("^[a-zA-Z\\s]+$")) {
+        if (!nome.matches("^[a-zA-ZÀ-ù'\\s]+$")) {
             throw new IllegalArgumentException("Il nome/cognome può contenere solo lettere e spazi.");
         }
     }
