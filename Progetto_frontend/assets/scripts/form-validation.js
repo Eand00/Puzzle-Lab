@@ -181,19 +181,41 @@ function formValidation(form) {
         return false;
     }
 
-    //create JSON object
-    const jsonFormData = JSON.stringify(formData);
+    submitFormData(formData);
+}
 
-    //create API request POST
-    const url = '';
-    fetch(url, {
+/**
+ * @function submitFormData(formData)
+ * @param {Object} formData - The validated form data to submit
+ * @description Handles the API submission of the form data
+ */
+function submitFormData(formData) {
+    const API_URL = '';
+    const requestOptions = {
         method: 'POST',
-        body: jsonFormData
-    }).then(response => response.json()).then(data => {
-        console.log(data);
-    }).catch(error => {
-        console.error('Error:', error);
-    });
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    };
+
+    //XXX aggiungere Loading State
+    fetch(API_URL, requestOptions)
+        .then(response => {
+            if(!response.ok) {
+                throw new Error(`Errore nella risposta del server: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            //XXX aggiungere feedback all'utente e resettare il form
+            console.log(data);
+        })
+        .catch(error => {
+            //XXX aggiungere feedback all'utente
+            console.error('Errore:', error);
+        });
+        //XXX Aggiungere finally per rimuovere il loading state
 }
 
 //initialize the form validation
