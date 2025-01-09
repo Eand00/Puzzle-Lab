@@ -69,6 +69,11 @@ public class RichiestaService {
         return richiestaDAO.findById(id);
     }
     
+    /* non funziona con una sola lettera
+    public Optional<Richiesta> trovaPerNome(String nome) {
+        return richiestaDAO.findByNome(nome);
+    }
+    */
     //ricerche testuali tutte case sensitive
     public List<Richiesta> trovaPerNome(String nome) {
     	List<Richiesta> richieste = richiestaDAO.findAll();
