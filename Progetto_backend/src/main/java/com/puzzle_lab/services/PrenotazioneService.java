@@ -15,32 +15,77 @@ public class PrenotazioneService extends RichiestaService{
 	 	@Autowired
 	    private PrenotazioneDAO prenotazioneDAO;
 
-	 // Metodo principale per validare una prenotazione
+	 	 // Metodo principale per validare una prenotazione
 	    public void validaPrenotazione(Prenotazione prenotazione) {
 	        validaRichiesta(prenotazione); // Validazione generale
 	        validaDate(prenotazione.getDataInizio(), prenotazione.getDataFine());
 	        validaTesto(prenotazione.getTesto());
+	        validaCampiOpzionali(prenotazione);
+	        validaLaboratori(prenotazione.getLaboratori());
+	        validaTipologia(prenotazione.getTipologia());
 	    }
 
 	    private void validaTesto(String testo) {
-			if (testo == null || testo.trim().isEmpty()) {
-				throw new IllegalArgumentException("Il testo della prenotazione non può essere vuoto.");
-			}
+	        if (testo == null || testo.trim().isEmpty()) {
+	            throw new IllegalArgumentException("Il testo della prenotazione non può essere vuoto.");
+	        }
+	        if (testo.length() > 500) {
+	            throw new IllegalArgumentException("Il testo della prenotazione non può superare i 500 caratteri.");
+	        }
 	    }
 
-		private void validaDate(LocalDateTime localDateTime, LocalDateTime localDateTime2) {
-	        if (localDateTime == null || localDateTime2 == null) {
+	    private void validaDate(LocalDateTime dataInizio, LocalDateTime dataFine) {
+	        if (dataInizio == null || dataFine == null) {
 	            throw new IllegalArgumentException("Le date di inizio e fine sono obbligatorie.");
 	        }
-	        if (localDateTime.isAfter(localDateTime2)) {
+	        if (dataInizio.isAfter(dataFine)) {
 	            throw new IllegalArgumentException("La data di inizio non può essere successiva alla data di fine.");
 	        }
-	        if (localDateTime.isBefore(LocalDateTime.now().plusDays(1))) {
+	        if (dataInizio.isBefore(LocalDateTime.now().plusDays(1))) {
 	            throw new IllegalArgumentException("La data di inizio deve essere almeno il giorno successivo alla prenotazione.");
 	        }
 	    }
 
-	    // Esegui la validazione di una prenotazione
+	    private void validaLaboratori(Prenotazione.Laboratori laboratori) {
+	        if (laboratori == null) {
+	            throw new IllegalArgumentException("Il laboratorio è obbligatorio.");
+	        }
+	    }
+
+	    private void validaTipologia(Prenotazione.Tipologia tipologia) {
+	        if (tipologia == null) {
+	            throw new IllegalArgumentException("La tipologia è obbligatoria.");
+	        }
+	    }
+
+	    private void validaCampiOpzionali(Prenotazione prenotazione) {
+	        // Numero giorni obbligatorio se tipologia è SOGGIORNO
+	        if (prenotazione.getTipologia() == Prenotazione.Tipologia.SOGGIORNO) {
+	            validaNumeroGiorni(prenotazione.getNumeroGiorni());
+	        }
+
+	        // Fascia oraria obbligatoria se tipologia è MISTO
+	        if (prenotazione.getTipologia() == Prenotazione.Tipologia.VISITA) {
+	            validaFasciaOraria(prenotazione.getFasciaOraria());
+	        }
+	    }
+
+	    private void validaNumeroGiorni(Integer numeroGiorni) {
+	        if (numeroGiorni == null || numeroGiorni <= 0) {
+	            throw new IllegalArgumentException("Il numero di giorni è obbligatorio per la tipologia SOGGIORNO e deve essere maggiore di zero.");
+	        }
+	        if (numeroGiorni > 30) {
+	            throw new IllegalArgumentException("Il numero di giorni non può essere maggiore di 30.");
+	        }
+	    }
+
+	    private void validaFasciaOraria(Prenotazione.FasciaOraria fasciaOraria) {
+	        if (fasciaOraria == null) {
+	            throw new IllegalArgumentException("La fascia oraria è obbligatoria per la tipologia MISTO.");
+	        }
+	    }
+
+	    // Esegui la validazione di una prenotazione e salvala
 	    public void salvaPrenotazione(Prenotazione prenotazione) {
 	        validaPrenotazione(prenotazione); // Valida prima di salvare
 	        prenotazioneDAO.save(prenotazione);
