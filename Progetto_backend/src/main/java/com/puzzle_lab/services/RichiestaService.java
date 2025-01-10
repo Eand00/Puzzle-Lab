@@ -77,58 +77,25 @@ public class RichiestaService {
         return richiestaDAO.findById(id);
     }
     
-    /* non funziona con una sola lettera
-    public Optional<Richiesta> trovaPerNome(String nome) {
+
+    public Optional<List<Richiesta>> trovaPerNome(String nome) {
         return richiestaDAO.findByNome(nome);
     }
-    */
-    
-    //ricerche testuali tutte case sensitive
-    public List<Richiesta> trovaPerNome(String nome) {
-    	List<Richiesta> richieste = richiestaDAO.findAll();
-    	List<Richiesta> elenco = new ArrayList<Richiesta>();
-    	for (Richiesta richiesta : richieste) {
-			if(richiesta.getNome().contains(nome))
-				elenco.add(richiesta);
-		}
-    	return elenco;
+    public Optional<List<Richiesta>> trovaPerCognome(String cognome) {
+        return richiestaDAO.findByCognome(cognome);
     }
-    
-    public List<Richiesta> trovaPerCognome(String cognome) {
-    	List<Richiesta> richieste = richiestaDAO.findAll();
-    	List<Richiesta> elenco = new ArrayList<Richiesta>();
-    	for (Richiesta richiesta : richieste) {
-			if(richiesta.getCognome().contains(cognome))
-				elenco.add(richiesta);
-		}
-    	return elenco;
+    public Optional<List<Richiesta>> trovaPerEmail(String email) {
+        return richiestaDAO.findByEmail(email);
     }
-    
-    public List<Richiesta> trovaPerEmail(String email) {
-    	List<Richiesta> richieste = richiestaDAO.findAll();
-    	List<Richiesta> elenco = new ArrayList<Richiesta>();
-    	for (Richiesta richiesta : richieste) {
-			if(richiesta.getEmail().contains(email))
-				elenco.add(richiesta);
-		}
-    	return elenco;
-    }
-    
-    public List<Richiesta> trovaPerOrganizzazione(String organizzazione) {
-    	List<Richiesta> richieste = richiestaDAO.findAll();
-    	List<Richiesta> elenco = new ArrayList<Richiesta>();
-    	for (Richiesta richiesta : richieste) {
-			if(richiesta.getOrganizzazione().contains(organizzazione))
-				elenco.add(richiesta);
-		}
-    	return elenco;
+    public Optional<List<Richiesta>> trovaPerOrganizzazione(String organizzazione) {
+        return richiestaDAO.findByOrganizzazione(organizzazione);
     }
     
     public Optional<Richiesta> trovaPerData(LocalDateTime data) {
 		return richiestaDAO.findByDataCreazione(data);
 	}
 	
-	public Optional<Richiesta> trovaPerStatus(String status) {
+	public List<Richiesta> trovaPerStatus(String status) {
 		return richiestaDAO.findByStatus(Status.valueOf(status));
 	}
 
