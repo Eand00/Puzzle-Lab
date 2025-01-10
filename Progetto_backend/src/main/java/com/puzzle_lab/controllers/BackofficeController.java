@@ -101,9 +101,9 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/richieste/nome")
-    public ResponseEntity<List<Richiesta>> getRichiestePerNome(@RequestParam(required = false) String nome) {
+    public ResponseEntity<Optional<List<Richiesta>>> getRichiestePerNome(@RequestParam(required = false) String nome) {
         try {
-            List<Richiesta> richieste = richiestaService.trovaPerNome(nome);
+            Optional<List<Richiesta>> richieste = richiestaService.trovaPerNome(nome);
             return ResponseEntity.ok(richieste);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -114,9 +114,9 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/richieste/cognome")
-    public ResponseEntity<List<Richiesta>> getRichiestePerCognome(@RequestParam(required = false) String cognome) {
+    public ResponseEntity<Optional<List<Richiesta>>> getRichiestePerCognome(@RequestParam(required = false) String cognome) {
         try {
-            List<Richiesta> richieste = richiestaService.trovaPerCognome(cognome);
+            Optional<List<Richiesta>> richieste = richiestaService.trovaPerCognome(cognome);
             return ResponseEntity.ok(richieste);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -127,9 +127,9 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/richieste/email")
-    public ResponseEntity<List<Richiesta>> getRichiestePerEmail(@RequestParam(required = false) String email) {
+    public ResponseEntity<Optional<List<Richiesta>>> getRichiestePerEmail(@RequestParam(required = false) String email) {
         try {
-            List<Richiesta> richieste = richiestaService.trovaPerEmail(email);
+            Optional<List<Richiesta>> richieste = richiestaService.trovaPerEmail(email);
             return ResponseEntity.ok(richieste);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -140,9 +140,9 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/richieste/organizzazione")
-    public ResponseEntity<List<Richiesta>> getRichiestePerOrganizzazione(@RequestParam(required = false) String organizzazione) {
+    public ResponseEntity<Optional<List<Richiesta>>> getRichiestePerOrganizzazione(@RequestParam(required = false) String organizzazione) {
         try {
-            List<Richiesta> richieste = richiestaService.trovaPerOrganizzazione(organizzazione);
+            Optional<List<Richiesta>> richieste = richiestaService.trovaPerOrganizzazione(organizzazione);
             return ResponseEntity.ok(richieste);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
