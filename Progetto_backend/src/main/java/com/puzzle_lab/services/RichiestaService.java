@@ -63,6 +63,14 @@ public class RichiestaService {
     public List<Richiesta> trovaTutte() {
         return richiestaDAO.findAll();
     }
+    // Trova le richieste NON archiviate
+    public List<Richiesta> trovaRichieste() {
+        return richiestaDAO.findByStatusNot(Status.ARCHIVIATA);
+    }
+    // Trova solo le richieste archiviate
+    public List<Richiesta> trovaRichiesteArchiviate() {
+        return richiestaDAO.findByStatus(Status.ARCHIVIATA);
+    }
 
     // Trova una richiesta per ID
     public Optional<Richiesta> trovaPerId(long id) {
@@ -74,6 +82,7 @@ public class RichiestaService {
         return richiestaDAO.findByNome(nome);
     }
     */
+    
     //ricerche testuali tutte case sensitive
     public List<Richiesta> trovaPerNome(String nome) {
     	List<Richiesta> richieste = richiestaDAO.findAll();
