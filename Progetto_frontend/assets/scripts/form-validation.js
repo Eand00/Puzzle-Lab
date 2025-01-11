@@ -14,12 +14,12 @@
  */
 const VALIDATION_RULES = {
     nome: {
-        regex: /^[A-zÀ-ù'\s]+$/,
+        regex: /^[a-zA-ZÀ-ù'\s]+$/,
         message: 'Il campo deve contenere solo lettere, apostrofi e spazi',
         required: true
     },
     cognome: {
-        regex: /^[A-zÀ-ù'\s]+$/,
+        regex: /^[a-zA-ZÀ-ù'\s]+$/,
         message: 'Il campo deve contenere solo lettere, apostrofi e spazi',
         required: true
     },
@@ -29,12 +29,12 @@ const VALIDATION_RULES = {
         required: true
     },
     email: {
-        regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        regex: /^[\w.-]+@[\w.-]+\.[a-z]{2,}$/,
         message: 'Il campo deve contenere un indirizzo email valido',
         required: true
     },
     telefono: {
-        regex: /^[\+]?[0-9\s]{10,}$/,
+        regex: /^\+?(?:[0-9] ?){6,14}[0-9]$"/,
         message: 'Il campo deve contenere un numero di telefono valido',
         required: false
     },

@@ -1,5 +1,6 @@
 package com.puzzle_lab.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,7 +51,10 @@ public class UtenteService {
         if (!utenteDAO.existsById(email)) {
             throw new IllegalArgumentException("Utente con email " + email + " non esiste.");
         }
-        utenteDAO.deleteById(email);
+        Utente utente = utenteDAO.findById(email).get();
+        utente.setCancellato(true);
+        utente.setDataPrevistaCancellazione(LocalDateTime.now().plusYears(1));
+        utenteDAO.save(utente);
     }
 
     // Validazione dei dati dell'utente

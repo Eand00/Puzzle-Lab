@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -43,17 +44,27 @@ public class AuthController {
         String username = credentials[0];
         String password = credentials[1];
 
-        // Authenticate the user
-        Authentication authentication = authenticationManager.authenticate(
+        try {
+	        // Authenticate the user
+	        Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password));
+	        // Generate the JWT token
+	        String token = jwtService.generaToken(authentication.getName());
+	
+	        // Return token in a response map
+	        Map<String, Object> response = new HashMap<>();
+	        response.put("token", token);
+	
+	        return ResponseEntity.ok(response);
+	        
+	    } catch (AuthenticationException e) {
+	        // Handle authentication failure
+	        return ResponseEntity.status(401).body("Invalid username or password");
+	    } catch (IllegalArgumentException | IllegalStateException e) {
+	        // Handle issues with decoding or other unexpected errors
+	        return ResponseEntity.status(400).body("Invalid request: " + e.getMessage());
+	    }
 
-        // Generate the JWT token
-        String token = jwtService.generaToken(authentication.getName());
-
-        // Return token in a response map
-        Map<String, Object> response = new HashMap<>();
-        response.put("token", token);
-
-        return ResponseEntity.ok(response);
+    
     }
 }

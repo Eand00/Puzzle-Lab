@@ -24,15 +24,11 @@
 }
 
 html {
-	font-size: 16px;
-	font-family: "Montserrat", sans-serif;
-	text-wrap: balance;
-}
-
-.inter {
+	font-size: var(--text-size-base);
 	font-family: "Inter", sans-serif;
 	font-optical-sizing: auto;
 	font-style: normal;
+	text-wrap: balance;
 }
 
 /* font size */
@@ -68,43 +64,38 @@ header.header-scroll {
 }
 
 .navbar-brand {
+	font-family: 'Montserrat', sans-serif;
 	font-size: 2rem;
 	height: 3rem;
 	text-decoration: none;
-	color: var(--color-black);
+	color: var(--color-base-primary);
 	display: block;
 	position: relative;
-	padding-left: 3.5rem;
+	padding-left: 4rem;
 }
 .navbar-brand::before {
 	content: "";
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 3rem;
-	height: 3rem;
-	/*background: url('../images/albero.svg') no-repeat center center;*/
-	background-color: var(--color-secondary);
-	border-radius: 35%;
+	width: 3.5rem;
+	height: 3.5rem;
+	background: url('../images/asterisco.svg') no-repeat center center;
 	background-size: contain;
 }
 .navbar-brand .row1 {
 	font-size: 1.6rem;
-	line-height: 1.5rem;
-	height: 1.5rem;
-	font-weight: 400;
-	letter-spacing: 0.1rem;
+    line-height: 1.5rem;
+    height: 1.5rem;
+    font-weight: 500;
+    letter-spacing: -0.05rem;
 }
 .navbar-brand .row2 {
 	font-size: 2rem;
 	line-height: 1.5rem;
 	height: 1.5rem;
 	font-weight: 700;
-	letter-spacing: -0.2rem;
-	background-image: linear-gradient(to right, #fedd00, #fab700, #e5007d);
-	background-clip: text;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+	letter-spacing: -0.05rem;
 }
 
 .navbar-toggle {
@@ -121,7 +112,7 @@ header.header-scroll {
 	display: block;
 	width: 2rem;
 	height: 2px;
-	background-color: var(--color-black);
+	background-color: var(--color-base-primary);
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -135,7 +126,7 @@ header.header-scroll {
 	display: block;
 	width: 2.5rem;
 	height: 2px;
-	background-color: var(--color-black);
+	background-color: var(--color-base-primary);
 	position: absolute;
 	right: 0;
 	top: -0.75rem;
@@ -170,7 +161,6 @@ header.header-scroll {
 	position: absolute;
 	padding: 3rem;
 	transition: all 0.3s ease-in-out;
-	background-color: var(--color-dark);
 }
 #navbarText {
 	top: var(--navbar-height);
@@ -198,7 +188,12 @@ header.header-scroll {
 	width: 300%;
 	height: 200%;
 }
-
+.logo-brand {
+	display: block;
+	width: 3.5rem;
+	height: 3.5rem;
+	margin: 0 auto 3.5rem;
+}
 .navbar-nav {
 	display: flex;
 	flex-direction: column;
@@ -207,24 +202,23 @@ header.header-scroll {
 	margin: 0;
 }
 
-.nav-item {
-	color: var(--color-tertiary);
-}
 .nav-item.active {
 	color: var(--color-white);
+}
+.nav-item.active .nav-link {
+	font-weight: 700;
 }
 .nav-link {
 	text-decoration: none;
 	color: inherit;
 	display: block;
 	font-size: 1.5rem;
-	font-weight: 700;
+	font-weight: 500;
 	padding-block: 1rem;
 	text-align: center;
 }
 
 #navbarText .social-icons p {
-	color: var(--color-tertiary);
 	text-align: center;
 	margin: 3rem auto 1rem;
 }
@@ -237,7 +231,7 @@ header.header-scroll {
 }
 
 #navbarText .social-icons-container a {
-	color: var(--color-tertiary);
+	color: inherit;
 	text-decoration: none;
 }
 
@@ -267,7 +261,9 @@ header.header-scroll {
 	#navbarText.show {
 		border-bottom: none;
 	}
-
+	.logo-brand {
+		display: none;
+	}
 	.navbar-nav {
 		flex-direction: row;
 		justify-content: flex-end;
