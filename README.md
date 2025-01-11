@@ -95,3 +95,36 @@ Nella directory principale della repository troverai un file chiamato **Server-S
    - Se chiudi questa finestra, il server smetterà di funzionare.
 
 Verifica il corretto avvio controllando eventuali messaggi di log nella finestra.
+
+---
+
+## 5. Utilizzo di Swagger
+
+### Accesso alla documentazione
+1. Apri il browser e vai su [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html).
+2. Esplora gli endpoint disponibili.
+
+### Uso degli Endpoint
+- **Endpoint senza autenticazione**:
+  - `/richieste/prenotazioni`
+  - `/richieste/informazioni`
+  - Questi possono essere utilizzati direttamente senza autenticazione.
+
+- **Endpoint con autenticazione**:
+  1. Vai alla sezione **Authorize** (in alto a destra).
+  2. Sotto `basicAuth`, inserisci le seguenti credenziali di prova:
+     - **Username**: `a`
+     - **Password**: `a`
+  3. Ottieni il token:
+     - Vai all'endpoint `/login`.
+     - Fai clic su **Try Out**.
+     - Inserisci un carattere a scelta nel campo `login` e clicca su **Execute`.
+     - Copia il token generato, ad esempio:
+       ```
+       eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhIiwiaWF0IjoxNzM2NjA1OTA0LCJleHAiOjE3MzY2MDk1MDR9.eX7N4SSMi8a8mi4_Yh-HYkQQbs2Dt-VrQ7uZV5hUmvI
+       ```
+  4. Autorizza con il token:
+     - Torna alla sezione **Authorize**.
+     - Sotto `bearerAuth`, incolla il token ricevuto.
+     - Clicca su **Authorize**.
+  5. Ora puoi utilizzare tutti gli endpoint protetti per un'ora.
