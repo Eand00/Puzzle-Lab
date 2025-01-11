@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -162,6 +163,19 @@ public class BackofficeController {
         }
     }
     
+    @Operation(summary = "Elimita richiesta", description = "Modifica il flag cancellato di una richiesta rendendolo invisibile e imposta la data di cancellazione a un anno dalla data attuale")
+    @ApiResponse(responseCode = "201", description = "Richiesta cancellato con successo")
+    @ApiResponse(responseCode = "400", description = "Richiesta non valida")
+    @DeleteMapping("/utente")
+    public ResponseEntity<String> eliminaRichiesta(@RequestBody Long id) {
+        try {
+            richiestaService.cancellaPerId(id);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Utente cancellato con successo.");
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+    
     @Operation(summary = "Ottieni le informazioni", description = "Recupera tutte le informazioni non archiviate")
     @ApiResponse(responseCode = "200", description = "Lista di informazioni recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
@@ -309,6 +323,19 @@ public class BackofficeController {
         try {
             utenteService.aggiornaUtente(utente);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Utente aggiornato con successo.");
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+    
+    @Operation(summary = "Elimita utente", description = "Modifica il flag cancellato di un utente rendendolo invisibile e imposta la data di cancellazione a un anno dalla data attuale")
+    @ApiResponse(responseCode = "201", description = "Utente cancellato con successo")
+    @ApiResponse(responseCode = "400", description = "Richiesta non valida")
+    @DeleteMapping("/utente")
+    public ResponseEntity<String> eliminaUtente(@RequestBody String email) {
+        try {
+            utenteService.eliminaUtente(email);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Utente cancellato con successo.");
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
