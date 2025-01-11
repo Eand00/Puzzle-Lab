@@ -166,7 +166,7 @@ public class BackofficeController {
     @Operation(summary = "Elimita richiesta", description = "Modifica il flag cancellato di una richiesta rendendolo invisibile e imposta la data di cancellazione a un anno dalla data attuale")
     @ApiResponse(responseCode = "201", description = "Richiesta cancellato con successo")
     @ApiResponse(responseCode = "400", description = "Richiesta non valida")
-    @DeleteMapping("/utente")
+    @DeleteMapping("/richieste")
     public ResponseEntity<String> eliminaRichiesta(@RequestBody Long id) {
         try {
             richiestaService.cancellaPerId(id);
