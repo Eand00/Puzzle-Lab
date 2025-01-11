@@ -49,7 +49,7 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/richieste")
-    public ResponseEntity<List<Richiesta>> getRichieste() {
+    public ResponseEntity<List<Richiesta>> ottieniTutteRichiesteNonArchiviate() {
         try {
             List<Richiesta> richieste = richiestaService.trovaRichieste();
             return ResponseEntity.ok(richieste);
@@ -62,7 +62,7 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/richieste/tutte")
-    public ResponseEntity<List<Richiesta>> getTutteRichieste() {
+    public ResponseEntity<List<Richiesta>> ottieniTutteRichieste() {
         try {
             List<Richiesta> richieste = richiestaService.trovaTutte();
             return ResponseEntity.ok(richieste);
@@ -75,7 +75,7 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/richieste/archivio")
-    public ResponseEntity<List<Richiesta>> getRichiesteArchiviate() {
+    public ResponseEntity<List<Richiesta>> ottieniRichiesteArchiviate() {
         try {
             List<Richiesta> richieste = richiestaService.trovaRichiesteArchiviate();
             return ResponseEntity.ok(richieste);
@@ -88,7 +88,7 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/richieste/status")
-    public ResponseEntity<List<Richiesta>> getRichiestePerStatus(@RequestParam(required = false) String status) {
+    public ResponseEntity<List<Richiesta>> ottieniRichiestePerStatus(@RequestParam(required = false) String status) {
         try {
             List<Richiesta> richieste = richiestaService.trovaPerStatus(status);
             return ResponseEntity.ok(richieste);
@@ -101,7 +101,7 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/richieste/nome")
-    public ResponseEntity<Optional<List<Richiesta>>> getRichiestePerNome(@RequestParam(required = false) String nome) {
+    public ResponseEntity<Optional<List<Richiesta>>> ottieniRichiestePerNome(@RequestParam(required = false) String nome) {
         try {
             Optional<List<Richiesta>> richieste = richiestaService.trovaPerNome(nome);
             return ResponseEntity.ok(richieste);
@@ -114,7 +114,7 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/richieste/cognome")
-    public ResponseEntity<Optional<List<Richiesta>>> getRichiestePerCognome(@RequestParam(required = false) String cognome) {
+    public ResponseEntity<Optional<List<Richiesta>>> ottieniRichiestePerCognome(@RequestParam(required = false) String cognome) {
         try {
             Optional<List<Richiesta>> richieste = richiestaService.trovaPerCognome(cognome);
             return ResponseEntity.ok(richieste);
@@ -127,7 +127,7 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/richieste/email")
-    public ResponseEntity<Optional<List<Richiesta>>> getRichiestePerEmail(@RequestParam(required = false) String email) {
+    public ResponseEntity<Optional<List<Richiesta>>> ottieniRichiestePerEmail(@RequestParam(required = false) String email) {
         try {
             Optional<List<Richiesta>> richieste = richiestaService.trovaPerEmail(email);
             return ResponseEntity.ok(richieste);
@@ -140,7 +140,7 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/richieste/organizzazione")
-    public ResponseEntity<Optional<List<Richiesta>>> getRichiestePerOrganizzazione(@RequestParam(required = false) String organizzazione) {
+    public ResponseEntity<Optional<List<Richiesta>>> ottieniRichiestePerOrganizzazione(@RequestParam(required = false) String organizzazione) {
         try {
             Optional<List<Richiesta>> richieste = richiestaService.trovaPerOrganizzazione(organizzazione);
             return ResponseEntity.ok(richieste);
@@ -153,7 +153,7 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/richieste/data")//formato data: 2025-01-04T21:30:27
-    public ResponseEntity<Optional<Richiesta>> getRichiestePerData(@RequestParam(required = false) LocalDateTime data) {
+    public ResponseEntity<Optional<Richiesta>> ottieniRichiestePerData(@RequestParam(required = false) LocalDateTime data) {
         try {
             Optional<Richiesta> richieste = richiestaService.trovaPerData(data);
             return ResponseEntity.ok(richieste);
@@ -166,7 +166,7 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Lista di informazioni recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/informazioni")
-    public ResponseEntity<List<Informazione>> getInformazioni() {
+    public ResponseEntity<List<Informazione>> ottieniTutteInformazioniNonArchiviate() {
         try {
             List<Informazione> informazioni = informazioneService.trovaInformazioni();
             return ResponseEntity.ok(informazioni);
@@ -179,7 +179,7 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Lista di informazioni recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/informazioni/tutte")
-    public ResponseEntity<List<Informazione>> getTutteInformazioni() {
+    public ResponseEntity<List<Informazione>> ottieniTutteInformazioni() {
         try {
             List<Informazione> informazioni = informazioneService.trovaTutteInformazioni();
             return ResponseEntity.ok(informazioni);
@@ -192,7 +192,7 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Lista di informazioni recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/informazioni/archivio")
-    public ResponseEntity<List<Informazione>> getInformazioniArchiviate() {
+    public ResponseEntity<List<Informazione>> ottieniInformazioniArchiviate() {
         try {
             List<Informazione> informazioni = informazioneService.trovaInformazioniArchiviate();
             return ResponseEntity.ok(informazioni);
@@ -205,7 +205,7 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "informazione aggiornata")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @PutMapping("/informazioni")
-    public ResponseEntity<String> updateInformazione(@RequestBody Informazione infoAggiornata) {
+    public ResponseEntity<String> modificaInformazione(@RequestBody Informazione infoAggiornata) {
         try {
             Optional<Richiesta> infoVecchia = informazioneService.trovaPerId(infoAggiornata.getId());
             if (infoVecchia.isPresent()) {
@@ -228,7 +228,7 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Lista di prenotazioni recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/prenotazioni")
-    public ResponseEntity<List<Prenotazione>> getPrenotazioni() {
+    public ResponseEntity<List<Prenotazione>> ottieniTuttePrenotazioniNonArchiviate() {
         try {
             List<Prenotazione> prenotazioni = prenotazioneService.trovaPrenotazioni();
             return ResponseEntity.ok(prenotazioni);
@@ -241,7 +241,7 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Lista di prenotazioni recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/prenotazioni/tutte")
-    public ResponseEntity<List<Prenotazione>> getTuttePrenotazioni() {
+    public ResponseEntity<List<Prenotazione>> ottieniTuttePrenotazioni() {
         try {
             List<Prenotazione> prenotazioni = prenotazioneService.trovaTuttePrenotazioni();
             return ResponseEntity.ok(prenotazioni);
@@ -254,7 +254,7 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Lista di prenotazioni recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/prenotazioni/archivio")
-    public ResponseEntity<List<Prenotazione>> getPrenotazioniArchiviate() {
+    public ResponseEntity<List<Prenotazione>> ottieniPrenotazioniArchiviate() {
         try {
             List<Prenotazione> prenotazioni = prenotazioneService.trovaPrenotazioniArchiviate();
             return ResponseEntity.ok(prenotazioni);
@@ -267,7 +267,7 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Prenotazione aggiornata")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @PutMapping("/prenotazioni")
-    public ResponseEntity<String> updatePrenotazione(@RequestBody Prenotazione prenoAggiornata) {
+    public ResponseEntity<String> modificaPrenotazione(@RequestBody Prenotazione prenoAggiornata) {
         try {
             Optional<Richiesta> prenoVecchia = prenotazioneService.trovaPerId(prenoAggiornata.getId());
             if (prenoVecchia.isPresent()) {
