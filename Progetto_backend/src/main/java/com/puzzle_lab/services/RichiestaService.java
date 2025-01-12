@@ -1,6 +1,7 @@
 package com.puzzle_lab.services;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.puzzle_lab.entities.Richiesta;
+import com.puzzle_lab.entities.Status;
 import com.puzzle_lab.repos.RichiestaDAO;
 
 @Service
@@ -61,14 +63,40 @@ public class RichiestaService {
     public List<Richiesta> trovaTutte() {
         return richiestaDAO.findAll();
     }
+    // Trova le richieste NON archiviate
+    public List<Richiesta> trovaRichieste() {
+        return richiestaDAO.findByStatusNot(Status.ARCHIVIATA);
+    }
+    // Trova solo le richieste archiviate
+    public List<Richiesta> trovaRichiesteArchiviate() {
+        return richiestaDAO.findByStatus(Status.ARCHIVIATA);
+    }
 
     // Trova una richiesta per ID
     public Optional<Richiesta> trovaPerId(long id) {
         return richiestaDAO.findById(id);
     }
+    
 
-	public Optional<Richiesta> trovaPerEmail(String email) {
-		return richiestaDAO.findByEmail(email);
+    public Optional<List<Richiesta>> trovaPerNome(String nome) {
+        return richiestaDAO.findByNome(nome);
+    }
+    public Optional<List<Richiesta>> trovaPerCognome(String cognome) {
+        return richiestaDAO.findByCognome(cognome);
+    }
+    public Optional<List<Richiesta>> trovaPerEmail(String email) {
+        return richiestaDAO.findByEmail(email);
+    }
+    public Optional<List<Richiesta>> trovaPerOrganizzazione(String organizzazione) {
+        return richiestaDAO.findByOrganizzazione(organizzazione);
+    }
+    
+    public Optional<Richiesta> trovaPerData(LocalDateTime data) {
+		return richiestaDAO.findByDataCreazione(data);
+	}
+	
+	public List<Richiesta> trovaPerStatus(String status) {
+		return richiestaDAO.findByStatus(Status.valueOf(status));
 	}
 	
 	public void cancellaPerId(long id) {
@@ -81,4 +109,7 @@ public class RichiestaService {
 		richiestaDAO.save(richiesta);
 	}
 
+	public Richiesta save(Richiesta richiesta) {
+		return richiestaDAO.save(richiesta);
+	}
 }
