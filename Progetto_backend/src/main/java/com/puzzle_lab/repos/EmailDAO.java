@@ -7,7 +7,7 @@ import com.puzzle_lab.entities.EmailTemplate;
 
 public interface EmailDAO extends JpaRepository<EmailTemplate, Long> {
 	
-	Optional<EmailTemplate> findById(Long Id);
+	EmailTemplate findByUsatoTrue();
 }
 
 

@@ -39,8 +39,7 @@ public class EmailService {
     
     @PostConstruct
     private void init() {
-    	config = emailDAO.findById(1L)
-    			.orElseThrow(() -> new IllegalArgumentException("Email configurations not found"));
+    	config = emailDAO.findByUsatoTrue();
     	System.out.println("template recuperato");
     	mailSender = createMailSender();
     	System.out.println("MailSender inizializzato");
