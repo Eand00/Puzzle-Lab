@@ -61,12 +61,12 @@ class FooterComponent extends HTMLElement {
                  <div class="container social-icons-container  ">
                     <a href="#" class="text-white">COOKIE POLICY</a>
                     <a href="#" class="text-white ">PRIVACY POLICY</a> 
-                </div>
-                
+                </div>       
             </footer>
         `;
   }
                
+
   /**
    * This method is called when the component is connected to the DOM.
    * It is used to initialize the component.

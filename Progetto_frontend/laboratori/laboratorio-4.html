@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="it">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="shortcut icon" href="../assets/images/favicon-32x32_placeholder.png" type="image/x-icon" />
+		<title>Laboratori - Caccia Saperi</title>
+		<meta name="description" content="PLACEHOLDER DESCRIPTION" />
+		<meta name="robots" content="index, follow" />
+		<meta name="author" content="Puzzle Lab Torino" />
+		<!-- Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+		<!-- Custom styles -->
+		<link rel="stylesheet" href="../assets/styles/normalize.css" />
+		<link rel="stylesheet" href="../assets/styles/style.css" />
+		<link rel="stylesheet" href="../assets/styles/laboratori.css" />
+		<!-- Custom components -->
+		<script src="../components/header-component.js" type="module"></script>
+		<script src="../components/footer-component.js" type="module"></script>
+		<script src="../components/lab-card-component.js" type="module"></script>
+		<script src="../components/lab-grid-component.js" type="module"></script>
+	</head>
+	<body>
+		<!-- header -->
+		<header-component active-page="laboratori" base-path=".."></header-component>
+		
+		<!-- Main -->
+		<main>
+            <!-- Hero -->
+            <section class="container-fluid first-section lab-hero" style="--url-image: url('../images/img_placeholder.svg');">
+                <h1>I beni confiscati</h1>
+            </section>
+
+            <!-- Description -->
+            <section class="container-fluid lab-description">
+                <div class="container">
+                    <h2>Strumenti di Riscatto</h2>
+                    <div class="lab-description__content">
+                        <p>
+                            Scopri come i beni confiscati alle mafie si trasformano in opportunità di rinascita per le comunità.     
+                        </p>
+                        <p>
+                            Durante l’attività, esploreremo il valore simbolico e pratico del riutilizzo sociale, approfondendo esempi concreti di trasformazione, come Cascina Caccia, per comprendere l’importanza di restituire questi spazi alla collettività.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA -->
+            <section class="container-fluid lab-cta">
+                <div class="cta-container">
+					<a href="../prenota-ora.html" class="cta-button" role="button">PRENOTA ORA</a>
+				</div>
+            </section>
+
+            <!-- Related Labs -->
+            <section class="container-fluid lab-related">
+                <h2>Altri laboratori</h2>
+                <div class="lab-carousel">
+                    <lab-grid-component data-labs='[
+					{
+						"title": "Storia di Cascina - Carla e Bruno Caccia", 
+						"image": "../images/img_placeholder.svg",
+						"href": "laboratorio-1.html"
+					}, {
+						"title": "Bruno Caccia",
+						"image": "../images/img_placeholder.svg",
+						"href": "laboratorio-2.html"
+					}, {
+						"title": "Introduzione al tema Mafia", 
+						"image": "../images/img_placeholder.svg", 
+						"href": "laboratorio-3.html"
+					}, {
+						"title": "Le mafie in Piemonte", 
+						"image": "../images/img_placeholder.svg", 
+						"href": "laboratorio-5.html"
+					}, {
+						"title": "Sostenibilità ambientale", 
+						"image": "../images/img_placeholder.svg", 
+						"href": "laboratorio-6.html"
+					}, {
+						"title": "La Mafia attraverso il cinema", 
+						"image": "../images/img_placeholder.svg", 
+						"href": "laboratorio-7.html"
+					}, {
+						"title": "Il gioco non è un azzardo", 
+						"image": "../images/img_placeholder.svg", 
+						"href": "laboratorio-8.html"
+					}, {
+						"title": "Chi non gioca vince", 
+						"image": "../images/img_placeholder.svg", 
+						"href": "laboratorio-9.html"
+					}
+				]'><!--TODO: noscript--></lab-grid-component>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+		<footer-component></footer-component>
+
+		<!-- Custom scripts -->
+		<script src="../assets/scripts/main.js"></script>
+	</body>
+</html>
