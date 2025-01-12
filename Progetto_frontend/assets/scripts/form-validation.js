@@ -33,22 +33,22 @@ const VALIDATION_RULES = {
         message: 'Il campo deve contenere un indirizzo email valido',
         required: true
     },
-    telefono: {
+    numero: {
         regex: /^\+?(?:[0-9] ?){6,14}[0-9]$"/,
         message: 'Il campo deve contenere un numero di telefono valido',
         required: false
     },
-    'data-inizio': {
+    dataInizio: {
         regex: /^\d{4}-\d{2}-\d{2}$/,
         message: 'Il campo deve contenere una data valida',
         required: true
     },
-    'data-fine': {
+    dataFine: {
         regex: /^\d{4}-\d{2}-\d{2}$/,
         message: 'Il campo deve contenere una data valida',
         required: true
     },
-    messaggio: {
+    testo: {
         regex: /.+/,
         message: 'Il campo non può essere vuoto',
         required: false
@@ -150,7 +150,9 @@ function formValidation(form) {
     const formData = {};
     let isValid = true;
     form.querySelectorAll('input, textarea').forEach(input => {
-        formData[input.name] = getFieldValue(input);
+        if(input.type !== 'checkbox') {
+            formData[input.name] = input.value;
+        }
 
         if(input.required) {
             //get the value of the field OR the checkbox status
@@ -180,8 +182,20 @@ function formValidation(form) {
 
         return false;
     }
-
+    console.log(formData);
     submitFormData(formData);
+}
+
+/**
+ * @function addTimeToDate
+ * @param {string} dateString - The date string in YYYY-MM-DD format
+ * @returns {string} - The date string in ISO format (YYYY-MM-DDThh:mm:ss.sssZ)
+ * @description Converts a date string to ISO format with time
+ */
+function addTimeToDate(dateString, isEndDate = false) {
+    const date = new Date(dateString);
+    date.setHours(0, 0, 0, 0);
+    return date.toISOString();
 }
 
 /**
@@ -190,14 +204,29 @@ function formValidation(form) {
  * @description Handles the API submission of the form data
  */
 function submitFormData(formData) {
+    // add time to the date fields
+    const processedData = { ...formData };
+    if (processedData.dataInizio) {
+        processedData.dataInizio = addTimeToDate(processedData.dataInizio);
+    }
+    if (processedData.dataFine) {
+        processedData.dataFine = addTimeToDate(processedData.dataFine, true);
+    }
+
+    // convert the processed data to JSON
+    const jsonFormData = JSON.stringify(processedData);
+
+    // API URL
     const API_BASE_URL = 'http://localhost:8080/richieste/';
+
+    // API request options
     const requestOptions = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         mode: 'cors',
-        body: JSON.stringify(formData)
+        body: jsonFormData
     };
     const API_URL = API_BASE_URL + (formData.tipo === 'prenotazione' ? 'prenotazioni' : 'informazioni');
 
@@ -208,15 +237,14 @@ function submitFormData(formData) {
             if(!response.ok) {
                 throw new Error(`Errore nella risposta del server: ${response.status}`);
             }
-            return response.json();
+            return response.text();
         })
         .then(data => {
-            //XXX aggiungere feedback all'utente e resettare il form
-            console.log('Form data submitted successfully:', data);
+            window.location.href = './feedback.html';
         })
         .catch(error => {
             //XXX aggiungere feedback all'utente
-            console.error('Errore:', error);
+            console.error(error);
         });
         //XXX Aggiungere finally per rimuovere il loading state
 }
