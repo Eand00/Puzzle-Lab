@@ -27,7 +27,7 @@ class HeaderComponent extends HTMLElement {
                     </button>
                     <div class="collapse navbar-collapse bg-dark text-gray" id="navbarText">
                         <svg class="logo-brand">
-                            <use href="${basePath}/assets/images/sprite.svg?v=2#logo-brand"></use>
+                            <use href="${basePath}/assets/images/sprite.svg#logo-brand"></use>
                         </svg>
                         <ul class="navbar-nav">
                             <li class="nav-item text-gray">
