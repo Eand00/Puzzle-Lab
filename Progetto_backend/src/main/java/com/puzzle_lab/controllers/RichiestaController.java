@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.puzzle_lab.entities.Informazione;
 import com.puzzle_lab.entities.Prenotazione;
+import com.puzzle_lab.services.EmailService;
 import com.puzzle_lab.services.InformazioneService;
 import com.puzzle_lab.services.PrenotazioneService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.mail.MessagingException;
 
 @Tag(name = "Richiesta", description = "Gestione delle richieste di informazioni e prenotazioni")
 @RestController
@@ -30,6 +32,9 @@ public class RichiestaController {
 
     @Autowired
     private PrenotazioneService prenotazioneService;
+    
+    @Autowired
+    private EmailService emailService;
 
 
     @Operation(summary = "Crea una nuova informazione", description = "Crea e salva una nuova informazione")
@@ -39,8 +44,9 @@ public class RichiestaController {
     public ResponseEntity<String> creaInformazione(@RequestBody Informazione informazione) {
         try {
             informazioneService.salvaInformazione(informazione);
+            emailService.emailRichiesta(informazione);
             return ResponseEntity.status(HttpStatus.CREATED).body("Informazione creata con successo.");
-        } catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException | MessagingException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
@@ -53,8 +59,9 @@ public class RichiestaController {
     public ResponseEntity<String> creaPrenotazione(@RequestBody Prenotazione prenotazione) {
         try {
             prenotazioneService.salvaPrenotazione(prenotazione);
+            emailService.emailRichiesta(prenotazione);
             return ResponseEntity.status(HttpStatus.CREATED).body("Prenotazione creata con successo.");
-        } catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException | MessagingException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
