@@ -179,3 +179,38 @@ form .form-group .valid::after {
     display: block;
 }
 
+/* Loading State */
+body.loading {
+  overflow: hidden;
+}
+
+body.loading::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: hsl(from var(--color-base-secondary) h s l /0.7);
+  backdrop-filter: blur(2px);
+  z-index: 9998;
+  cursor: wait;
+}
+
+body.loading::before {
+  content: '';
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  background-image: url('../images/asterisco.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: spin 1.5s linear infinite;
+  z-index: 9999;
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}

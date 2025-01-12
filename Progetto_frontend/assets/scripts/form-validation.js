@@ -204,6 +204,9 @@ function addTimeToDate(dateString, isEndDate = false) {
  * @description Handles the API submission of the form data
  */
 function submitFormData(formData) {
+    //add loading state
+    document.body.classList.add('loading');
+
     // add time to the date fields
     const processedData = { ...formData };
     if (processedData.dataInizio) {
@@ -230,9 +233,10 @@ function submitFormData(formData) {
     };
     const API_URL = API_BASE_URL + (formData.tipo === 'prenotazione' ? 'prenotazioni' : 'informazioni');
 
-    //XXX aggiungere Loading State
-
-    fetch(API_URL, requestOptions)
+    //XXX test di loading state, rimuovere in produzione
+    const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+    delay(3000)
+        .then(() => fetch(API_URL, requestOptions))
         .then(response => {
             if(!response.ok) {
                 throw new Error(`Errore nella risposta del server: ${response.status}`);
@@ -240,13 +244,16 @@ function submitFormData(formData) {
             return response.text();
         })
         .then(data => {
+            //remove loading state
+            document.body.classList.remove('loading');
             window.location.href = './feedback.html';
         })
         .catch(error => {
+            //remove loading state
+            document.body.classList.remove('loading');
             //XXX aggiungere feedback all'utente
             console.error(error);
         });
-        //XXX Aggiungere finally per rimuovere il loading state
 }
 
 //initialize the form validation
