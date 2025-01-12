@@ -190,16 +190,19 @@ function formValidation(form) {
  * @description Handles the API submission of the form data
  */
 function submitFormData(formData) {
-    const API_URL = '';
+    const API_BASE_URL = 'http://localhost:8080/richieste/';
     const requestOptions = {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
+        mode: 'cors',
         body: JSON.stringify(formData)
     };
+    const API_URL = API_BASE_URL + (formData.tipo === 'prenotazione' ? 'prenotazioni' : 'informazioni');
 
     //XXX aggiungere Loading State
+
     fetch(API_URL, requestOptions)
         .then(response => {
             if(!response.ok) {
@@ -209,7 +212,7 @@ function submitFormData(formData) {
         })
         .then(data => {
             //XXX aggiungere feedback all'utente e resettare il form
-            console.log(data);
+            console.log('Form data submitted successfully:', data);
         })
         .catch(error => {
             //XXX aggiungere feedback all'utente
