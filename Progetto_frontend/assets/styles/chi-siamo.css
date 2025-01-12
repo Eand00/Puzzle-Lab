@@ -17,15 +17,15 @@ main h1 {
 main p {
    font-size: 1.5rem;
    line-height: 2rem;
-   padding: 3rem;
+   padding: 2rem;
 }
 main picture {
    display: flex;
    justify-content: center;
    align-items: center;
    overflow: hidden;
-   border-radius: 40px;
-   margin-inline: 3rem;
+   border-radius: var(--border-radius-big);
+   margin-inline: 2rem;
    aspect-ratio: 4/3;
 }
 main picture img {
