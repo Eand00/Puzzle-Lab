@@ -52,26 +52,21 @@ class FooterComponent extends HTMLElement {
                 </div>
 
                 <div class="container icon-footer py-5 px-0">
-                    <div class="social-icons">
-                        <p class="text-white">PROGETTO A CURA DI</p>
-                        <div class="social-icons-container text-white">
-                            <a href="#">
-                                <svg width="32" height="32" fill="white">
-                                    <use href="${basePath}/assets/images/sprite.svg?v=1#icon-facebook"></use>
-                                </svg>
-                            </a>
-                            <a href="#">
-                                <svg width="32" height="32" fill="white">
-                                    <use href="${basePath}/assets/images/sprite.svg?v=1#icon-instagram"></use>
-                                </svg>
-                            </a>
-                        </div>
+                    <p class="text-white">PROGETTO A CURA DI</p>
+                    <div class="container text-white">
+                        <img src="./assets/images/logo-acmos-bianco.png">
+                        <img src="./assets/images/logo-libera.png">
                     </div>
                 </div>
+                 <div class="container social-icons-container  ">
+                    <a href="#" class="text-white">COOKIE POLICY</a>
+                    <a href="#" class="text-white ">PRIVACY POLICY</a> 
+                </div>
+                
             </footer>
         `;
   }
-
+               
   /**
    * This method is called when the component is connected to the DOM.
    * It is used to initialize the component.
