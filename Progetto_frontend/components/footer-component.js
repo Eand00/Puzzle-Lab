@@ -19,7 +19,7 @@ class FooterComponent extends HTMLElement {
             <footer class="py-5 text-light bg-dark "> 
                 <div class="container">
                     <svg class="logo-brand">
-                        <use href="${basePath}/assets/images/sprite.svg?v=2#logo-brand"></use>
+                        <use href="${basePath}/assets/images/sprite.svg?v=1#logo-brand"></use>
                     </svg>
                     <p class="copyright text-center">2024 &copy; CacciaSaperi - www.cacciasaperi.it</p>
                 </div>
