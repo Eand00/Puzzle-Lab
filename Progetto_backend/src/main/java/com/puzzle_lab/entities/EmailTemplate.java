@@ -34,6 +34,8 @@ public class EmailTemplate {
 	@Column(columnDefinition = "TEXT")
 	private String corpo;
 	
+	private boolean usato;
+	
 	public enum EncryptionType {
 		NONE, TLS, SSL 
 	}
