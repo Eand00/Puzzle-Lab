@@ -45,6 +45,7 @@
 .bg-white {background-color: var(--color-white);}
 .bg-gray {background-color: var(--color-gray);}
 .bg-black {background-color: var(--color-black);}
+.bg-base-primary {background-color: var(--color-base-primary);}
 .bg-transparent {background-color: var(--color-transparent);}
 
 /* Colori di sfondo subtle */

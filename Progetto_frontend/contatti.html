@@ -29,15 +29,15 @@
     <!-- Main -->
     <main>
       <section class="container-fluid first-section">
-        <h2 class="pt-5">Contatti</h2>
-        <p class="text-center">
+        <h2 class="pt-5 text-base">Contatti</h2>
+        <p class="text-center text-base">
           Hai dei dubbi?<br />Non farti problemi a contattarci compilando il
           form!
         </p>
       </section>
       <form action="./feedback.html" method="post" data-validate>
         <div class="form-group">
-          <label for="nome">Nome </label>
+          <label for="nome" class="text-base">Nome </label>
           <input
             type="text"
             id="nome"
@@ -50,7 +50,7 @@
           />
         </div>
         <div class="form-group">
-          <label for="cognome">Cognome</label>
+          <label for="cognome" class="text-base">Cognome</label>
           <input
             type="text"
             id="cognome"
@@ -63,7 +63,7 @@
           />
         </div>
         <div class="form-group">
-          <label for="organizzazione">Organizzazione</label>
+          <label for="organizzazione" class="text-base">Organizzazione</label>
           <input
             type="text"
             id="organizzazione"
@@ -77,7 +77,7 @@
           />
         </div>
         <div class="form-group">
-          <label for="email">Email</label>
+          <label for="email" class="text-base">Email</label>
           <input
             type="email"
             id="email"
@@ -88,8 +88,8 @@
           />
         </div>
         <div class="form-group">
-          <label for="telefono"
-            >Telefono <span class="text-muted">(opzionale)</span></label
+          <label for="telefono" class="text-base"
+            >Telefono <span class="text-muted text-base">(opzionale)</span></label
           >
           <input
             type="tel"
@@ -101,7 +101,7 @@
           />
         </div>
         <div class="form-group">
-          <label for="messaggio">Messaggio</label>
+          <label for="messaggio" class="text-base">Messaggio</label>
           <textarea
             id="messaggio"
             name="messaggio"
@@ -118,7 +118,7 @@
             class="form-check-input"
             required
           />
-          <label for="privacy"
+          <label for="privacy" class="text-base"
             >Acconsento al trattamento dei miei dati personali ai sensi del
             Regolamento (UE) 2016/679 (GDPR) per la gestione e conferma della
             prenotazione.</label
@@ -132,7 +132,7 @@
             class="form-check-input"
             required
           />
-          <label for="tos"
+          <label for="tos" class="text-base"
             >Dichiaro di aver letto e accettato i Termini e Condizioni del
             servizio. <a href="#">Link Informativa</a></label
           >
@@ -144,21 +144,21 @@
             name="sensibleData"
             class="form-check-input"
           />
-          <label for="sensibleData"
+          <label for="sensibleData" class="text-base"
             >Acconsento al trattamento dei dati sensibili forniti per finalità
             legate all’organizzazione del servizio richiesto (ad esempio
             esigenze alimentari o mediche).</label
           >
         </div>
         <section class="cta-container">
-          <button type="submit" class="cta-button">Invia</button>
+          <button type="submit" class="cta-button bg-primary">Invia</button>
         </section>
       </form>
       <section class="container-fluid contact-container">
-        <p class="text-center follows">
+        <p class="text-center follows text-base">
           In alternativa puoi anche contattarci telefonicamente.
         </p>
-        <a href="tel:+393486425023" class="text-center cta-call">
+        <a href="tel:+393486425023" class="text-center cta-call text-base">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
