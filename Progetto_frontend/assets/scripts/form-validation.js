@@ -33,22 +33,22 @@ const VALIDATION_RULES = {
         message: 'Il campo deve contenere un indirizzo email valido',
         required: true
     },
-    telefono: {
+    numero: {
         regex: /^\+?(?:[0-9] ?){6,14}[0-9]$"/,
         message: 'Il campo deve contenere un numero di telefono valido',
         required: false
     },
-    'data-inizio': {
+    dataInizio: {
         regex: /^\d{4}-\d{2}-\d{2}$/,
         message: 'Il campo deve contenere una data valida',
         required: true
     },
-    'data-fine': {
+    dataFine: {
         regex: /^\d{4}-\d{2}-\d{2}$/,
         message: 'Il campo deve contenere una data valida',
         required: true
     },
-    messaggio: {
+    testo: {
         regex: /.+/,
         message: 'Il campo non può essere vuoto',
         required: false
@@ -147,9 +147,13 @@ function updateFieldStatus(field, isValid, message) {
  */
 function formValidation(form) {
     const errors = {};
+    const formData = {};
     let isValid = true;
     form.querySelectorAll('input, textarea').forEach(input => {
-        
+        if(input.type !== 'checkbox') {
+            formData[input.name] = input.value;
+        }
+
         if(input.required) {
             //get the value of the field OR the checkbox status
             let value = getFieldValue(input);
@@ -178,8 +182,78 @@ function formValidation(form) {
 
         return false;
     }
+    console.log(formData);
+    submitFormData(formData);
+}
 
-    console.log('valid');
+/**
+ * @function addTimeToDate
+ * @param {string} dateString - The date string in YYYY-MM-DD format
+ * @returns {string} - The date string in ISO format (YYYY-MM-DDThh:mm:ss.sssZ)
+ * @description Converts a date string to ISO format with time
+ */
+function addTimeToDate(dateString, isEndDate = false) {
+    const date = new Date(dateString);
+    date.setHours(0, 0, 0, 0);
+    return date.toISOString();
+}
+
+/**
+ * @function submitFormData(formData)
+ * @param {Object} formData - The validated form data to submit
+ * @description Handles the API submission of the form data
+ */
+function submitFormData(formData) {
+    //add loading state
+    document.body.classList.add('loading');
+
+    // add time to the date fields
+    const processedData = { ...formData };
+    if (processedData.dataInizio) {
+        processedData.dataInizio = addTimeToDate(processedData.dataInizio);
+    }
+    if (processedData.dataFine) {
+        processedData.dataFine = addTimeToDate(processedData.dataFine, true);
+    }
+
+    // convert the processed data to JSON
+    const jsonFormData = JSON.stringify(processedData);
+
+    // API URL
+    const API_BASE_URL = 'http://localhost:8080/richieste/';
+
+    // API request options
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        body: jsonFormData
+    };
+    const API_URL = API_BASE_URL + (formData.tipo === 'prenotazione' ? 'prenotazioni' : 'informazioni');
+
+    //XXX test di loading state, rimuovere in produzione
+    const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+    delay(3000)
+        .then(() => fetch(API_URL, requestOptions))
+        .then(response => {
+            if(!response.ok) {
+                throw new Error(`Errore nella risposta del server: ${response.status}`);
+            }
+            return response.text();
+        })
+        .then(data => {
+            //remove loading state
+            document.body.classList.remove('loading');
+            window.location.href = './feedback.html';
+        })
+        .catch(error => {
+            //remove loading state
+            document.body.classList.remove('loading');
+            //XXX aggiungere feedback all'utente
+            console.error(error);
+        });
 }
 
 //initialize the form validation
@@ -192,8 +266,8 @@ document.addEventListener('DOMContentLoaded', () => {
     //initialize the error messages containers
     initErrorMessages(form);
 
-    //handle on blur validation
-    form.addEventListener('blur', (event) => {
+    //handle validation on input
+    form.addEventListener('input', (event) => {
         const input = event.target;
 
         //filter for only required input and textarea
