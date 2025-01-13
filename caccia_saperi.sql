@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2025 at 03:57 PM
+-- Generation Time: Jan 13, 2025 at 09:32 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -20,6 +20,31 @@ SET time_zone = "+00:00";
 --
 -- Database: `caccia_saperi`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `email-template`
+--
+
+CREATE TABLE `email-template` (
+  `id` bigint(20) NOT NULL,
+  `corpo` text DEFAULT NULL,
+  `encryption_type` enum('NONE','SSL','TLS') DEFAULT NULL,
+  `host` varchar(255) DEFAULT NULL,
+  `oggetto` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `port` int(11) NOT NULL,
+  `usato` bit(1) NOT NULL,
+  `username` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `email-template`
+--
+
+INSERT INTO `email-template` (`id`, `corpo`, `encryption_type`, `host`, `oggetto`, `password`, `port`, `usato`, `username`) VALUES
+(1, 'Grazie per aver usato il nostro servizio!', 'TLS', 'smtp.gmail.com', 'Richiesta Caccia Saperi', 'aomc iqez fopo kcnu', 587, b'1', 'caccia.saperi@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -75,7 +100,8 @@ INSERT INTO `prenotazioni` (`data_fine`, `data_inizio`, `testo`, `id`) VALUES
 ('2025-01-12 16:00:00.000000', '2025-01-11 16:00:00.000000', 'Testo di esempio per prenotazione 7', 7),
 ('2025-01-13 17:00:00.000000', '2025-01-12 17:00:00.000000', 'Testo di esempio per prenotazione 8', 8),
 ('2025-01-14 18:00:00.000000', '2025-01-13 18:00:00.000000', 'Testo di esempio per prenotazione 9', 9),
-('2025-01-15 19:00:00.000000', '2025-01-14 19:00:00.000000', 'Testo di esempio per prenotazione 10', 10);
+('2025-01-15 19:00:00.000000', '2025-01-14 19:00:00.000000', 'Testo di esempio per prenotazione 10', 10),
+('2025-01-15 23:00:00.000000', '2025-01-14 23:00:00.000000', 'asda', 21);
 
 -- --------------------------------------------------------
 
@@ -120,7 +146,8 @@ INSERT INTO `richieste` (`id`, `cancellato`, `cognome`, `data_creazione`, `data_
 (17, b'0', 'Arancio', '2025-01-17 16:00:00.000000', NULL, 'sofia.arancio@example.com', 'Sofia', '6677889900', 'Azienda I', 'RICEVUTA'),
 (18, b'0', 'Viola', '2025-01-18 17:00:00.000000', NULL, 'giada.viola@example.com', 'Giada', '7788990011', 'Azienda H', 'CONFERMATA'),
 (19, b'0', 'Azzurri', '2025-01-19 18:00:00.000000', NULL, 'antonio.azzurri@example.com', 'Antonio', '8899001122', 'Azienda G', 'PRESA_IN_CARICO'),
-(20, b'1', 'Marroni', '2025-01-20 19:00:00.000000', '2025-02-20 10:00:00.000000', 'luisa.marroni@example.com', 'Luisa', '9900112233', 'Azienda F', 'RIFIUTATA');
+(20, b'1', 'Marroni', '2025-01-20 19:00:00.000000', '2025-02-20 10:00:00.000000', 'luisa.marroni@example.com', 'Luisa', '9900112233', 'Azienda F', 'RIFIUTATA'),
+(21, b'0', 'Avdiu', '2025-01-13 21:28:33.000000', NULL, 'avdiu.eand@gmail.com', 'Eand', '+39 3483156301', 'non lo so', 'RICEVUTA');
 
 -- --------------------------------------------------------
 
@@ -143,11 +170,17 @@ CREATE TABLE `utenti` (
 --
 
 INSERT INTO `utenti` (`email`, `cognome`, `nome`, `password`, `ruolo`, `cancellato`, `data_prevista_cancellazione`) VALUES
-('a', 'a', 'a', '$2a$10$4tZD/YbYS/aDObw775PNEe45R1XhhmY6csJflXu6pkBwc45DLW89y', 'USER', b'0', NULL);
+('eand.avdiu@edu.itspiemonte.it', 'Avdiu', 'Eand', '$2a$10$4tZD/YbYS/aDObw775PNEe45R1XhhmY6csJflXu6pkBwc45DLW89y', 'USER', b'0', NULL);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `email-template`
+--
+ALTER TABLE `email-template`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `informazioni`
@@ -178,10 +211,16 @@ ALTER TABLE `utenti`
 --
 
 --
+-- AUTO_INCREMENT for table `email-template`
+--
+ALTER TABLE `email-template`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `richieste`
 --
 ALTER TABLE `richieste`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Constraints for dumped tables
@@ -197,7 +236,7 @@ ALTER TABLE `informazioni`
 -- Constraints for table `prenotazioni`
 --
 ALTER TABLE `prenotazioni`
-  ADD CONSTRAINT `FKd78arqfk8mdpejnmp2oe2y0c6` FOREIGN KEY (`id`) REFERENCES `richieste` (`id`);
+  ADD CONSTRAINT `fk_prenotazioni_richieste` FOREIGN KEY (`id`) REFERENCES `richieste` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
