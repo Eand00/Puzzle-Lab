@@ -54,8 +54,8 @@ class FooterComponent extends HTMLElement {
                 <div class="container icon-footer py-5 px-0">
                     <p class="text-white">PROGETTO A CURA DI</p>
                     <div class="container text-white">
-                        <img src="./assets/images/logo-acmos-bianco.png">
-                        <img src="./assets/images/logo-libera.png">
+                        <img src="${basePath}/assets/images/logo-acmos-bianco.png">
+                        <img src="${basePath}/assets/images/logo-libera.png">
                     </div>
                 </div>
                  <div class="container social-icons-container  ">
