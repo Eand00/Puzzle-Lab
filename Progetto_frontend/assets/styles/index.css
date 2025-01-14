@@ -24,13 +24,16 @@
     content:'';
     position: absolute;
     inset: 0;
-    background-image: url(../images/img_placeholder.svg);
+    background-image: url(../images/index/hero.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     z-index: -1;
     opacity: 0.5;
+}
 
+#hero > div {
+    background-color: #00000088;
 }
 
 #hero h3 {
