@@ -58,12 +58,12 @@ const VALIDATION_RULES = {
         message: 'Il campo deve essere selezionato',
         required: true
     },
-    'sensible-data': {
+    sensibleData: {
         regex: 'checked',
         message: 'Il campo deve essere selezionato',
         required: true
     },
-    'tos': {
+    tos: {
         regex: 'checked',
         message: 'Il campo deve essere selezionato',
         required: true
@@ -104,7 +104,7 @@ function validate(data, type) {
     const rule = VALIDATION_RULES[type];
     
     //checkboxes
-    if(['privacy', 'sensible-data', 'tos'].includes(type)) {
+    if(['privacy', 'sensibleData', 'tos'].includes(type)) {
         return [data === 'on' || data === true, 'Campo obbligatorio'];
     }
 
