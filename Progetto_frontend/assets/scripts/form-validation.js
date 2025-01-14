@@ -239,7 +239,9 @@ function submitFormData(formData) {
         .then(() => fetch(API_URL, requestOptions))
         .then(response => {
             if(!response.ok) {
-                throw new Error(`Errore nella risposta del server: ${response.status}`);
+                return response.text().then(text => {
+                    throw new Error(text || `Errore del server: ${response.status}`);
+                });
             }
             return response.text();
         })
@@ -251,9 +253,37 @@ function submitFormData(formData) {
         .catch(error => {
             //remove loading state
             document.body.classList.remove('loading');
-            //XXX aggiungere feedback all'utente
-            console.error(error);
+            //user feedback
+            console.error({error});
+            showErrorToast(error.message);
         });
+}
+
+/**
+ * @function showErrorToast
+ * @param {string} message - The error message to display
+ * @description Shows a toast message with the error
+ */
+function showErrorToast(message) {
+    const toast = document.createElement('div');
+    toast.classList.add('toast', 'error');
+    toast.innerHTML = `
+        <div class="toast-content">
+            <svg class="toast-icon" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
+            <span>${message}</span>
+        </div>
+        <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+    `;
+    document.body.appendChild(toast);
+    
+    // Auto-remove after 5 seconds
+    setTimeout(() => {
+        if (toast.parentElement) {
+            toast.remove();
+        }
+    }, 5000);
 }
 
 //initialize the form validation
