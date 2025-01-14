@@ -6,7 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.puzzle_lab.entities.FasciaOraria;
+import com.puzzle_lab.entities.Laboratori;
 import com.puzzle_lab.entities.Prenotazione;
+import com.puzzle_lab.entities.Tipologia;
 import com.puzzle_lab.repos.PrenotazioneDAO;
 
 @Service
@@ -46,13 +49,13 @@ public class PrenotazioneService extends RichiestaService{
 	        }
 	    }
 
-	    private void validaLaboratori(Prenotazione.Laboratori laboratori) {
+	    private void validaLaboratori(Laboratori laboratori) {
 	        if (laboratori == null) {
 	            throw new IllegalArgumentException("Il laboratorio è obbligatorio.");
 	        }
 	    }
 
-	    private void validaTipologia(Prenotazione.Tipologia tipologia) {
+	    private void validaTipologia(Tipologia tipologia) {
 	        if (tipologia == null) {
 	            throw new IllegalArgumentException("La tipologia è obbligatoria.");
 	        }
@@ -60,12 +63,12 @@ public class PrenotazioneService extends RichiestaService{
 
 	    private void validaCampiOpzionali(Prenotazione prenotazione) {
 	        // Numero giorni obbligatorio se tipologia è SOGGIORNO
-	        if (prenotazione.getTipologia() == Prenotazione.Tipologia.SOGGIORNO) {
+	        if (prenotazione.getTipologia() == Tipologia.SOGGIORNO) {
 	            validaNumeroGiorni(prenotazione.getNumeroGiorni());
 	        }
 
 	        // Fascia oraria obbligatoria se tipologia è MISTO
-	        if (prenotazione.getTipologia() == Prenotazione.Tipologia.VISITA) {
+	        if (prenotazione.getTipologia() == Tipologia.VISITA) {
 	            validaFasciaOraria(prenotazione.getFasciaOraria());
 	        }
 	    }
@@ -79,7 +82,7 @@ public class PrenotazioneService extends RichiestaService{
 	        }
 	    }
 
-	    private void validaFasciaOraria(Prenotazione.FasciaOraria fasciaOraria) {
+	    private void validaFasciaOraria(FasciaOraria fasciaOraria) {
 	        if (fasciaOraria == null) {
 	            throw new IllegalArgumentException("La fascia oraria è obbligatoria per la tipologia MISTO.");
 	        }

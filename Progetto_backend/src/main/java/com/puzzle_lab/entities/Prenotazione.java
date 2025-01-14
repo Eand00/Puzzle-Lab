@@ -39,16 +39,5 @@ public class Prenotazione extends Richiesta {
 
     @Column(name = "numero_giorni")
     private Integer numeroGiorni;
-    
-    public enum Laboratori {
-        LAB_1, LAB_2, LAB_3, LAB_4
-    }
 
-    public enum FasciaOraria {
-        MATTINA, POMERIGGIO
-    }
-
-    public enum Tipologia {
-        VISITA, SOGGIORNO
-    }
 }
