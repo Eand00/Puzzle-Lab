@@ -235,7 +235,7 @@ function submitFormData(formData) {
 
     //XXX test di loading state, rimuovere in produzione
     const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-    delay(3000)
+    delay(2000)
         .then(() => fetch(API_URL, requestOptions))
         .then(response => {
             if(!response.ok) {
