@@ -29,7 +29,8 @@ class LabCardComponent extends HTMLElement {
         this.innerHTML = `
             <a href="${href}" class="lab-card">
                 <div class="lab-card__image border-radius-small" style="--image: url(${image})">
-                    <div class="lab-card__title">${title}</div>
+                    <div class="opacity-div border-radius-small"></div>
+                    <div class="lab-card__title text-white">${title}</div>
                 </div>
             </a>`;
     }
