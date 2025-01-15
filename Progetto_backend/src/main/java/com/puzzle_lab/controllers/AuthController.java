@@ -11,7 +11,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,13 +49,13 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(username, password));
 	        // Generate the JWT token
 	        String token = jwtService.generaToken(authentication.getName());
-	
+
 	        // Return token in a response map
 	        Map<String, Object> response = new HashMap<>();
 	        response.put("token", token);
-	
+
 	        return ResponseEntity.ok(response);
-	        
+
 	    } catch (AuthenticationException e) {
 	        // Handle authentication failure
 	        return ResponseEntity.status(401).body("Invalid username or password");
@@ -65,6 +64,6 @@ public class AuthController {
 	        return ResponseEntity.status(400).body("Invalid request: " + e.getMessage());
 	    }
 
-    
+
     }
 }

@@ -1,7 +1,6 @@
 package com.puzzle_lab.services;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,17 +25,17 @@ public class EmailService {
 
     @Autowired
     private JavaMailSender mailSender;
-    
+
     @Autowired
     private UtenteService utenteService;
-    
+
     @Autowired
     private EmailDAO emailDAO;
-    
+
     //private static boolean firstTime = true;
-    
-    private EmailTemplate config; 
-    
+
+    private EmailTemplate config;
+
     @PostConstruct
     private void init() {
     	config = emailDAO.findByUsatoTrue();
@@ -44,9 +43,9 @@ public class EmailService {
     	mailSender = createMailSender();
     	System.out.println("MailSender inizializzato");
     }
-    
+
     public JavaMailSender createMailSender() {
-    	
+
         // Crea l'istanza di JavaMailSender
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(config.getHost());
@@ -74,12 +73,12 @@ public class EmailService {
 
         return mailSender;
     }
-    
+
     public void sendEmail(String to, String body, String subject, boolean isHTML) throws MessagingException {
     	/*
     	if(firstTime) { // alla prima esecuzione recupera i dati e configura mailSender
     		getEmail();
-    		mailSender = createMailSender(); 
+    		mailSender = createMailSender();
     		firstTime = false;
     		System.out.println("MailSender initialized");
     	}*/
@@ -94,11 +93,11 @@ public class EmailService {
         // Invio dell'email
         mailSender.send(mimeMessage);
     }
-    
+
     //manda le email in seguito al ricevimento di una richiesta dal form
     public void emailRichiesta(Richiesta richiesta) throws MessagingException {
     	sendEmail(richiesta.getEmail(),config.getCorpo(), config.getOggetto(), true);
-    	
+
     	String corpo = "Hai ricevuto una richiesta da "+ richiesta.getNome()
     		+ " " + richiesta.getCognome()
     		+ "\norgainzzazione: " + richiesta.getOrganizzazione()
@@ -110,7 +109,7 @@ public class EmailService {
     	}else {
     		corpo += "\nrichiesta: " + ((Informazione)richiesta).getTesto();
     	}
-    			
+
     	List<Utente> utenti = utenteService.findAll();
     	for (Utente utente : utenti) {
 			sendEmail(utente.getEmail(),corpo,"Nuova Richiesta",false);

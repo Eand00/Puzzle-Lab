@@ -10,14 +10,13 @@ import java.util.function.Function;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
-import io.jsonwebtoken.security.Keys;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JWTService {
@@ -37,7 +36,7 @@ public class JWTService {
         }
     }
 
-    
+
     public String generaToken(String email) {
     	Map<String, Object> claims = new HashMap<>();
         return Jwts.builder()
@@ -55,7 +54,7 @@ public class JWTService {
         byte[] keyBytes = Decoders.BASE64.decode(chiaveSegreta);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-    
+
     public String estraiEmail(String token) {
         return estraiClaim(token, Claims::getSubject);
     }

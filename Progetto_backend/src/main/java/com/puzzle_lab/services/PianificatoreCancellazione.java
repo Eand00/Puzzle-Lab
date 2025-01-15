@@ -16,7 +16,7 @@ public class PianificatoreCancellazione {
 	private UtenteDAO utenteDAO;
 	@Autowired
 	private RichiestaDAO richiestaDAO;
-	
+
 	@Scheduled(cron = "0 0 0 * * ?")
 	public void deleteExpiredUsers() {
         LocalDateTime ora = LocalDateTime.now();

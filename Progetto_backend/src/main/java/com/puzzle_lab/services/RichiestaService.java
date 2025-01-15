@@ -1,7 +1,6 @@
 package com.puzzle_lab.services;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,7 +75,7 @@ public class RichiestaService {
     public Optional<Richiesta> trovaPerId(long id) {
         return richiestaDAO.findById(id);
     }
-    
+
 
     public Optional<List<Richiesta>> trovaPerNome(String nome) {
         return richiestaDAO.findByNome(nome);
@@ -90,15 +89,15 @@ public class RichiestaService {
     public Optional<List<Richiesta>> trovaPerOrganizzazione(String organizzazione) {
         return richiestaDAO.findByOrganizzazione(organizzazione);
     }
-    
+
     public Optional<Richiesta> trovaPerData(LocalDateTime data) {
 		return richiestaDAO.findByDataCreazione(data);
 	}
-	
+
 	public List<Richiesta> trovaPerStatus(String status) {
 		return richiestaDAO.findByStatus(Status.valueOf(status));
 	}
-	
+
 	public void cancellaPerId(long id) {
 		if (!richiestaDAO.existsById(id)) {
 			throw new IllegalArgumentException("La richiesta non esiste.");

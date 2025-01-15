@@ -1,7 +1,6 @@
 package com.puzzle_lab.controllers;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,9 +11,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.puzzle_lab.entities.Informazione;
@@ -39,13 +38,13 @@ public class BackofficeController {
 
     @Autowired
     private PrenotazioneService prenotazioneService;
-    
+
     @Autowired
     private RichiestaService richiestaService;
-    
+
     @Autowired
     private UtenteService utenteService;
-    
+
     @Operation(summary = "Ottieni le richieste", description = "Recupera tutte le richieste non archiviate")
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
@@ -58,7 +57,7 @@ public class BackofficeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @Operation(summary = "Ottieni tutte le richieste", description = "Recupera tutte le richieste")
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
@@ -71,7 +70,7 @@ public class BackofficeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @Operation(summary = "Ottieni le richieste archiviate", description = "Recupera tutte le richieste archiviate")
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
@@ -84,7 +83,7 @@ public class BackofficeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @Operation(summary = "Ottieni le richieste con status x", description = "Recupera tutte le richieste con un determinato status")
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
@@ -97,7 +96,7 @@ public class BackofficeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @Operation(summary = "Ottieni le richieste con nome x", description = "Recupera tutte le richieste che contengono il parametro nel campo nome")
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
@@ -110,7 +109,7 @@ public class BackofficeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @Operation(summary = "Ottieni le richieste con cognome x", description = "Recupera tutte le richieste che contengono il parametro nel campo cognome")
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
@@ -123,7 +122,7 @@ public class BackofficeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @Operation(summary = "Ottieni le richieste con email x", description = "Recupera tutte le richieste che contengono il parametro nel campo email")
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
@@ -136,7 +135,7 @@ public class BackofficeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @Operation(summary = "Ottieni le richieste con organizzazione x", description = "Recupera tutte le richieste che contengono il parametro nel campo organizzazione")
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
@@ -149,7 +148,7 @@ public class BackofficeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @Operation(summary = "Ottieni le richieste con data x", description = "Recupera tutte le richieste che hanno una certa data di creazione")
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
@@ -162,7 +161,7 @@ public class BackofficeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @Operation(summary = "Elimita richiesta", description = "Modifica il flag cancellato di una richiesta rendendolo invisibile e imposta la data di cancellazione a un anno dalla data attuale")
     @ApiResponse(responseCode = "201", description = "Richiesta cancellato con successo")
     @ApiResponse(responseCode = "400", description = "Richiesta non valida")
@@ -175,7 +174,7 @@ public class BackofficeController {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
-    
+
     @Operation(summary = "Ottieni le informazioni", description = "Recupera tutte le informazioni non archiviate")
     @ApiResponse(responseCode = "200", description = "Lista di informazioni recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
@@ -188,7 +187,7 @@ public class BackofficeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @Operation(summary = "Ottieni tutte le informazioni", description = "Recupera tutte le informazioni disponibili")
     @ApiResponse(responseCode = "200", description = "Lista di informazioni recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
@@ -201,7 +200,7 @@ public class BackofficeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @Operation(summary = "Ottieni solo le informazioni archiviate", description = "Recupera tutte le informazioni in archivio")
     @ApiResponse(responseCode = "200", description = "Lista di informazioni recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
@@ -214,7 +213,7 @@ public class BackofficeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @Operation(summary = "Modifica una informazione", description = "Permette di aggiornare i dati relativi a una informazione")
     @ApiResponse(responseCode = "200", description = "informazione aggiornata")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
@@ -237,7 +236,7 @@ public class BackofficeController {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
-    
+
     @Operation(summary = "Ottieni le prenotazioni", description = "Recupera le prenotazioni non archiviate")
     @ApiResponse(responseCode = "200", description = "Lista di prenotazioni recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
@@ -250,7 +249,7 @@ public class BackofficeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @Operation(summary = "Ottieni tutte le prenotazioni", description = "Recupera tutte le prenotazioni disponibili")
     @ApiResponse(responseCode = "200", description = "Lista di prenotazioni recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
@@ -263,7 +262,7 @@ public class BackofficeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @Operation(summary = "Ottieni le prenotazioni archiviate", description = "Recupera tutte le prenotazioni archiviate")
     @ApiResponse(responseCode = "200", description = "Lista di prenotazioni recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
@@ -276,7 +275,7 @@ public class BackofficeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @Operation(summary = "Modifica una prenotazione", description = "Permette di aggiornare i dati relativi a una preno")
     @ApiResponse(responseCode = "200", description = "Prenotazione aggiornata")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
@@ -301,7 +300,7 @@ public class BackofficeController {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
-    
+
     @Operation(summary = "Crea nuovo utente", description = "Crea e salva un nuovo utente")
     @ApiResponse(responseCode = "201", description = "Utente aggiunto con successo")
     @ApiResponse(responseCode = "400", description = "Richiesta non valida")
@@ -314,7 +313,7 @@ public class BackofficeController {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
-    
+
     @Operation(summary = "Modifica utente", description = "Modifica i dati di un utente")
     @ApiResponse(responseCode = "201", description = "Utente aggiornato con successo")
     @ApiResponse(responseCode = "400", description = "Richiesta non valida")
@@ -327,7 +326,7 @@ public class BackofficeController {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
-    
+
     @Operation(summary = "Elimita utente", description = "Modifica il flag cancellato di un utente rendendolo invisibile e imposta la data di cancellazione a un anno dalla data attuale")
     @ApiResponse(responseCode = "201", description = "Utente cancellato con successo")
     @ApiResponse(responseCode = "400", description = "Richiesta non valida")
@@ -340,5 +339,5 @@ public class BackofficeController {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
-    
+
 }

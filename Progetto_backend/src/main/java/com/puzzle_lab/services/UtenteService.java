@@ -19,7 +19,7 @@ public class UtenteService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-    
+
 	public List<Utente> findAll(){
 
 		return utenteDAO.findAll();

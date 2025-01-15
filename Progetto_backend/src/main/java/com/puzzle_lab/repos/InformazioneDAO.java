@@ -9,7 +9,7 @@ import com.puzzle_lab.entities.Status;
 
 
 public interface InformazioneDAO extends JpaRepository<Informazione, Long> {
-	
+
 	List<Informazione> findByStatus(Status status);
 	List<Informazione> findByStatusNot(Status status);
 }
