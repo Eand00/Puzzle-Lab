@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Backoffice Caccia SAPERI</title>
+    
+    <!-- Stili -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/components/header.css">
+    <link rel="stylesheet" href="assets/css/components/toast.css">
+    <link rel="stylesheet" href="assets/css/pages/index.css">
+</head>
+<body>
+    <!-- Header con navigazione -->
+    <header-component page-title="Dashboard"></header-component>
+
+    <main class="dashboard-container">
+        
+        <section class="dashboard-stats">
+            <h2>Riepilogo</h2>
+            <!-- Qui andranno i widget con le statistiche -->
+        </section>
+
+        <section class="recent-requests">
+            <h2>Ultime richieste</h2>
+            <!-- Qui andrà la lista delle ultime richieste -->
+        </section>
+    </main>
+
+    <!-- Toast per messaggi di feedback -->
+    <toast-component></toast-component>
+
+    <!-- Scripts -->
+    <script type="module" src="assets/js/components/header-component.js"></script>
+    <script type="module" src="assets/js/components/toast-component.js"></script>
+    <script type="module" src="assets/js/pages/index.main.js"></script>
+</body>
+</html>
