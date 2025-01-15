@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestione Utenti - Backoffice Caccia SAPERI</title>
     
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <!-- Stili -->
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/components/header.css">
@@ -16,17 +20,14 @@
     <header-component page-title="Gestione Utenti"></header-component>
 
     <main class="users-container">
-
-        <!-- Azioni -->
-        <section class="actions-section">
-            <button type="button" class="btn-primary" id="addUserBtn">
-                Nuovo Utente
-            </button>
-        </section>
-
         <!-- Lista utenti -->
         <section class="users-list">
-            <h2>Elenco Utenti</h2>
+            <div class="users-list-header">
+                <h2>Elenco Utenti</h2>
+                <button type="button" class="btn-primary" id="addUserBtn">
+                    Nuovo Utente
+                </button>
+            </div>
             <table class="users-table">
                 <thead>
                     <tr>

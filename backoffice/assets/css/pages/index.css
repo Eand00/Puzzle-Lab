@@ -1,0 +1,104 @@
+/**
+ * File: index.css
+ * Description: Styles for the dashboard page
+ * Version: 1.0.0
+ * Author: Puzzle Lab
+ * Contributors: Bonura Vincenzo
+ * Date: 2025-01-15
+ */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 2rem;
+    height: calc(100vh - var(--navbar-height) - 4rem);
+}
+
+.dashboard-grid h2 {
+    margin-top: 0;
+}
+
+/* Statistiche */
+.dashboard-stats {
+    background: var(--color-white);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.stat-card {
+    background: var(--color-light);
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-base-primary);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: var(--color-base-secondary);
+}
+
+.stat-card.total {
+    grid-column: span 2;
+    background: var(--color-base-primary);
+}
+
+.stat-card.total .stat-number {
+    color: var(--color-white);
+}
+
+.stat-card.total .stat-label {
+    color: var(--color-light);
+}
+
+/* Ultime richieste */
+.recent-requests {
+    background: var(--color-white);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.requests-list {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.view-all {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-card.total {
+        grid-column: auto;
+    }
+}

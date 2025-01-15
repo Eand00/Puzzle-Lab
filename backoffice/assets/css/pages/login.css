@@ -1,0 +1,118 @@
+/**
+ * File: login.css
+ * Description: Styles for the login page
+ * Version: 1.0.0
+ * Author: Puzzle Lab
+ * Contributors: Bonura Vincenzo
+ * Date: 2025-01-15
+ */
+
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: var(--color-light);
+}
+
+.login-box {
+    background: var(--color-white);
+    padding: 3rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-box h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--color-dark);
+    font-family: var(--font-family-heading);
+}
+
+.login-box h1::before {
+    content: url(../../images/asterisco.svg);
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--color-dark);
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-base-secondary);
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--color-base-primary);
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 1rem;
+    font-size: 1.125rem;
+    font-weight: 500;
+}
+
+/* Error state */
+.form-group.error input {
+    border-color: var(--color-danger);
+}
+
+.error-message {
+    color: var(--color-danger);
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .login-box {
+        padding: 2rem;
+    }
+}
+
+/* Loading state */
+.btn-primary.loading {
+    position: relative;
+    color: transparent;
+}
+
+.btn-primary.loading::after {
+    content: '';
+    position: absolute;
+    width: 1.25rem;
+    height: 1.25rem;
+    top: 50%;
+    left: 50%;
+    margin: -0.625rem 0 0 -0.625rem;
+    border: 2px solid var(--color-white);
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
