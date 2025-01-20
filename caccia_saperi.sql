@@ -147,8 +147,7 @@ INSERT INTO `richieste` (`id`, `cancellato`, `cognome`, `data_creazione`, `data_
 (18, b'0', 'Viola', '2025-01-18 17:00:00.000000', NULL, 'giada.viola@example.com', 'Giada', '7788990011', 'Azienda H', 'CONFERMATA'),
 (19, b'0', 'Azzurri', '2025-01-19 18:00:00.000000', NULL, 'antonio.azzurri@example.com', 'Antonio', '8899001122', 'Azienda G', 'PRESA_IN_CARICO'),
 (20, b'1', 'Marroni', '2025-01-20 19:00:00.000000', '2025-02-20 10:00:00.000000', 'luisa.marroni@example.com', 'Luisa', '9900112233', 'Azienda F', 'RIFIUTATA'),
-(21, b'0', 'Avdiu', '2025-01-13 21:28:33.000000', NULL, 'avdiu.eand@gmail.com', 'Eand', '+39 3483156301', 'non lo so', 'RICEVUTA'),
-(22, b'0', 'ses', '2025-01-18 19:45:42.000000', NULL, 'samuelesicura@gmail.com', 'samu', '1112229988', 'LePalle', 'RICEVUTA');
+(21, b'0', 'Avdiu', '2025-01-13 21:28:33.000000', NULL, 'avdiu.eand@gmail.com', 'Eand', '+39 3483156301', 'non lo so', 'RICEVUTA');
 
 -- --------------------------------------------------------
 
