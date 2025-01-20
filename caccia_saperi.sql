@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 13, 2025 at 09:32 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Creato il: Gen 18, 2025 alle 20:04
+-- Versione del server: 10.4.28-MariaDB
+-- Versione PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `email-template`
+-- Struttura della tabella `email-template`
 --
 
 CREATE TABLE `email-template` (
@@ -40,16 +40,16 @@ CREATE TABLE `email-template` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `email-template`
+-- Dump dei dati per la tabella `email-template`
 --
 
 INSERT INTO `email-template` (`id`, `corpo`, `encryption_type`, `host`, `oggetto`, `password`, `port`, `usato`, `username`) VALUES
-(1, 'Grazie per aver usato il nostro servizio!', 'TLS', 'smtp.gmail.com', 'Richiesta Caccia Saperi', 'aomc iqez fopo kcnu', 587, b'1', 'caccia.saperi@gmail.com');
+(1, '<html lang=\"it\">\r\n    <head>\r\n        <meta charset=\"UTF-8\">\r\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n        <title>Conferma Ricezione della Richiesta</title>\r\n        <style>\r\n            body {\r\n                font-family: Arial, sans-serif;\r\n                margin: 0;\r\n                padding: 0;\r\n                background-color: #f4f4f4;\r\n            }\r\n            .email-container {\r\n                max-width: 600px;\r\n                margin: 20px auto;\r\n                background: #ffffff;\r\n                border: 1px solid #dddddd;\r\n                border-radius: 8px;\r\n                overflow: hidden;\r\n            }\r\n            .header {\r\n                color: #ffffff;\r\n                text-align: center;\r\n                padding: 20px 10px;\r\n            }\r\n            h1 {\r\n                margin: 0;\r\n                font-size: 24px;\r\n                color: #fab700;\r\n            }\r\n            .content {\r\n                padding: 20px;\r\n                color: #333333;\r\n                line-height: 1.6;\r\n            }\r\n            .content h2 {\r\n                font-size: 20px;\r\n                margin-top: 0;\r\n            }\r\n            .content p {\r\n                margin: 10px 0;\r\n            }\r\n\r\n            .footer {\r\n                text-align: center;\r\n                padding: 10px;\r\n                color: white;\r\n                background-color: #4b3f72;\r\n                font-size: 12px;\r\n            }\r\n            .button {\r\n                display: inline-block;\r\n                margin-top: 20px;\r\n                padding: 10px 20px;\r\n                background-color: #4b3f72;\r\n                color: #ffffff;\r\n                text-decoration: none;\r\n                border-radius: 5px;\r\n                font-size: 16px;\r\n            }\r\n            .button:hover {\r\n                background-color: #fab700;\r\n            }\r\n        </style>\r\n    </head>\r\n    <body>\r\n        <div class=\"email-container\">\r\n            <div class=\"header\">\r\n                <img src=\"https://i.imgur.com/lPnYvNv.png\" alt=\"logo\" />\r\n            </div>\r\n            <div class=\"content\">\r\n                <h1>Grazie per la tua richiesta!</h1>\r\n                <p>Ciao {{NOME_UTENTE}},</p>\r\n                <p>Abbiamo ricevuto la tua richiesta e il nostro team la esaminerà al più presto. Ti contatteremo per fornirti una risposta in base alle tue esigenze.</p>\r\n                <p>Nel frattempo, se hai domande o necessiti di ulteriori informazioni, non esitare a contattarci.</p>\r\n                <p>Puoi anche visitare il nostro sito web per maggiori dettagli.</p>\r\n                <a href=\"https://cascinacaccia.net/\" class=\"button\">Visita il nostro sito</a>\r\n            </div>\r\n\r\n            <div class=\"footer\">\r\n                <p>Questo è un messaggio automatico, si prega di non rispondere a questa email.</p>\r\n                <p>Se non hai effettuato questa richiesta, ignora pure questa email o contatta il nostro supporto.</p>\r\n                <p>Contattaci:</p>\r\n                <p>Email: supporto@tuosito.it | Telefono: +39 123 456 7890</p>\r\n            \r\n                <!-- <p>&copy; 2024 La Nostra Attività. Tutti i diritti riservati.</p> -->\r\n            </div>\r\n        </div>\r\n    </body>\r\n    </html>', 'TLS', 'smtp.gmail.com', 'Richiesta Caccia Saperi', 'aomc iqez fopo kcnu', 587, b'1', 'caccia.saperi@gmail.com');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `informazioni`
+-- Struttura della tabella `informazioni`
 --
 
 CREATE TABLE `informazioni` (
@@ -58,7 +58,7 @@ CREATE TABLE `informazioni` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `informazioni`
+-- Dump dei dati per la tabella `informazioni`
 --
 
 INSERT INTO `informazioni` (`testo`, `id`) VALUES
@@ -76,7 +76,7 @@ INSERT INTO `informazioni` (`testo`, `id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prenotazioni`
+-- Struttura della tabella `prenotazioni`
 --
 
 CREATE TABLE `prenotazioni` (
@@ -87,7 +87,7 @@ CREATE TABLE `prenotazioni` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `prenotazioni`
+-- Dump dei dati per la tabella `prenotazioni`
 --
 
 INSERT INTO `prenotazioni` (`data_fine`, `data_inizio`, `testo`, `id`) VALUES
@@ -106,7 +106,7 @@ INSERT INTO `prenotazioni` (`data_fine`, `data_inizio`, `testo`, `id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `richieste`
+-- Struttura della tabella `richieste`
 --
 
 CREATE TABLE `richieste` (
@@ -123,7 +123,7 @@ CREATE TABLE `richieste` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `richieste`
+-- Dump dei dati per la tabella `richieste`
 --
 
 INSERT INTO `richieste` (`id`, `cancellato`, `cognome`, `data_creazione`, `data_prevista_cancellazione`, `email`, `nome`, `numero`, `organizzazione`, `status`) VALUES
@@ -147,12 +147,13 @@ INSERT INTO `richieste` (`id`, `cancellato`, `cognome`, `data_creazione`, `data_
 (18, b'0', 'Viola', '2025-01-18 17:00:00.000000', NULL, 'giada.viola@example.com', 'Giada', '7788990011', 'Azienda H', 'CONFERMATA'),
 (19, b'0', 'Azzurri', '2025-01-19 18:00:00.000000', NULL, 'antonio.azzurri@example.com', 'Antonio', '8899001122', 'Azienda G', 'PRESA_IN_CARICO'),
 (20, b'1', 'Marroni', '2025-01-20 19:00:00.000000', '2025-02-20 10:00:00.000000', 'luisa.marroni@example.com', 'Luisa', '9900112233', 'Azienda F', 'RIFIUTATA'),
-(21, b'0', 'Avdiu', '2025-01-13 21:28:33.000000', NULL, 'avdiu.eand@gmail.com', 'Eand', '+39 3483156301', 'non lo so', 'RICEVUTA');
+(21, b'0', 'Avdiu', '2025-01-13 21:28:33.000000', NULL, 'avdiu.eand@gmail.com', 'Eand', '+39 3483156301', 'non lo so', 'RICEVUTA'),
+(22, b'0', 'ses', '2025-01-18 19:45:42.000000', NULL, 'samuelesicura@gmail.com', 'samu', '1112229988', 'LePalle', 'RICEVUTA');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `utenti`
+-- Struttura della tabella `utenti`
 --
 
 CREATE TABLE `utenti` (
@@ -166,74 +167,74 @@ CREATE TABLE `utenti` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `utenti`
+-- Dump dei dati per la tabella `utenti`
 --
 
 INSERT INTO `utenti` (`email`, `cognome`, `nome`, `password`, `ruolo`, `cancellato`, `data_prevista_cancellazione`) VALUES
 ('eand.avdiu@edu.itspiemonte.it', 'Avdiu', 'Eand', '$2a$10$4tZD/YbYS/aDObw775PNEe45R1XhhmY6csJflXu6pkBwc45DLW89y', 'USER', b'0', NULL);
 
 --
--- Indexes for dumped tables
+-- Indici per le tabelle scaricate
 --
 
 --
--- Indexes for table `email-template`
+-- Indici per le tabelle `email-template`
 --
 ALTER TABLE `email-template`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `informazioni`
+-- Indici per le tabelle `informazioni`
 --
 ALTER TABLE `informazioni`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `prenotazioni`
+-- Indici per le tabelle `prenotazioni`
 --
 ALTER TABLE `prenotazioni`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `richieste`
+-- Indici per le tabelle `richieste`
 --
 ALTER TABLE `richieste`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `utenti`
+-- Indici per le tabelle `utenti`
 --
 ALTER TABLE `utenti`
   ADD PRIMARY KEY (`email`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT per le tabelle scaricate
 --
 
 --
--- AUTO_INCREMENT for table `email-template`
+-- AUTO_INCREMENT per la tabella `email-template`
 --
 ALTER TABLE `email-template`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `richieste`
+-- AUTO_INCREMENT per la tabella `richieste`
 --
 ALTER TABLE `richieste`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
--- Constraints for dumped tables
+-- Limiti per le tabelle scaricate
 --
 
 --
--- Constraints for table `informazioni`
+-- Limiti per la tabella `informazioni`
 --
 ALTER TABLE `informazioni`
   ADD CONSTRAINT `FKb5w7yti08rd56055derdujdwx` FOREIGN KEY (`id`) REFERENCES `richieste` (`id`);
 
 --
--- Constraints for table `prenotazioni`
+-- Limiti per la tabella `prenotazioni`
 --
 ALTER TABLE `prenotazioni`
   ADD CONSTRAINT `fk_prenotazioni_richieste` FOREIGN KEY (`id`) REFERENCES `richieste` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;

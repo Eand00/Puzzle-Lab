@@ -96,7 +96,7 @@ public class EmailService {
 
     //manda le email in seguito al ricevimento di una richiesta dal form
     public void emailRichiesta(Richiesta richiesta) throws MessagingException {
-    	sendEmail(richiesta.getEmail(),config.getCorpo(), config.getOggetto(), true);
+    	sendEmail(richiesta.getEmail(),config.getCorpo().replace("{{NOME_UTENTE}}", richiesta.getNome()), config.getOggetto(), true);
 
     	String corpo = "Hai ricevuto una richiesta da "+ richiesta.getNome()
     		+ " " + richiesta.getCognome()
