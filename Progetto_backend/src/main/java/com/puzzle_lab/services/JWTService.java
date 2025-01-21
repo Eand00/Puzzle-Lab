@@ -21,7 +21,7 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JWTService {
 
-    private String chiaveSegreta = "ChiaveSuperSegretaAlmeno32Caratteri!";
+    private String chiaveSegreta;
 
     private long scadenzaToken = 3600000; // 1 ora
 
