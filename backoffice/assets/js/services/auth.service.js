@@ -15,7 +15,6 @@ export async function login(username, password) {
                 'Authorization': 'Basic ' + btoa(`${username}:${password}`),
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(credentials)
         });
 
         if (typeof response === 'string') {

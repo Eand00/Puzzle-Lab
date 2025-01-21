@@ -27,9 +27,7 @@ loginForm.addEventListener('submit', async (event) => {
 
         // If a token is received, redirect to the index page
         if (token) {
-            setTimeout(() => {
-                window.location.href = 'index.html';  // Redirect to the dashboard or home page
-            });
+            window.location.href = 'index.html';  // Redirect to the dashboard or home page
         }
     } catch (error) {
         // Error handling is already done in the login function
