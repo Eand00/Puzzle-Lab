@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Richieste - Backoffice Caccia SAPERI</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Stili -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/components/header.css">
+    <link rel="stylesheet" href="assets/css/components/toast.css">
+    <link rel="stylesheet" href="assets/css/pages/requests.css">
+</head>
+<body>
+    <!-- Header con navigazione -->
+    <header-component page-title="Gestione Richieste"></header-component>
+
+    <main class="requests-container">
+
+        <!-- Lista richieste -->
+        <section class="requests-list">
+            <div class="requests-list-header">
+                <h2>Elenco Richieste</h2>
+                <div class="requests-list-filters">
+                    <form id="filterForm" class="filters-form">
+                        <div class="form-group--inline">
+                            <label for="status">Stato</label>
+                            <select id="status" name="status">
+                                <option value="">Tutti</option>
+                                <option value="new">Nuove</option>
+                                <option value="in-progress">In Lavorazione</option>
+                                <option value="completed">Completate</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+            <!-- La lista verrà popolata dinamicamente -->
+        </section>
+    </main>
+
+    <!-- Toast per messaggi di feedback -->
+    <toast-component></toast-component>
+
+    <!-- Scripts -->
+    <script type="module" src="assets/js/components/header-component.js"></script>
+    <script type="module" src="assets/js/components/toast-component.js"></script>
+    <script type="module" src="assets/js/pages/main.js"></script>
+    <script type="module" src="assets/js/pages/requests.main.js"></script>
+</body>
+</html>

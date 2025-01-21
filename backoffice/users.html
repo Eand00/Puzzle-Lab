@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Utenti - Backoffice Caccia SAPERI</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Stili -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/components/header.css">
+    <link rel="stylesheet" href="assets/css/components/toast.css">
+    <link rel="stylesheet" href="assets/css/pages/users.css">
+</head>
+<body>
+    <!-- Header con navigazione -->
+    <header-component page-title="Gestione Utenti"></header-component>
+
+    <main class="users-container">
+        <!-- Lista utenti -->
+        <section class="users-list">
+            <div class="users-list-header">
+                <h2>Elenco Utenti</h2>
+                <button type="button" class="btn-primary" id="addUserBtn">
+                    Nuovo Utente
+                </button>
+            </div>
+            <table class="users-table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Nome</th>
+                        <th>Stato</th>
+                        <th>Ultimo accesso</th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- La lista verrà popolata dinamicamente -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Toast per messaggi di feedback -->
+    <toast-component></toast-component>
+
+    <!-- Scripts -->
+    <script type="module" src="assets/js/components/header-component.js"></script>
+    <script type="module" src="assets/js/components/toast-component.js"></script>
+    <script type="module" src="assets/js/pages/main.js"></script>
+    <script type="module" src="assets/js/pages/users.main.js"></script>
+</body>
+</html>

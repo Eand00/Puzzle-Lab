@@ -29,6 +29,6 @@ public class Utente {
 	private String password;
 	private boolean cancellato = false;
     private LocalDateTime dataPrevistaCancellazione;
-	
+
 
 }

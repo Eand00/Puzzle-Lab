@@ -10,6 +10,7 @@ import com.puzzle_lab.entities.FasciaOraria;
 import com.puzzle_lab.entities.Laboratori;
 import com.puzzle_lab.entities.Prenotazione;
 import com.puzzle_lab.entities.Tipologia;
+import com.puzzle_lab.entities.Status;
 import com.puzzle_lab.repos.PrenotazioneDAO;
 
 @Service
@@ -97,5 +98,13 @@ public class PrenotazioneService extends RichiestaService{
 	    // Trova tutte le prenotazioni
 	    public List<Prenotazione> trovaTuttePrenotazioni() {
 	        return prenotazioneDAO.findAll();
+	    }
+	    // Trova le prenotazioni NON archiviate
+	    public List<Prenotazione> trovaPrenotazioni() {
+	        return prenotazioneDAO.findByStatusNot(Status.ARCHIVIATA);
+	    }
+	    // Trova solo le prenotazioni archiviate
+	    public List<Prenotazione> trovaPrenotazioniArchiviate() {
+	        return prenotazioneDAO.findByStatus(Status.ARCHIVIATA);
 	    }
 }

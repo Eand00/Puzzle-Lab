@@ -10,6 +10,7 @@
  */
 
 @import "./utility.css";
+@import "./footer.css";
 
 /* Global */
 :root {
@@ -28,7 +29,7 @@ html {
 	font-family: "Inter", sans-serif;
 	font-optical-sizing: auto;
 	font-style: normal;
-	text-wrap: balance;
+	text-wrap: auto;
 }
 
 /* font size */
@@ -37,12 +38,22 @@ h1 {
 	font-weight: 700;
 }
 h2 {
-	font-size: 1.75rem;
+	font-size: 1.875rem;
 	font-weight: 700;
 }
 h3 {
-	font-size: 1.25rem;
+	font-size: 1.5rem;
 	font-weight: 700;
+}
+p {
+	font-size: 1.25rem;
+	font-weight: 300;
+}
+.bold {
+	font-weight: 700;
+}
+.light {
+	font-weight: 300;
 }
 
 /* Header */
@@ -349,11 +360,16 @@ p.follows {
 	padding-block: 3rem;
 }
 .cta-button {
+	display: block;
+	text-align: center;
+	line-height: 3.5rem;
 	text-decoration: none;
-	color: var(--color-white);
-	background-color: var(--color-black);
-	padding: 1rem 2rem;
-	font-size: 1.2rem;
+	color: var(--color-black);
+	margin: 1rem 0;
+	width: calc(100vw - 2rem);
+	max-width: 20rem;
+	height: 3.5rem;
+	font-size: 1.5rem;
 	font-weight: bold;
 	border-radius: 2rem;
 	border: none;
@@ -418,3 +434,31 @@ footer {
 	font-size: 0.875rem;
 	text-align: center;
 }
+
+/* Cookie banner */
+.infoBanner {
+	display: flex;
+	gap: 0.5rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-base-secondary);
+    padding: 1rem;
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+}
+.infoBanner.closing {
+	transform: translateY(100%);
+}
+.btn-container {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+.btn-container button {
+	padding: 0.25rem 0.5rem;
+	cursor: pointer;
+
+}
+

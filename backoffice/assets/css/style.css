@@ -1,0 +1,172 @@
+/** 
+ * File: style.css
+ * Description: Global stylesheet for the backoffice portal.
+ * Version: 1.0.0
+ * Author: Puzzle Lab
+ * Contributors: Bonura Vincenzo
+ * Date: 2025-01-15
+ */
+
+/* Variables */
+:root {
+    /* Colors */
+    --color-base-primary: #007bff;
+    --color-base-secondary: #6c757d;
+    --color-success: #28a745;
+    --color-danger: #dc3545;
+    --color-warning: #ffc107;
+    --color-info: #17a2b8;
+    
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-dark: #343a40;
+    --color-light: #f8f9fa;
+
+    /* Typography */
+    --text-size-base: 16px;
+    --font-family-base: "Inter", sans-serif;
+    --font-family-heading: "Montserrat", sans-serif;
+
+    /* Layout */
+    --navbar-height: 64px;
+}
+
+/* Global Reset */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Base Styles */
+html {
+    font-size: var(--text-size-base);
+    font-family: var(--font-family-base);
+    font-optical-sizing: auto;
+    font-style: normal;
+    text-wrap: balance;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-light);
+}
+
+/* Typography */
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: var(--font-family-heading);
+}
+
+h2 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    font-family: var(--font-family-heading);
+}
+
+h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: var(--font-family-heading);
+}
+
+p {
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 1.5;
+}
+
+/* Utility Classes */
+.bold {
+    font-weight: 700;
+}
+
+.light {
+    font-weight: 300;
+}
+
+/* Layout */
+main {
+    flex: 1;
+    padding: 2rem;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Splash */
+.splash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--color-white);
+    background-image: url('../images/asterisco.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 150px;
+    z-index: 1000;
+    transition: opacity 0.25s linear;
+}
+.splash.closing {
+    opacity: 0;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group--inline {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.form-group--inline label {
+    margin-bottom: 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--color-base-secondary);
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--color-base-primary);
+    color: var(--color-white);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}

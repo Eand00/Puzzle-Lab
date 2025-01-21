@@ -1,0 +1,104 @@
+/**
+ * File: users.css
+ * Description: Styles for the users management page
+ * Version: 1.0.0
+ * Author: Puzzle Lab
+ * Date: 2024-11-25
+ */
+
+.users-container {
+    height: calc(100vh - var(--navbar-height) - 4rem);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Lista utenti */
+.users-list {
+    background: var(--color-white);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    flex: 1;
+    overflow-y: auto;
+}
+
+.users-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.users-list-header h2 {
+    margin: 0;
+}
+
+.users-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.users-table th {
+    position: sticky;
+    top: 0;
+    background: var(--color-white);
+    z-index: 1;
+}
+
+.users-table td {
+    vertical-align: middle;
+}
+
+.user-status {
+    display: inline-block;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.user-status.active {
+    background: var(--color-success);
+}
+
+.user-status.inactive {
+    background: var(--color-base-secondary);
+}
+
+.actions-cell {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.action-btn {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: background-color 0.3s ease;
+}
+
+.action-btn.edit {
+    background: var(--color-info);
+    color: var(--color-white);
+}
+
+.action-btn.delete {
+    background: var(--color-danger);
+    color: var(--color-white);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .users-table {
+        font-size: 0.875rem;
+    }
+
+    .action-btn {
+        padding: 0.25rem;
+    }
+}

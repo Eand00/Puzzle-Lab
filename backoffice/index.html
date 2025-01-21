@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Backoffice Caccia SAPERI</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Stili -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/components/header.css">
+    <link rel="stylesheet" href="assets/css/components/toast.css">
+    <link rel="stylesheet" href="assets/css/pages/index.css">
+</head>
+<body>
+    <header-component page-title="Dashboard"></header-component>
+
+    <main class="dashboard-container">
+        <div class="dashboard-grid">
+            <!-- Colonna sinistra: Statistiche -->
+            <section class="dashboard-stats">
+                <h2>Riepilogo</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number">-</span>
+                        <span class="stat-label">Ricevute</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">-</span>
+                        <span class="stat-label">In carico</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">-</span>
+                        <span class="stat-label">Rifiutate</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">-</span>
+                        <span class="stat-label">Completate</span>
+                    </div>
+                    <div class="stat-card total">
+                        <span class="stat-number">-</span>
+                        <span class="stat-label">Totali</span>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- Colonna destra: Ultime richieste -->
+            <section class="recent-requests">
+                <h2>Ultime Richieste</h2>
+                <div class="requests-list">
+                    <!-- Lista richieste verrà popolata dinamicamente -->
+                </div>
+                <div class="view-all">
+                    <a href="./requests.html" class="btn-primary">Vedi tutte</a>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+
+    <toast-component></toast-component>
+
+    <!-- Scripts -->
+    <script type="module" src="assets/js/components/header-component.js"></script>
+    <script type="module" src="assets/js/components/toast-component.js"></script>
+    <script type="module" src="assets/js/pages/main.js"></script>
+    <script type="module" src="assets/js/pages/index.main.js"></script>
+</body>
+</html>
