@@ -1,6 +1,14 @@
 import { apiClient } from '../utils/api-client.js';
 import { API_BASE_URL } from '../config/config.js';
 
+
+/**
+ * Effettua il login dell'utente
+ * @function login
+ * @param {string} username - Il nome utente
+ * @param {string} password - La password
+ * @returns {Promise<string>} - Il token JWT
+ */
 export async function login(username, password) {
     const url = `${API_BASE_URL}/login`;
     const credentials = {
@@ -34,7 +42,20 @@ export async function login(username, password) {
     }
 }
 
+/**
+ * Effettua il logout dell'utente
+ * @function logout
+ */
 export function logout() {
     localStorage.removeItem('jwtToken');
     window.location.href = 'login.html';
+}
+
+/**
+ * Controlla se l'utente è loggato e redirige alla pagina di login se non lo è
+ * @function checkAuth
+ * @returns {boolean} - True se l'utente è loggato, false altrimenti
+ */
+export function checkAuth() {
+    return localStorage.getItem('jwtToken') !== null;
 }

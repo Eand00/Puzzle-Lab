@@ -97,6 +97,25 @@ main {
     width: 100%;
 }
 
+/* Splash */
+.splash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--color-white);
+    background-image: url('../images/asterisco.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 150px;
+    z-index: 1000;
+    transition: opacity 0.25s linear;
+}
+.splash.closing {
+    opacity: 0;
+}
+
 /* Forms */
 .form-group {
     margin-bottom: 1rem;

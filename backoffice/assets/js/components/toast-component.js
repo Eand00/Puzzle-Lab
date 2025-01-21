@@ -18,29 +18,7 @@ class ToastComponent extends HTMLElement {
     }
 
     render() {
-        this.innerHTML = `
-            <div class="toast-container"></div>
-            
-            <!-- XXX: testing -->
-            <div class="toast-test-buttons" 
-                style="
-                    position: fixed; 
-                    bottom: 0.5rem; 
-                    left: 0.5rem;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 2px;
-                    z-index: 1000;
-                    background: #0007;
-                    padding: 1rem;
-                    border-radius: 8px;
-                ">
-                <button onclick="document.querySelector('toast-component').showToast('info', 'Info Title', 'This is an info message')">Test Info</button>
-                <button onclick="document.querySelector('toast-component').showToast('success', 'Success!', 'Operation completed successfully')">Test Success</button>
-                <button onclick="document.querySelector('toast-component').showToast('warning', 'Warning', 'Please check your input')">Test Warning</button>
-                <button onclick="document.querySelector('toast-component').showToast('error', 'Error', 'Something went wrong')">Test Error</button>
-            </div>
-        `;
+        this.innerHTML = `<div class="toast-container"></div>`;
     }
 
     /**
