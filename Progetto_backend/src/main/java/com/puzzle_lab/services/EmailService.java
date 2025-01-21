@@ -100,14 +100,14 @@ public class EmailService {
 
     	String corpo = "Hai ricevuto una richiesta da "+ richiesta.getNome()
     		+ " " + richiesta.getCognome()
-    		+ "\norgainzzazione: " + richiesta.getOrganizzazione()
-    		+ "\nemail: " + richiesta.getEmail()
-    		+ "\nnumero: " + richiesta.getNumero();
+    		+ "\nOrganizzazione: " + richiesta.getOrganizzazione()
+    		+ "\nE-mail: " + richiesta.getEmail()
+    		+ "\nNumero di telefono: " + richiesta.getNumero();
     	if(richiesta instanceof Prenotazione) {
-    		corpo += "\ndisponibilità: " + ((Prenotazione)richiesta).getDataInizio()
+    		corpo += "\nDisponibilità: " + ((Prenotazione)richiesta).getDataInizio()
     				+" - "+((Prenotazione)richiesta).getDataFine();
     	}else {
-    		corpo += "\nrichiesta: " + ((Informazione)richiesta).getTesto();
+    		corpo += "\nDomanda: " + ((Informazione)richiesta).getTesto();
     	}
 
     	List<Utente> utenti = utenteService.findAll();
