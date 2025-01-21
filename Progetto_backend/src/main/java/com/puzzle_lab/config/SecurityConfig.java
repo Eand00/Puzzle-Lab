@@ -34,7 +34,7 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable) // Disables CSRF
             .cors(withDefaults()) // Abilita il CORS
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/back-office/**").authenticated() // Secure paths
+                //.requestMatchers("/back-office/**").authenticated() // Secure paths
                 .requestMatchers("/login", "/logout", "/swagger-ui/**", "/v3/api-docs/**").permitAll() // Public access to login/logout
                 .anyRequest().permitAll() // All other requests require authentication
             )

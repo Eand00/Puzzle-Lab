@@ -300,6 +300,19 @@ public class BackofficeController {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
+    
+    @Operation(summary = "Ottieni tutti gli utenti", description = "Recupera gli utenti")
+    @ApiResponse(responseCode = "200", description = "Lista di utenti recuperata con successo")
+    @ApiResponse(responseCode = "500", description = "Errore interno del server")
+    @GetMapping("/utente")
+    public ResponseEntity<List<Utente>> ottieniTuttiUtenti() {
+        try {
+            List<Utente> utenti = utenteService.findAll();
+            return ResponseEntity.ok(utenti);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
     @Operation(summary = "Crea nuovo utente", description = "Crea e salva un nuovo utente")
     @ApiResponse(responseCode = "201", description = "Utente aggiunto con successo")
