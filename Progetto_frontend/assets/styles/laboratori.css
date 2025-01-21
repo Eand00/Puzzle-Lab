@@ -18,19 +18,21 @@ main h1 {
 /* Intro Labs */
 
 .laboratories-grid {
-    display: grid;
-    gap: 1.5rem;
-    padding: 0 0 3rem 0;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .lab-card {
-    width: 100%;
+    width: 80vw;
+    max-width: 360px;
     height: 100px;
     display: block;
     text-decoration: none;
     border-radius: var(--border-radius-small);
     overflow: hidden;
+    margin: 1rem;
 }
 
 .lab-card__image {
@@ -70,7 +72,7 @@ main h1 {
     align-items: center;
     justify-content: center;
     color: #ffffff;
-    height: calc(100vw);
+    height: 80vh;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center, center;
@@ -90,13 +92,17 @@ main h1 {
     text-align: center;
 }
 
+main p {
+    padding: 0 2rem;
+}
+
 /* Description */
 .lab-description {
     padding: 2rem 1rem;
+    max-width: 65ch; /* Per una migliore leggibilità */
 }
 
 .lab-description__content {
-    max-width: 65ch; /* Per una migliore leggibilità */
     margin: 0 auto;
 }
 
@@ -104,11 +110,19 @@ main h1 {
 .lab-related {
     max-width: 100%;
     overflow-x: hidden;
-    padding: 0;
+    padding: 0 0 2rem;
 }
 
 .lab-related h2 {
     text-align: center;
+}
+
+.lab-related .laboratories-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
 }
 
 .lab-related .lab-carousel {
