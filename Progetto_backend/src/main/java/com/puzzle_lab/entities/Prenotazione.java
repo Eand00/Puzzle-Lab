@@ -1,6 +1,6 @@
 package com.puzzle_lab.entities;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,17 +17,16 @@ import lombok.EqualsAndHashCode;
 public class Prenotazione extends Richiesta {
 
     @Column(name = "data_inizio", nullable = false)
-    private LocalDateTime dataInizio;
+    private LocalDate dataInizio;
 
     @Column(name = "data_fine", nullable = false)
-    private LocalDateTime dataFine;
+    private LocalDate dataFine;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String testo;
-    
-    @Enumerated(EnumType.STRING)
+
     @Column(nullable = false)
-    private Laboratori laboratori;
+    private String laboratori;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "fascia_oraria")

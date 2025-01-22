@@ -1,6 +1,6 @@
  package com.puzzle_lab.services;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import com.puzzle_lab.entities.FasciaOraria;
 import com.puzzle_lab.entities.Laboratori;
 import com.puzzle_lab.entities.Prenotazione;
-import com.puzzle_lab.entities.Tipologia;
 import com.puzzle_lab.entities.Status;
+import com.puzzle_lab.entities.Tipologia;
 import com.puzzle_lab.repos.PrenotazioneDAO;
 
 @Service
@@ -38,21 +38,32 @@ public class PrenotazioneService extends RichiestaService{
 	        }
 	    }
 
-	    private void validaDate(LocalDateTime dataInizio, LocalDateTime dataFine) {
+	    private void validaDate(LocalDate dataInizio, LocalDate dataFine) {
 	        if (dataInizio == null || dataFine == null) {
 	            throw new IllegalArgumentException("Le date di inizio e fine sono obbligatorie.");
 	        }
 	        if (dataInizio.isAfter(dataFine)) {
 	            throw new IllegalArgumentException("La data di inizio non può essere successiva alla data di fine.");
 	        }
-	        if (dataInizio.isBefore(LocalDateTime.now().plusDays(1))) {
+	        if (dataInizio.isBefore(LocalDate.now().plusDays(1))) {
 	            throw new IllegalArgumentException("La data di inizio deve essere almeno il giorno successivo alla prenotazione.");
 	        }
 	    }
 
-	    private void validaLaboratori(Laboratori laboratori) {
-	        if (laboratori == null) {
-	            throw new IllegalArgumentException("Il laboratorio è obbligatorio.");
+	    private void validaLaboratori(String laboratori) {
+	        if (laboratori == null || laboratori.trim().isEmpty()) {
+	            throw new IllegalArgumentException("I laboratori sono obbligatori.");
+	        }
+
+	        // Split the string by semicolon and validate each laboratory
+	        String[] labs = laboratori.split(",");
+	        for (String lab : labs) {
+	            String trimmedLab = lab.trim();
+	            try {
+	                Laboratori.valueOf(trimmedLab);
+	            } catch (IllegalArgumentException e) {
+	                throw new IllegalArgumentException("Laboratorio non valido: " + trimmedLab);
+	            }
 	        }
 	    }
 
