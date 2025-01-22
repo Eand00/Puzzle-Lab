@@ -41,7 +41,22 @@
 		<!-- Main -->
 		<main>
             <!-- Hero -->
-            <section class="container-fluid first-section lab-hero" style="--url-image: url('../images/img-libera/cascinacaccia/mobile/cascina-caccia.jpg');">
+            <section class="container-fluid first-section lab-hero" style="
+			--url-image-desktop: image-set(
+				url(../images/img-libera/cascinacaccia/desktop/cascina-caccia.avif) type('image/avif'), 
+				url(../images/img-libera/cascinacaccia/desktop/cascina-caccia.webp) type('image/webp'),
+				url(../images/img-libera/cascinacaccia/desktop/cascina-caccia.jpg) type('image/jpeg')
+			); 
+			--url-image-mobile: image-set(
+				url(../images/img-libera/cascinacaccia/mobile/cascina-caccia.avif) type('image/avif'), 
+				url(../images/img-libera/cascinacaccia/mobile/cascina-caccia.webp) type('image/webp'),
+				url(../images/img-libera/cascinacaccia/mobile/cascina-caccia.jpg) type('image/jpeg')
+			);
+			--url-image-tablet: image-set(
+				url(../images/img-libera/cascinacaccia/tablet/cascina-caccia.avif) type('image/avif'), 
+				url(../images/img-libera/cascinacaccia/tablet/cascina-caccia.webp) type('image/webp'),
+				url(../images/img-libera/cascinacaccia/tablet/cascina-caccia.jpg) type('image/jpeg')
+			);" >
                 <h2 class="text-light">Storia di cascina</h2>
             </section>
 

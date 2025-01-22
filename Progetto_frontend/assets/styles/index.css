@@ -24,7 +24,11 @@
     content:'';
     position: absolute;
     inset: 0;
-    background-image: url(../images/index/hero.jpg);
+    background-image: image-set(
+        url(../images/img-libera/homepage-hero/desktop/homepage-hero.avif) type('image/avif'), 
+        url(../images/img-libera/homepage-hero/desktop/homepage-hero.webp) type('image/webp'),
+        url(../images/img-libera/homepage-hero/desktop/homepage-hero.jpg) type('image/jpeg')
+    );
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -368,3 +372,4 @@
         );
     }
 }
+

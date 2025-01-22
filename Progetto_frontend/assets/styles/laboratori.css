@@ -156,3 +156,16 @@ main p {
 .cta-container {
     padding-top: 0;
 }
+
+@media (min-width: 768px) {
+    .lab-hero {
+       
+        background-image: var(--url-image-mobile);
+    }
+}
+@media (min-width: 992px) {
+    .lab-hero {
+       
+        background-image: var(--url-image-tablet);
+    }
+}
