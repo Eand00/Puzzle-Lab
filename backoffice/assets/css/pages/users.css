@@ -25,6 +25,29 @@
     background-color: #0056b3;
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+tr.user-row {
+    background-color: #f9f9f9; /* Colore di sfondo per ogni riga */
+}
+
+tr.user-row:nth-child(even) {
+    background-color: #f1f1f1; /* Colore alternato per le righe */
+}
+
+button {
+    margin-right: 10px;
+}
+
 .users-container {
     height: calc(100vh - var(--navbar-height) - 4rem);
     display: flex;

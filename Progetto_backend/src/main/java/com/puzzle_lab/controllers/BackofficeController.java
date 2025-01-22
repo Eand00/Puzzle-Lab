@@ -2,6 +2,7 @@ package com.puzzle_lab.controllers;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -313,6 +315,18 @@ public class BackofficeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+    @Operation(summary = "Ottieni utente per email", description = "Recupera l'utente")
+    @ApiResponse(responseCode = "200", description = "Lista di utenti recuperata con successo")
+    @ApiResponse(responseCode = "500", description = "Errore interno del server")
+    @GetMapping("/utente/{email}")
+    public ResponseEntity<Utente> ottieniUtentiPerEmail(@PathVariable String email) {
+        try {
+            Utente utente = utenteService.findByEmail(email);
+            return ResponseEntity.ok(utente);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
     @Operation(summary = "Crea nuovo utente", description = "Crea e salva un nuovo utente")
     @ApiResponse(responseCode = "201", description = "Utente aggiunto con successo")
@@ -332,8 +346,23 @@ public class BackofficeController {
     @ApiResponse(responseCode = "400", description = "Richiesta non valida")
     @PutMapping("/utente")
     public ResponseEntity<String> modificaUtente(@RequestBody Utente utente) {
-        try {
-            utenteService.aggiornaUtente(utente);
+    	 try {
+    	        // Recupera l'utente esistente
+    	        Utente existingUser = utenteService.findByEmail(utente.getEmail());
+    	        
+    	        // Modifica solo i campi forniti
+    	        if (utente.getNome() != null) {
+    	            existingUser.setNome(utente.getNome());
+    	        }
+    	        if (utente.getCognome() != null) {
+    	            existingUser.setCognome(utente.getCognome());
+    	        }
+    	        if (utente.getRuolo() != null) {
+    	            existingUser.setRuolo(utente.getRuolo());
+    	        }
+
+    	        // Salva l'utente aggiornato
+    	        utenteService.aggiornaUtente(existingUser);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Utente aggiornato con successo.");
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
@@ -344,8 +373,12 @@ public class BackofficeController {
     @ApiResponse(responseCode = "201", description = "Utente cancellato con successo")
     @ApiResponse(responseCode = "400", description = "Richiesta non valida")
     @DeleteMapping("/utente")
-    public ResponseEntity<String> eliminaUtente(@RequestBody String email) {
+    public ResponseEntity<String> eliminaUtente(@RequestBody Map<String, String> payload) {
         try {
+        	String email = payload.get("email");
+        	if (email == null || email.isEmpty()) {
+                return ResponseEntity.badRequest().body("Email mancante o non valida.");
+            }
             utenteService.eliminaUtente(email);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Utente cancellato con successo.");
         } catch (IllegalArgumentException ex) {
