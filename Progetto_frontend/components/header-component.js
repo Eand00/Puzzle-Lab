@@ -16,11 +16,11 @@ class HeaderComponent extends HTMLElement {
 
         this.template = document.createElement('template');
         this.template.innerHTML = `
-            <header class="bg-white fixed-top">
+            <header class="bg-dark fixed-top">
                 <nav class="navbar">
                     <a class="navbar-brand" href="${basePath}/index.html">
-                        <div class="row1">CACCIA</div>
-                        <div class="row2">SAPERI</div>
+                        <div class="row1 text-white">CACCIA</div>
+                        <div class="row2 text-white">SAPERI</div>
                     </a>
                     <button class="navbar-toggle" id="navbarBtn" type="button" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
