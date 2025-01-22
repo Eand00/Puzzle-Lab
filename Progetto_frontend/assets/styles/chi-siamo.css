@@ -44,6 +44,14 @@ main > .first-section {
    background-color: #00000088;
 }
 
+picture {
+   width: 90vw;
+   height: calc(90vw / 2);
+   overflow: hidden;
+   border-radius: var(--border-radius-big);
+   margin: 0 auto;
+}
+
 .left-attached, .right-attached {
    display: flex;
    justify-content: center;
