@@ -1,5 +1,6 @@
 package com.puzzle_lab.repos;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +20,7 @@ public interface RichiestaDAO extends JpaRepository<Richiesta,Long> {
     List<Richiesta> findByStatus(Status status);
     List<Richiesta> findByStatusNot(Status status);
 
-	Optional<Richiesta> findByDataCreazione(LocalDateTime data);
+	Optional<Richiesta> findByDataCreazione(LocalDate data);
 
 	@Query("SELECT r FROM Richiesta r WHERE r.nome LIKE CONCAT('%', :nome, '%')")
 	Optional<List<Richiesta>> findByNome(@Param("nome")String nome);

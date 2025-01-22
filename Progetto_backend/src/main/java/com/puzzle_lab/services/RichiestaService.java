@@ -1,5 +1,6 @@
 package com.puzzle_lab.services;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -90,7 +91,7 @@ public class RichiestaService {
         return richiestaDAO.findByOrganizzazione(organizzazione);
     }
 
-    public Optional<Richiesta> trovaPerData(LocalDateTime data) {
+    public Optional<Richiesta> trovaPerData(LocalDate data) {
 		return richiestaDAO.findByDataCreazione(data);
 	}
 

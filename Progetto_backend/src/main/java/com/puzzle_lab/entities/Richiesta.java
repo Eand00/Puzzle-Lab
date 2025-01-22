@@ -1,5 +1,6 @@
 package com.puzzle_lab.entities;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.SQLRestriction;
@@ -49,7 +50,7 @@ public abstract class Richiesta {
     @Column(nullable = false)
 	private String organizzazione;
 	private String numero;
-	private LocalDateTime dataCreazione ;
+	private LocalDate dataCreazione ;
 	private boolean cancellato = false;
     private LocalDateTime dataPrevistaCancellazione;
 
@@ -58,7 +59,7 @@ public abstract class Richiesta {
 
 	@PrePersist
     protected void onCreate() {
-        this.dataCreazione = LocalDateTime.now();
+        this.dataCreazione = LocalDate.now();
         this.status = Status.RICEVUTA;
     }
 
