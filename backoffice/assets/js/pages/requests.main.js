@@ -39,25 +39,29 @@ fetch(API_BASE_URL+'richieste')
             // Popola il contenitore con le richieste filtrate
             richiesteFiltrate.forEach(item => {
                 const richiesta = document.createElement('div');
-                const proprieta = document.createElement('details');
+                const summary = document.createElement('summary');
                 richiesta.className = 'request';
-                proprieta.innerHTML = `
-                <summary>
+                summary.innerHTML = `
                     <h5>Tipo: ${item.tipo || 'N/A'}</h5>
                     <p>Da: ${item.nome || 'N/A'} ${item.cognome || 'N/A'}</p>
                     <p>email: ${item.email || 'N/A'}</p>
                     <p>organizzazione: ${item.organizzazione || 'N/A'}</p>
-                    <select id="status" name="status">
-                        <option value="RICEVUTA">Ricevuta</option>
-                        <option value="PRESA_IN_CARICO">Presa in carico</option>
-                        <option value="CONFERMATA">Confermata</option>
-                        <option value="RIFIUTATA">Rifiutata</option>
-                    </select>
-                </summary>
                 `;
 
-                const details = document.createElement('div');
-                details.className = 'details';
+                // modifica status
+                const modificaStatus = document.createElement('div');
+                modificaStatus.innerHTML = `
+                    <select class="statusSelect" name="status"> 
+                        <option value="RICEVUTA" ${item.status === 'RICEVUTA' ? 'selected' : ''}>Ricevuta</option>
+            <option value="PRESA_IN_CARICO" ${item.status === 'PRESA_IN_CARICO' ? 'selected' : ''}>Presa in carico</option>
+            <option value="CONFERMATA" ${item.status === 'CONFERMATA' ? 'selected' : ''}>Confermata</option>
+            <option value="RIFIUTATA" ${item.status === 'RIFIUTATA' ? 'selected' : ''}>Rifiutata</option>
+        </select>
+                    `;
+                modificaStatus.addEventListener('change', () => updateStatus(item, richiesta));
+                summary.appendChild(modificaStatus);
+
+                const details = document.createElement('details');
                 details.innerHTML = `
                     <p>numero: ${item.numero || 'N/A'}</p>
                     <p>data: ${item.dataCreazione || 'N/A'}</p>
@@ -83,12 +87,43 @@ fetch(API_BASE_URL+'richieste')
                 cancellaButton.addEventListener('click', () => cancellaRichiesta(item, richiesta));
                 details.appendChild(cancellaButton);
 
-                proprieta.appendChild(details);
-                richiesta.appendChild(proprieta);
+                summary.appendChild(details);
+                richiesta.appendChild(summary);
                 richiesteContainer.appendChild(richiesta);
             });
         }
 
+        function updateStatus(item, richiesta) {
+            const select = richiesta.querySelector('.statusSelect');
+            const newStatus = select.value; // Ottieni il valore selezionato dal dropdown
+            const id = item.id; // ID dell'oggetto originale
+            const url = API_BASE_URL+`richieste/status?id=${id}&status=${newStatus}`;
+            console.log(url);
+            // Effettua la richiesta PUT per aggiornare lo stato
+            fetch(API_BASE_URL+`richieste/status?id=${id}&status=${newStatus}`, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            })
+              .then((response) => {
+                if (response.ok) {
+                  return response.json();
+                } else {
+                  throw new Error(`Errore nella modifica dello stato: ${response.status}`);
+                }
+              })
+              .then((updatedItem) => {
+                console.log('Stato aggiornato con successo:', updatedItem);
+          
+                // Aggiorna l'oggetto originale localmente
+                item.status = newStatus;
+              })
+              .catch((error) => {
+                console.error('Errore nella richiesta:', error);
+              });
+          }
+          
 
         function cancellaRichiesta(item, richiesta) {
             const conferma = confirm(`Sei sicuro di voler cancellare la richiesta "${item.id}"?`);
@@ -180,7 +215,6 @@ fetch(API_BASE_URL+'richieste')
 
         function salvaModifiche(item, richiesta) {
             const form = richiesta.querySelector('.edit-form');
-            const formData = new FormData(form);
             
             // Crea un oggetto con i dati modificati
             const updatedData = {
