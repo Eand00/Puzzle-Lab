@@ -1,6 +1,6 @@
 package com.puzzle_lab.controllers;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -153,7 +153,7 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/richieste/data")//formato data: 2025-01-04T21:30:27
-    public ResponseEntity<Optional<Richiesta>> ottieniRichiestePerData(@RequestParam(required = false) LocalDateTime data) {
+    public ResponseEntity<Optional<Richiesta>> ottieniRichiestePerData(@RequestParam(required = false) LocalDate data) {
         try {
             Optional<Richiesta> richieste = richiestaService.trovaPerData(data);
             return ResponseEntity.ok(richieste);
