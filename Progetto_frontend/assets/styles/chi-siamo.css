@@ -64,8 +64,13 @@ main > .first-section::before {
 }
 
 main > .first-section {
+   height: 68vh;
    position: relative;
    background-color: #00000088;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   text-align: center;
 }
 
 picture {
