@@ -19,69 +19,76 @@
     <!-- Header con navigazione -->
     <header-component page-title="Gestione Utenti"></header-component>
 
+    <!-- Main content -->
     <main class="users-container">
-        <!-- Lista utenti -->
         <section class="users-list">
             <div class="users-list-header">
                 <h2>Elenco Utenti</h2>
-                <!-- Bottone per mostrare il modulo -->
-                <button type="button" class="btn-primary" id="addUserBtn" aria-label="Aggiungi un nuovo utente">
+                <button type="button" class="btn-primary" id="addUserBtn">
                     Nuovo Utente
                 </button>
             </div>
-
-            <!-- Contenitore per il modulo di creazione -->
-            <div id="createUserFormContainer" style="display: none;">
-                <div class="card">
-                    <div class="card-header">Crea un nuovo utente</div>
-                    <div class="card-body">
-                        <form id="createUserForm">
-                            <div style="margin-bottom: 10px;">
-                                <label for="nome">Nome</label>
-                                <input type="text" id="nome" name="nome" style="width: 100%; padding: 5px;" required>
-                            </div>
-                            <div style="margin-bottom: 10px;">
-                                <label for="cognome">Cognome</label>
-                                <input type="text" id="cognome" name="cognome" style="width: 100%; padding: 5px;" required>
-                            </div>
-                            <div style="margin-bottom: 10px;">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" name="email" style="width: 100%; padding: 5px;" required>
-                            </div>
-                            <div style="margin-bottom: 10px;">
-                                <label for="password">Password</label>
-                                <input type="password" id="password" name="password" style="width: 100%; padding: 5px;" required>
-                            </div>
-                            <div style="margin-bottom: 10px;">
-                                <label for="ruolo">Ruolo</label>
-                                <select id="ruolo" name="ruolo" style="width: 100%; padding: 5px;">
-                                    <option value="USER">USER</option>
-                                    <option value="ADMIN">ADMIN</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn-primary">Crea Utente</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tabella utenti -->
             <table class="users-table">
                 <thead>
                     <tr>
                         <th>Email</th>
-                        <th>Cognome</th>
                         <th>Nome</th>
+                        <th>Cognome</th>
                         <th>Ruolo</th>
                         <th>Azioni</th>
                     </tr>
                 </thead>
-                <tbody id="userTableBody">
-                    <!-- La lista verrà popolata dinamicamente -->
+                <tbody id="usersTableBody">
+                    <!-- Users will be populated here -->
                 </tbody>
             </table>
         </section>
     </main>
+
+    <!-- Modal -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Nuovo Utente</h3>
+            <form id="userForm" novalidate>
+                <div class="form-group">
+                    <label for="email">Email*</label>
+                    <input type="email" id="email" name="email" required 
+                        pattern="^[\w.-]+@[\w.-]+\.[a-z]{2,}$">
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="nome">Nome*</label>
+                    <input type="text" id="nome" name="nome" required 
+                        pattern="^[a-zA-Z\s]+$">
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="cognome">Cognome*</label>
+                    <input type="text" id="cognome" name="cognome" required
+                        pattern="^[a-zA-Z\s]+$">
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password<span id="passwordHelp"></span></label>
+                    <input type="password" id="password" name="password" required>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="ruolo">Ruolo*</label>
+                    <select id="ruolo" name="ruolo" required>
+                        <option value="">Seleziona ruolo</option>
+                        <option value="USER">User</option>
+                        <option value="ADMIN">Admin</option>
+                    </select>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Salva</button>
+                    <button type="button" class="btn-secondary" onclick="closeModal()">Annulla</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Toast per messaggi di feedback -->
     <toast-component></toast-component>
