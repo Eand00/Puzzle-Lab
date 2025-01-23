@@ -15,7 +15,7 @@
 }
 
 .request{
-    cursor: pointer;
+    position: relative;
     margin: 0 auto;
     margin-bottom: 20px;
     padding: 40px;
@@ -23,7 +23,28 @@
     border-radius: 15px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
+/* Stile per il select */
+.request .statusSelect {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: auto; /* Cambia la larghezza */
+    max-width: 200px; /* Imposta una larghezza massima */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
 
+/* Stile per la data */
+.request #data {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    margin: 0;
+    font-size: 0.9em;
+    color: #555;
+}
 
 .requests-container h2 {
     margin-top: 0;
@@ -55,6 +76,15 @@
     gap: 2rem;
     align-items: flex-end;
 }
+
+
+.filters-form input[type="text"]{
+    margin-right: 4rem;
+}
+.filters-form label[for="status"]{
+    margin-left: 4rem;
+}
+
 
 .requests-table {
     width: 100%;
