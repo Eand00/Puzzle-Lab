@@ -42,9 +42,8 @@ public class UtenteService {
         if (!utenteDAO.existsById(utente.getEmail())) {
             throw new IllegalArgumentException("Utente con email " + utente.getEmail() + " non trovato.");
         }
-        validaRuolo(utente.getRuolo());
-        validaNome(utente.getNome());
-        validaCognome(utente.getCognome()); // Effettua la convalida
+        validaUtente(utente);
+        utente.setPassword(passwordEncoder.encode(utente.getPassword()));
         return utenteDAO.save(utente); // Salva aggiornato
     }
 
@@ -61,10 +60,16 @@ public class UtenteService {
 
     // Validazione dei dati dell'utente
     public void validaUtente(Utente utente) {
-        validaEmail(utente.getEmail());
-        validaRuolo(utente.getRuolo());
-        validaNome(utente.getNome());
-        validaCognome(utente.getCognome());
+        if (utenteDAO.existsById(utente.getEmail())) {
+            validaRuolo(utente.getRuolo());
+            validaNome(utente.getNome());
+            validaCognome(utente.getCognome());
+        } else {
+            validaEmail(utente.getEmail());
+            validaRuolo(utente.getRuolo());
+            validaNome(utente.getNome());
+            validaCognome(utente.getCognome());
+        }
     }
 
     // Convalida dell'email

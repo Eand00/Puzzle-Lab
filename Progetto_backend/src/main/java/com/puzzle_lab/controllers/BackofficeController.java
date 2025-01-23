@@ -306,7 +306,7 @@ public class BackofficeController {
     @Operation(summary = "Ottieni tutti gli utenti", description = "Recupera gli utenti")
     @ApiResponse(responseCode = "200", description = "Lista di utenti recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
-    @GetMapping("/utente")
+    @GetMapping("/utenti")
     public ResponseEntity<List<Utente>> ottieniTuttiUtenti() {
         try {
             List<Utente> utenti = utenteService.findAll();
@@ -319,7 +319,7 @@ public class BackofficeController {
     @ApiResponse(responseCode = "200", description = "Lista di utenti recuperata con successo")
     @ApiResponse(responseCode = "500", description = "Errore interno del server")
     @GetMapping("/utente/{email}")
-    public ResponseEntity<Utente> ottieniUtentiPerEmail(@PathVariable String email) {
+    public ResponseEntity<Utente> ottieniUtentePerEmail(@PathVariable String email) {
         try {
             Utente utente = utenteService.findByEmail(email);
             return ResponseEntity.ok(utente);
@@ -360,7 +360,9 @@ public class BackofficeController {
     	        if (utente.getRuolo() != null) {
     	            existingUser.setRuolo(utente.getRuolo());
     	        }
-
+				if (utente.getPassword() != null) {
+					existingUser.setPassword(utente.getPassword());
+				}
     	        // Salva l'utente aggiornato
     	        utenteService.aggiornaUtente(existingUser);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Utente aggiornato con successo.");
@@ -373,12 +375,8 @@ public class BackofficeController {
     @ApiResponse(responseCode = "201", description = "Utente cancellato con successo")
     @ApiResponse(responseCode = "400", description = "Richiesta non valida")
     @DeleteMapping("/utente")
-    public ResponseEntity<String> eliminaUtente(@RequestBody Map<String, String> payload) {
-        try {
-        	String email = payload.get("email");
-        	if (email == null || email.isEmpty()) {
-                return ResponseEntity.badRequest().body("Email mancante o non valida.");
-            }
+    public ResponseEntity<String> eliminaUtente(@RequestBody String email) {
+    	try {
             utenteService.eliminaUtente(email);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Utente cancellato con successo.");
         } catch (IllegalArgumentException ex) {
