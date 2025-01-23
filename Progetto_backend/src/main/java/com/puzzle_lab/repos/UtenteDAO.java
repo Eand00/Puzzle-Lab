@@ -17,5 +17,7 @@ public interface UtenteDAO extends JpaRepository<Utente, String>{
 	@Transactional
 	@Query("DELETE FROM Utente u WHERE u.dataPrevistaCancellazione < :currentTime")
 	void deleteByDeleteScheduledAtBefore(@Param("currentTime") LocalDateTime currentTime);
+	
+	Utente findByEmail(String email);
 
 }
