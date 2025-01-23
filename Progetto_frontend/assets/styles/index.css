@@ -24,7 +24,6 @@
     content:'';
     position: absolute;
     inset: 0;
-    background-image: url(../images/index/hero.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -389,3 +388,35 @@
 .cta-button {
     width: 20rem;
 }
+
+/*! Mobile */
+#hero > div::before {
+    background-image: image-set(
+        url(../images/img-libera/homepage-hero/mobile/homepage-hero.avif) type('image/avif'), 
+        url(../images/img-libera/homepage-hero/mobile/homepage-hero.webp) type('image/webp'),
+        url(../images/img-libera/homepage-hero/mobile/homepage-hero.jpg) type('image/jpeg') 
+    );
+}
+
+/*! Tablet  */
+@media (min-width: 768px) {
+    #hero > div::before {
+        background-image: image-set(
+            url(../images/img-libera/homepage-hero/tablet/homepage-hero.avif) type('image/avif'), 
+            url(../images/img-libera/homepage-hero/tablet/homepage-hero.webp) type('image/webp'),
+            url(../images/img-libera/homepage-hero/tablet/homepage-hero.jpg) type('image/jpeg') 
+        );
+    }
+}
+
+/*! Desktop  */
+@media (min-width: 992px) {
+    #hero > div::before {
+        background-image: image-set(
+            url(../images/img-libera/homepage-hero/desktop/homepage-hero.avif) type('image/avif'), 
+            url(../images/img-libera/homepage-hero/desktop/homepage-hero.webp) type('image/webp'),
+            url(../images/img-libera/homepage-hero/desktop/homepage-hero.jpg) type('image/jpeg') 
+        );
+    }
+}
+
