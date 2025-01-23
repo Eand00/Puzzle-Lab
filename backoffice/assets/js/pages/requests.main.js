@@ -46,6 +46,7 @@ fetch(API_BASE_URL+'richieste')
                     <p>Da: ${item.nome || 'N/A'} ${item.cognome || 'N/A'}</p>
                     <p>email: ${item.email || 'N/A'}</p>
                     <p>organizzazione: ${item.organizzazione || 'N/A'}</p>
+                    <p id="data">data: ${item.dataCreazione || 'N/A'}</p>
                 `;
 
                 // modifica status
@@ -53,10 +54,10 @@ fetch(API_BASE_URL+'richieste')
                 modificaStatus.innerHTML = `
                     <select class="statusSelect" name="status"> 
                         <option value="RICEVUTA" ${item.status === 'RICEVUTA' ? 'selected' : ''}>Ricevuta</option>
-            <option value="PRESA_IN_CARICO" ${item.status === 'PRESA_IN_CARICO' ? 'selected' : ''}>Presa in carico</option>
-            <option value="CONFERMATA" ${item.status === 'CONFERMATA' ? 'selected' : ''}>Confermata</option>
-            <option value="RIFIUTATA" ${item.status === 'RIFIUTATA' ? 'selected' : ''}>Rifiutata</option>
-        </select>
+                        <option value="PRESA_IN_CARICO" ${item.status === 'PRESA_IN_CARICO' ? 'selected' : ''}>Presa in carico</option>
+                        <option value="CONFERMATA" ${item.status === 'CONFERMATA' ? 'selected' : ''}>Confermata</option>
+                        <option value="RIFIUTATA" ${item.status === 'RIFIUTATA' ? 'selected' : ''}>Rifiutata</option>
+                    </select>
                     `;
                 modificaStatus.addEventListener('change', () => updateStatus(item, richiesta));
                 summary.appendChild(modificaStatus);
@@ -64,7 +65,6 @@ fetch(API_BASE_URL+'richieste')
                 const details = document.createElement('details');
                 details.innerHTML = `
                     <p>numero: ${item.numero || 'N/A'}</p>
-                    <p>data: ${item.dataCreazione || 'N/A'}</p>
                     <p>Testo: ${item.testo || 'N/A'}</p>
                 `;
                 
@@ -72,7 +72,18 @@ fetch(API_BASE_URL+'richieste')
                     details.innerHTML += `
                         <p>Inizio disponibilità: ${item.dataInizio || 'N/A'}</p>
                         <p>Fine disponibilità: ${item.dataFine || 'N/A'}</p>
+                        <p>Laboratori: ${item.laboratori || 'N/A'}</p>
+                        <p>Tipologia: ${item.tipologia || 'N/A'}</p>
                     `;
+                    if(item.tipologia === "SOGGIORNO"){
+                        details.innerHTML += `
+                        <p>Numero Giorni: ${item.numeroGiorni || 'N/A'}</p>
+                        `;
+                    } else {
+                        details.innerHTML += `
+                        <p>Fascia oraria: ${item.fasciaOraria || 'N/A'}</p>
+                        `;
+                    }
                 }
                 
                 // pulsante modifica
@@ -197,7 +208,32 @@ fetch(API_BASE_URL+'richieste')
                             Fine disponibilità:
                             <input type="date" name="dataFine" value="${item.dataFine ? new Date(item.dataFine).toISOString().split('T')[0] : ''}">
                         </label>
+                        <label>
+                            Laboratori:
+                            <input type="text" name="laboratori" value="${item.laboratori || ''}">
+                        </label>
+                        <label>
+                            Tipologia:
+                            <select name="tipologia"> 
+                                <option value="VISITA" ${item.tipologia === 'VISITA' ? 'selected' : ''}>Visita</option>
+                                <option value="SOGGIORNO" ${item.tipologia === 'SOGGIORNO' ? 'selected' : ''}>Soggiorno</option>
+                            </select>
+                        </label>
                     ` : ''}
+                    ${item.tipo === "prenotazione" && item.tipologia === "SOGGIORNO" ? `
+                        <label>
+                            Numero giorni:
+                            <input type="text" name="numeroGiorni" value="${item.numeroGiorni || ''}">
+                        </label>
+                    ` : `
+                        <label>
+                            Fascia oraria:
+                            <select name="fasciaOraria"> 
+                                <option value="MATTINA" ${item.fasciaOraria === 'MATTINA' ? 'selected' : ''}>MATTINA</option>
+                                <option value="POMERIGGIO" ${item.fasciaOraria === 'POMERIGGIO' ? 'selected' : ''}>POMERIGGIO</option>
+                            </select>
+                        </label>
+                    `}
                     <button type="button" class="save-button">Salva</button>
                     <button type="button" class="cancel-button">Annulla</button>
                 </form>
