@@ -32,11 +32,35 @@ main > .first-section::before {
    content: '';
    position: absolute;
    inset: 0;
-   background-image: url("../images/img-libera/cascinacaccia/mobile/cascina-caccia.jpg");
+   background-image: image-set(
+      url(../images/img-libera/cascinacaccia/mobile/cascina-caccia.avif) type('image/avif'), 
+      url(../images/img-libera/cascinacaccia/mobile/cascina-caccia.webp) type('image/webp'),
+      url(../images/img-libera/cascinacaccia/mobile/cascina-caccia.jpg) type('image/jpeg')
+   );
    background-size: cover;
    background-repeat: no-repeat;
    background-position: center;
    z-index: -1;
+}
+
+@media (min-width: 768px) {
+   main > .first-section::before {
+       background-image: image-set(
+           url(../images/img-libera/cascinacaccia/tablet/cascina-caccia.avif) type('image/avif'), 
+           url(../images/img-libera/cascinacaccia/tablet/cascina-caccia.webp) type('image/webp'),
+           url(../images/img-libera/cascinacaccia/tablet/cascina-caccia.jpg) type('image/jpeg')
+       ); 
+   }
+}
+
+@media (min-width: 992px) {
+   main > .first-section::before {
+      background-image: image-set(
+         url(../images/img-libera/cascinacaccia/desktop/cascina-caccia.avif) type('image/avif'), 
+         url(../images/img-libera/cascinacaccia/desktop/cascina-caccia.webp) type('image/webp'),
+         url(../images/img-libera/cascinacaccia/desktop/cascina-caccia.jpg) type('image/jpeg')
+      ); 
+   }
 }
 
 main > .first-section {
@@ -56,18 +80,37 @@ picture {
    display: flex;
    justify-content: center;
    align-items: center;
-   background-image: url("../images/chi-siamo/bruno-caccia.jpg");
+}
+
+.left-attached {
+   background-image: image-set(
+      url(../images/img-libera/chi-siamo-immagine-1/mobile/chi-siamo-immagine-1.avif) type('image/avif'), 
+      url(../images/img-libera/chi-siamo-immagine-1/mobile/chi-siamo-immagine-1.webp) type('image/webp'),
+      url(../images/img-libera/chi-siamo-immagine-1/mobile/chi-siamo-immagine-1.jpg) type('image/jpeg')
+   );
    background-position: center;
    background-size: cover;
    background-attachment: fixed;
 }
 
 .right-attached {
-   background-image: url("../images/chi-siamo/cascina.jpg");
+   background-image: image-set(
+      url(../images/img-libera/chi-siamo-immagine-2/mobile/chi-siamo-immagine-2.avif) type('image/avif'), 
+      url(../images/img-libera/chi-siamo-immagine-2/mobile/chi-siamo-immagine-2.webp) type('image/webp'),
+      url(../images/img-libera/chi-siamo-immagine-2/mobile/chi-siamo-immagine-2.jpg) type('image/jpeg')
+   );
+   background-position: center;
+   background-size: cover;
+   background-attachment: fixed;
 }
 
 @media (min-width: 768px) {
    .left-attached {
+      background-image: image-set(
+         url(../images/img-libera/chi-siamo-immagine-1/tablet/chi-siamo-immagine-1.avif) type('image/avif'), 
+         url(../images/img-libera/chi-siamo-immagine-1/tablet/chi-siamo-immagine-1.webp) type('image/webp'),
+         url(../images/img-libera/chi-siamo-immagine-1/tablet/chi-siamo-immagine-1.jpg) type('image/jpeg')
+      );
       border-top-right-radius: 180px;
       border-bottom-right-radius: 180px;
       margin-left: -2rem;
@@ -75,6 +118,11 @@ picture {
   }
   
    .right-attached {
+      background-image: image-set(
+         url(../images/img-libera/chi-siamo-immagine-2/tablet/Chi_Siamo_Immagine2.avif) type('image/avif'), 
+         url(../images/img-libera/chi-siamo-immagine-2/tablet/Chi_Siamo_Immagine2.webp) type('image/webp'),
+         url(../images/img-libera/chi-siamo-immagine-2/tablet/Chi_Siamo_Immagine2.jpg) type('image/jpeg')
+      );
       border-top-left-radius: 180px;
       border-bottom-left-radius: 180px;
       margin-right: -2rem;
@@ -83,11 +131,29 @@ picture {
 
    picture {
       width: 90vw;
-      height: 24vh;
+      height: 30vh;
       overflow: hidden;
    }
   
    picture img {
       width: 100%;
   }
+}
+
+@media (min-width: 992px) {
+   .left-attached {
+      background-image: image-set(
+         url(../images/img-libera/chi-siamo-immagine-1/desktop/chi-siamo-immagine-1.avif) type('image/avif'), 
+         url(../images/img-libera/chi-siamo-immagine-1/desktop/chi-siamo-immagine-1.webp) type('image/webp'),
+         url(../images/img-libera/chi-siamo-immagine-1/desktop/chi-siamo-immagine-1.jpg) type('image/jpeg')
+      );
+   }
+  
+   .right-attached {
+      background-image: image-set(
+         url(../images/img-libera/chi-siamo-immagine-2/desktop/chi-siamo-immagine-2.avif) type('image/avif'), 
+         url(../images/img-libera/chi-siamo-immagine-2/desktop/chi-siamo-immagine-2.webp) type('image/webp'),
+         url(../images/img-libera/chi-siamo-immagine-2/desktop/chi-siamo-immagine-2.jpg) type('image/jpeg')
+      );
+   }
 }
