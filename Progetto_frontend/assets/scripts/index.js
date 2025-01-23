@@ -14,6 +14,18 @@
  * @description The container element for the testimonial carousel.
  */
 const containerScroll = document.getElementById("testimonial-container");
+/**
+ * @variable scrollIndex
+ * @type {HTMLElement}
+ * @description The index of setTimeout of scroll function.
+ */
+let scrollIndex;
+/**
+ * @variable carouselIndex
+ * @type {HTMLElement}
+ * @description The index of setTimeout of carousel function.
+ */
+let carouselIndex;
 
 /**
  * @function scroll
@@ -32,8 +44,24 @@ function carousel() {
     containerScroll.classList.remove("scroll");
     firstElement.remove();
     containerScroll.appendChild(firstElement);
-    setTimeout(scroll, 4700);
-    setTimeout(carousel, 5000);
+    scrollIndex = setTimeout(scroll, 4700);
 }
 
-carousel();
+/**
+ * @function handleMediaQueries
+ * @description Adjusts the carousel behavior based on media query changes.
+ */
+function handleMediaQueries() {
+    const mediaQuery = window.matchMedia("(max-width: 1440px)");
+
+    if (mediaQuery.matches) {
+        carousel();
+    }
+    else {
+        containerScroll.classList.remove("scroll");
+        clearTimeout(scrollIndex);
+    }
+}
+
+setInterval(handleMediaQueries, 5000);
+

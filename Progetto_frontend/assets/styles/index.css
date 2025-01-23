@@ -33,7 +33,7 @@
 }
 
 #hero > div {
-    background-color: #00000088;
+    background-color: #1F2041AA;
 }
 
 #hero h3 {
@@ -88,11 +88,12 @@
     display: flex;
     justify-content: start;
     align-items: center;
+    margin: 1rem 0;
 }
 
 #problema-soluzione ul li p {
     width: calc(100% - 5rem);
-    margin-left: 1rem;
+    margin: 0 0 0 1rem;
 }
 
 #problema-soluzione .num-container {
@@ -109,6 +110,37 @@
     font-size: 2rem;
 }
 
+@media (min-width: 1024px) {
+    #problema-soluzione ul {
+        display: flex;
+        flex-direction: row;
+        gap: 2rem;
+    }
+
+    #problema-soluzione ul li {
+        width: calc(100% / 3);
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    #problema-soluzione ul li p {
+        margin: 1rem 0 0;
+        text-align: center;
+    }
+
+    #problema-soluzione .num-container {
+        margin: 0;
+    }
+
+    .problema > p,
+    .problema > h3,
+    .soluzione > p,
+    .soluzione > h3 {
+        text-align: center;
+        margin: 1rem auto;
+        max-width: 65ch; /* Per una migliore leggibilità */
+    }
+}
 
 #problema-soluzione figure {
     width: 80vw;
@@ -188,16 +220,12 @@
     position: relative;
 }
 
-#perche-noi .benefit-icon::before {
-    content: 'ICONA / FOTO';
-    position: absolute;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--color-light);
+#perche-noi h3 {
+    margin: 1rem 0 0;
+}
+
+#perche-noi p {
+    margin: 0.5rem 0 0;
 }
 
 /* come funziona section */
@@ -230,15 +258,17 @@
     color: var(--color-light);
 }
 
+#come-funziona .step-content {
+    margin: 0 2rem;
+}
+
 #come-funziona .right-attached .step-label {
     border-radius: 3rem 0 0 3rem;
-    margin-left: 2rem;
 }
 
 #come-funziona .left-attached .step-label {
     border-radius: 0 45px 45px 0;
     justify-content: flex-end;
-    margin-right: 2rem;
 }
 
 #come-funziona .right-attached .step-content {
@@ -260,7 +290,8 @@
 }
 
 #testimonial-container .card {
-    width: 64vw;
+    width: 18rem;
+    padding: 0 0.5rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -269,7 +300,7 @@
 
 #testimonial-container figure.card-image {
     margin: 0 0 1rem 0;
-    width: 64vw;
+    width: 18rem;
 }
 
 #testimonial-container figure.card-image picture {
@@ -303,7 +334,7 @@
 }
 
 #testimonial-container.scroll {
-    transform: translateX(-64vw);
+    transform: translateX(-18rem);
     transition-duration: 0.3s;
 }
 
@@ -318,7 +349,7 @@
     border: 1px solid var(--color-dark);
     border-radius: 2rem;
     width: 80vw;
-    max-width: 400px;
+    max-width: 600px;
     margin-inline: auto;
 }
 
