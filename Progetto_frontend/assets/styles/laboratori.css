@@ -18,19 +18,21 @@ main h1 {
 /* Intro Labs */
 
 .laboratories-grid {
-    display: grid;
-    gap: 1.5rem;
-    padding: 0 0 3rem 0;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .lab-card {
-    width: 100%;
+    width: 80vw;
+    max-width: 360px;
     height: 100px;
     display: block;
     text-decoration: none;
     border-radius: var(--border-radius-small);
     overflow: hidden;
+    margin: 1rem;
 }
 
 .lab-card__image {
@@ -70,7 +72,7 @@ main h1 {
     align-items: center;
     justify-content: center;
     color: #ffffff;
-    height: calc(100vw);
+    height: 80vh;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center, center;
@@ -90,13 +92,17 @@ main h1 {
     text-align: center;
 }
 
+main p {
+    padding: 0 2rem;
+}
+
 /* Description */
 .lab-description {
     padding: 2rem 1rem;
+    max-width: 65ch; /* Per una migliore leggibilità */
 }
 
 .lab-description__content {
-    max-width: 65ch; /* Per una migliore leggibilità */
     margin: 0 auto;
 }
 
@@ -104,11 +110,19 @@ main h1 {
 .lab-related {
     max-width: 100%;
     overflow-x: hidden;
-    padding: 0;
+    padding: 0 0 2rem;
 }
 
 .lab-related h2 {
     text-align: center;
+}
+
+.lab-related .laboratories-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
 }
 
 .lab-related .lab-carousel {
@@ -142,3 +156,215 @@ main h1 {
 .cta-container {
     padding-top: 0;
 }
+
+
+/* Sfondi per i laboratori */
+
+/*! Mobile */
+#storia-di-cascina-caccia {
+    background-image: image-set(
+        url(../images/img-libera/cascinacaccia/mobile/cascina-caccia.avif) type('image/avif'), 
+        url(../images/img-libera/cascinacaccia/mobile/cascina-caccia.webp) type('image/webp'),
+        url(../images/img-libera/cascinacaccia/mobile/cascina-caccia.jpg) type('image/jpeg')
+    ); 
+}
+#bruno-caccia {
+    background-image: image-set(
+        url(../images/img-libera/bruno-caccia/mobile/bruno-caccia.avif) type('image/avif'), 
+        url(../images/img-libera/bruno-caccia/mobile/bruno-caccia.webp) type('image/webp'),
+        url(../images/img-libera/bruno-caccia/mobile/bruno-caccia.jpg) type('image/jpeg')
+    ); 
+}
+#introduzione-al-tema-mafia {
+    background-image: image-set(
+        url(../images/img-libera/mafia/mobile/mafia.avif) type('image/avif'), 
+        url(../images/img-libera/mafia/mobile/mafia.webp) type('image/webp'),
+        url(../images/img-libera/mafia/mobile/mafia.jpg) type('image/jpeg')
+    );
+}
+#beni-confiscati {
+    background-image: image-set(
+        url(../images/img-libera/beni-confiscati/mobile/beni-confiscati.avif) type('image/avif'), 
+        url(../images/img-libera/beni-confiscati/mobile/beni-confiscati.webp) type('image/webp'),
+        url(../images/img-libera/beni-confiscati/mobile/beni-confiscati.jpg) type('image/jpeg')
+    );
+}
+#le-mafie-in-piemonte {
+    background-image: image-set(
+        url(../images/img-libera/piemonte/mobile/piemonte.avif) type('image/avif'), 
+        url(../images/img-libera/piemonte/mobile/piemonte.webp) type('image/webp'),
+        url(../images/img-libera/piemonte/mobile/piemonte.jpg) type('image/jpeg')
+    );
+}
+#la-mafia-attraverso-il-cinema {
+    background-image: image-set(
+        url(../images/img-libera/il-padrino/mobile/il-padrino.avif) type('image/avif'), 
+        url(../images/img-libera/il-padrino/mobile/il-padrino.webp) type('image/webp'),
+        url(../images/img-libera/il-padrino/mobile/il-padrino.jpg) type('image/jpeg')
+    );
+}
+#il-gioco-non-e-un-azzardo {
+    background-image: image-set(
+        url(../images/img-libera/psicologia-gioco-di-azzardo/mobile/psicologia-gioco-di-azzardo.avif) type('image/avif'), 
+        url(../images/img-libera/psicologia-gioco-di-azzardo/mobile/psicologia-gioco-di-azzardo.webp) type('image/webp'),
+        url(../images/img-libera/psicologia-gioco-di-azzardo/mobile/psicologia-gioco-di-azzardo.jpg) type('image/jpeg')
+    );
+}
+#chi-non-gioca-vince {
+    background-image: image-set(
+        url(../images/img-libera/pesci/mobile/pesci.avif) type('image/avif'), 
+        url(../images/img-libera/pesci/mobile/pesci.webp) type('image/webp'),
+        url(../images/img-libera/pesci/mobile/pesci.jpg) type('image/jpeg')
+    );
+}
+#sostenibilita-ambientale {
+    background-image: image-set(
+        url(../images/img-libera/ambiente/mobile/ambiente.avif) type('image/avif'), 
+        url(../images/img-libera/ambiente/mobile/ambiente.webp) type('image/webp'),
+        url(../images/img-libera/ambiente/mobile/ambiente.jpg) type('image/jpeg')
+    );
+}
+
+
+/*! Tablet */
+@media (min-width: 768px) {
+    #storia-di-cascina-caccia {
+        background-image: image-set(
+            url(../images/img-libera/cascinacaccia/tablet/cascina-caccia.avif) type('image/avif'), 
+            url(../images/img-libera/cascinacaccia/tablet/cascina-caccia.webp) type('image/webp'),
+            url(../images/img-libera/cascinacaccia/tablet/cascina-caccia.jpg) type('image/jpeg')
+        ); 
+    }
+    #bruno-caccia {
+        background-image: image-set(
+            url(../images/img-libera/bruno-caccia/tablet/bruno-caccia.avif) type('image/avif'), 
+            url(../images/img-libera/bruno-caccia/tablet/bruno-caccia.webp) type('image/webp'),
+            url(../images/img-libera/bruno-caccia/tablet/bruno-caccia.jpg) type('image/jpeg')
+        ); 
+    }
+    #introduzione-al-tema-mafia {
+        background-image: image-set(
+            url(../images/img-libera/mafia/tablet/mafia.avif) type('image/avif'), 
+            url(../images/img-libera/mafia/tablet/mafia.webp) type('image/webp'),
+            url(../images/img-libera/mafia/tablet/mafia.jpg) type('image/jpeg')
+        );
+    }
+    #beni-confiscati {
+        background-image: image-set(
+            url(../images/img-libera/beni-confiscati/tablet/beni-confiscati.avif) type('image/avif'), 
+            url(../images/img-libera/beni-confiscati/tablet/beni-confiscati.webp) type('image/webp'),
+            url(../images/img-libera/beni-confiscati/tablet/beni-confiscati.jpg) type('image/jpeg')
+        );
+    }
+    #le-mafie-in-piemonte {
+        background-image: image-set(
+            url(../images/img-libera/piemonte/tablet/piemonte.avif) type('image/avif'), 
+            url(../images/img-libera/piemonte/tablet/piemonte.webp) type('image/webp'),
+            url(../images/img-libera/piemonte/tablet/piemonte.jpg) type('image/jpeg')
+        );
+    }
+    #la-mafia-attraverso-il-cinema {
+        background-image: image-set(
+            url(../images/img-libera/il-padrino/tablet/il-padrino.avif) type('image/avif'), 
+            url(../images/img-libera/il-padrino/tablet/il-padrino.webp) type('image/webp'),
+            url(../images/img-libera/il-padrino/tablet/il-padrino.jpg) type('image/jpeg')
+        );
+    }
+    #il-gioco-non-e-un-azzardo {
+        background-image: image-set(
+            url(../images/img-libera/psicologia-gioco-di-azzardo/tablet/psicologia-gioco-di-azzardo.avif) type('image/avif'), 
+            url(../images/img-libera/psicologia-gioco-di-azzardo/tablet/psicologia-gioco-di-azzardo.webp) type('image/webp'),
+            url(../images/img-libera/psicologia-gioco-di-azzardo/tablet/psicologia-gioco-di-azzardo.jpg) type('image/jpeg')
+        );
+    }
+    #chi-non-gioca-vince {
+        background-image: image-set(
+            url(../images/img-libera/pesci/tablet/pesci.avif) type('image/avif'), 
+            url(../images/img-libera/pesci/tablet/pesci.webp) type('image/webp'),
+            url(../images/img-libera/pesci/tablet/pesci.jpg) type('image/jpeg')
+        );
+    }
+    #sostenibilita-ambientale {
+        background-image: image-set(
+            url(../images/img-libera/ambiente/tablet/ambiente.avif) type('image/avif'), 
+            url(../images/img-libera/ambiente/tablet/ambiente.webp) type('image/webp'),
+            url(../images/img-libera/ambiente/tablet/ambiente.jpg) type('image/jpeg')
+        );
+    }
+}
+
+/*! Desktop  */
+@media (min-width: 992px) {
+    #storia-di-cascina-caccia {
+        background-image: image-set(
+            url(../images/img-libera/cascinacaccia/desktop/cascina-caccia.avif) type('image/avif'), 
+            url(../images/img-libera/cascinacaccia/desktop/cascina-caccia.webp) type('image/webp'),
+            url(../images/img-libera/cascinacaccia/desktop/cascina-caccia.jpg) type('image/jpeg')
+        ); 
+    }
+    #bruno-caccia {
+        background-image: image-set(
+            url(../images/img-libera/bruno-caccia/desktop/bruno-caccia.avif) type('image/avif'), 
+            url(../images/img-libera/bruno-caccia/desktop/bruno-caccia.webp) type('image/webp'),
+            url(../images/img-libera/bruno-caccia/desktop/bruno-caccia.jpg) type('image/jpeg')
+        ); 
+    }
+    #introduzione-al-tema-mafia {
+        background-image: image-set(
+            url(../images/img-libera/mafia/tablet/mafia.avif) type('image/avif'), 
+            url(../images/img-libera/mafia/tablet/mafia.webp) type('image/webp'),
+            url(../images/img-libera/mafia/tablet/mafia.jpg) type('image/jpeg')
+        );
+    }
+    #introduzione-al-tema-mafia {
+        background-image: image-set(
+            url(../images/img-libera/mafia/desktop/mafia.avif) type('image/avif'), 
+            url(../images/img-libera/mafia/desktop/mafia.webp) type('image/webp'),
+            url(../images/img-libera/mafia/desktop/mafia.jpg) type('image/jpeg')
+        );
+    }
+    #beni-confiscati {
+        background-image: image-set(
+            url(../images/img-libera/beni-confiscati/desktop/beni-confiscati.avif) type('image/avif'), 
+            url(../images/img-libera/beni-confiscati/desktop/beni-confiscati.webp) type('image/webp'),
+            url(../images/img-libera/beni-confiscati/desktop/beni-confiscati.jpg) type('image/jpeg')
+        );
+    }
+    #le-mafie-in-piemonte {
+        background-image: image-set(
+            url(../images/img-libera/piemonte/desktop/piemonte.avif) type('image/avif'), 
+            url(../images/img-libera/piemonte/desktop/piemonte.webp) type('image/webp'),
+            url(../images/img-libera/piemonte/desktop/piemonte.jpg) type('image/jpeg')
+        );
+    }
+    #la-mafia-attraverso-il-cinema {
+        background-image: image-set(
+            url(../images/img-libera/il-padrino/desktop/il-padrino.avif) type('image/avif'), 
+            url(../images/img-libera/il-padrino/desktop/il-padrino.webp) type('image/webp'),
+            url(../images/img-libera/il-padrino/desktop/il-padrino.jpg) type('image/jpeg')
+        );
+    }
+    #il-gioco-non-e-un-azzardo {
+        background-image: image-set(
+            url(../images/img-libera/psicologia-gioco-di-azzardo/desktop/psicologia-gioco-di-azzardo.avif) type('image/avif'), 
+            url(../images/img-libera/psicologia-gioco-di-azzardo/desktop/psicologia-gioco-di-azzardo.webp) type('image/webp'),
+            url(../images/img-libera/psicologia-gioco-di-azzardo/desktop/psicologia-gioco-di-azzardo.jpg) type('image/jpeg')
+        );
+    }
+    #chi-non-gioca-vince {
+        background-image: image-set(
+            url(../images/img-libera/pesci/desktop/pesci.avif) type('image/avif'), 
+            url(../images/img-libera/pesci/desktop/pesci.webp) type('image/webp'),
+            url(../images/img-libera/pesci/desktop/pesci.jpg) type('image/jpeg')
+        );
+    }
+    #sostenibilita-ambientale {
+        background-image: image-set(
+            url(../images/img-libera/ambiente/desktop/ambiente.avif) type('image/avif'), 
+            url(../images/img-libera/ambiente/desktop/ambiente.webp) type('image/webp'),
+            url(../images/img-libera/ambiente/desktop/ambiente.jpg) type('image/jpeg')
+        );
+    }
+    
+}
+

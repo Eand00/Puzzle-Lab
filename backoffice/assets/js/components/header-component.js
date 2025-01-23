@@ -1,3 +1,5 @@
+import { logout } from '../services/auth.service.js';
+
 /**
  * Header component with navigation and page title
  * @customElement header-component
@@ -29,8 +31,10 @@ class HeaderComponent extends HTMLElement {
 
     render() {
         const pageTitle = this.getAttribute('page-title') || 'Dashboard';
-        
+        const isLoggedIn = localStorage.getItem('jwtToken') !== null;
+
         this.innerHTML = `
+            <div class="splash"></div>
             <header class="main-header">
                 <div class="header-content">
                     <div class="header-title">
@@ -75,12 +79,11 @@ class HeaderComponent extends HTMLElement {
         this.setupEventListeners();
     }
 
+
+
     setupEventListeners() {
         this.querySelector('#logoutBtn').addEventListener('click', () => {
-            this.dispatchEvent(new CustomEvent('logout', {
-                bubbles: true,
-                composed: true
-            }));
+            logout();
         });
     }
 }
