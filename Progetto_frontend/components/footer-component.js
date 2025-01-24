@@ -17,7 +17,7 @@ class FooterComponent extends HTMLElement {
     this.template = document.createElement("template");
     this.template.innerHTML = `
             <footer class="py-5 text-light bg-dark "> 
-                <div class="container">
+                <div class="container footer-logo">
                     <svg class="logo-brand">
                         <use href="${basePath}/assets/images/sprite.svg?v=1#logo-brand"></use>
                     </svg>
@@ -33,7 +33,7 @@ class FooterComponent extends HTMLElement {
                 </ul>
                 
             
-                <div class="container icon-footer ">
+                <div class="container icon-footer social-container">
                     <div class="social-icons">
                         <p class="text-white">SEGUICI SUI SOCIAL</p>
                         <div class="social-icons-container text-white">
@@ -51,14 +51,14 @@ class FooterComponent extends HTMLElement {
                     </div>
                 </div>
 
-                <div class="container icon-footer py-5 px-0">
+                <div class="container icon-footer py-5 px-0 libera-container">
                     <p class="text-white">PROGETTO A CURA DI</p>
                     <div class="container text-white">
                         <img src="${basePath}/assets/images/logo-acmos-bianco.png">
                         <img src="${basePath}/assets/images/logo-libera.png">
                     </div>
                 </div>
-                 <div class="container social-icons-container  ">
+                <div class="container social-icons-container privacy-container">
                     <a href="#" class="text-white">COOKIE POLICY</a>
                     <a href="#" class="text-white ">PRIVACY POLICY</a> 
                 </div>       
