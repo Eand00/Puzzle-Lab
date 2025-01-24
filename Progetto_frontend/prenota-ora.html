@@ -40,42 +40,58 @@
         <!-- Main -->
         <main>
             <section class="container-fluid first-section">
-                <h2 class="text-center text-uppercase text-base light">Compila il form e scopri la <span class="bold">verità sulla mafia</span></h2>
+                <h2 class="text-center text-uppercase text-base light px-5">Compila il form e scopri la <span class="bold">verità sulla mafia</span></h2>
             </section>
             <form action="./feedback.html" method="post" data-validate>
                 <input type="hidden" name="tipo" value="prenotazione">
-                <div class="form-group">
-                    <label for="nome" class="text-base">Nome</label>
-                    <input type="text" id="nome" name="nome" required minlength="2" pattern="[A-zÀ-ù'\s]+" placeholder="Mario">
-                </div>
-                <div class="form-group">
-                    <label for="cognome" class="text-base">Cognome</label>
-                    <input type="text" id="cognome" name="cognome" required minlength="2" pattern="[A-zÀ-ù'\s]+" placeholder="Rossi">
-                </div>
-                <div class="form-group">
-                    <label for="organizzazione" class="text-base">Organizzazione </label>
-                    <input type="text" id="organizzazione" name="organizzazione" placeholder="Istituto Comprensivo S. Pertini" minlength="2" maxlength="100" pattern="[A-zÀ-ù'\s]+" required>
-                </div>
-                <div class="form-group">
-                    <label for="email" class="text-base">Email</label>
-                    <input type="email" id="email" name="email" required placeholder="email@example.com">
-                </div>
-                <div class="form-group">
-                    <label for="numero">Telefono <span class="text-muted">(opzionale)</span></label>
-                    <input type="tel" id="numero" name="numero" pattern="[\+]?[0-9\s]{10,}" placeholder="+39 987 654 3210">
-                </div>
+                <fieldset>
+                    <div class="form-group">
+                        <label for="nome" class="text-base">Nome</label>
+                        <input type="text" id="nome" name="nome" required minlength="2" pattern="[A-zÀ-ù'\s]+" placeholder="Mario">
+                    </div>
+                    <div class="form-group">
+                        <label for="cognome" class="text-base">Cognome</label>
+                        <input type="text" id="cognome" name="cognome" required minlength="2" pattern="[A-zÀ-ù'\s]+" placeholder="Rossi">
+                    </div>
+                    <div class="form-group">
+                        <label for="organizzazione" class="text-base">Organizzazione </label>
+                        <input type="text" id="organizzazione" name="organizzazione" placeholder="Istituto Comprensivo S. Pertini" minlength="2" maxlength="100" pattern="[A-zÀ-ù'\s]+" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="text-base">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="numero">Telefono <span class="text-muted">(opzionale)</span></label>
+                        <input type="tel" id="numero" name="numero" pattern="[\+]?[0-9\s]{10,}" placeholder="+39 987 654 3210">
+                    </div>
+                </fieldset>
                 <fieldset>
                     <legend>Durata della visita</legend>
                     <div class="form-group switch">
-                        <input type="checkbox" id="tipologia" name="tipologia" class="form-check-input">
-                        <label for="tipologia" class="text-base"><span class="left">Visita</span><span class="right">Soggiorno</span></label>
+                        <input type="radio" id="tipologia_visita" name="tipologia" value="VISITA" checked>
+                        <input type="radio" id="tipologia_soggiorno" name="tipologia" value="SOGGIORNO">
+                        <div class="label-container">
+                            <label for="tipologia_visita" class="text-base">VISITA</label>
+                            <label for="tipologia_soggiorno" class="text-base">SOGGIORNO</label>
+                        </div>
                     </div>
-                    <!--
-                    tipologia: VISITA | SOGGIORNO 
-                    laboratori: number
-                    fasciaOraria: MATTINA | POMERIGGIO
-                    numeroGiorni: number 
-                    -->
+                    <div class="form-group form-group--inline" id="fasciaOrariaGroup">
+                        <legend class="text-base">Fascia oraria preferita</legend>
+                        <div class="switch switch--vertical">
+                            <input type="radio" id="mattina" name="fasciaOraria" value="MATTINA" checked>
+                            <input type="radio" id="pomeriggio" name="fasciaOraria" value="POMERIGGIO">
+                            <div class="label-container">
+                                <label for="mattina">Mattina</label>
+                                <label for="pomeriggio">Pomeriggio</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group form-group--inline" id="numeroGiorniGroup" style="display: none;">
+                        <label for="numeroGiorni" class="text-base">Numero di giorni</label>
+                        <input type="number" id="numeroGiorni" name="numeroGiorni" min="2">
+                    </div>
                 </fieldset>
                 <fieldset>
                     <legend>Disponibilità</legend>  
@@ -124,5 +140,7 @@
 		<!-- Custom scripts -->
 		<script src="./assets/scripts/main.js"></script>
         <script src="./assets/scripts/form-validation.js"></script>
+        <script src="./assets/scripts/form-conditional-fields.js"></script>
 	</body>
 </html>
+

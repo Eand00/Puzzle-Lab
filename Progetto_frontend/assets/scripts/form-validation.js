@@ -58,6 +58,16 @@ const VALIDATION_RULES = {
         message: '',
         required: false
     },
+    fasciaOraria: {
+        regex: /.*/,
+        message: '',
+        required: false
+    },
+    numeroGiorni: {
+        regex: /^\d+$/,
+        message: 'Il campo deve contenere un numero valido',
+        required: false //dynamically set by the conditional fields
+    },
     privacy: {
         regex: 'checked',
         message: 'Il campo deve essere selezionato',
@@ -107,10 +117,18 @@ function initErrorMessages(form) {
  */
 function validate(data, type) {
     const rule = VALIDATION_RULES[type];
+
+    //numeroGiorni conditional validation
+    if(type === 'numeroGiorni') {
+        const isSoggiorno = document.getElementById('tipologia_soggiorno').checked;
+        if(isSoggiorno) {
+            return [data >= 2, 'Il numero di giorni deve essere maggiore di 1'];
+        }
+    }
     
     //checkboxes
     if(['privacy', 'sensibleData', 'tos'].includes(type)) {
-        return [data === 'on' || data === true, 'Campo obbligatorio'];
+        return [data === 'on' || data === true, rule.message];
     }
 
     //not recognized fields
@@ -155,6 +173,15 @@ function formValidation(form) {
     const formData = {};
     let isValid = true;
     form.querySelectorAll('input, textarea').forEach(input => {
+        //Skip validation for radio buttons
+        if(input.type === 'radio') {
+            if(input.checked) {
+                formData[input.name] = input.value;
+            }
+            return;
+        }
+        
+        //get the value of the field
         if(input.type !== 'checkbox') {
             formData[input.name] = input.value;
         }
@@ -182,12 +209,11 @@ function formValidation(form) {
         const invalidFields = form.querySelector('.invalid');
         invalidFields.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
 
-        //focus the first invalid field
+        //focus the first invalid field (timeout to avoid blocking smooth scroll)
         setTimeout(() => invalidFields.focus(), 500);
 
         return false;
     }
-    console.log(formData);
     submitFormData(formData);
 }
 
@@ -204,13 +230,22 @@ function addTimeToDate(dateString, isEndDate = false) {
 }
 
 /**
+ * @function isLoading
+ * @param {boolean} state - The state of the loading
+ * @description Adds or removes the loading state to the body
+ */
+function isLoading(state = false) {
+    document.body.classList.toggle('loading', state);
+}
+
+/**
  * @function submitFormData(formData)
  * @param {Object} formData - The validated form data to submit
  * @description Handles the API submission of the form data
  */
 function submitFormData(formData) {
     //add loading state
-    document.body.classList.add('loading');
+    isLoading(true);
 
     // add time to the date fields
     const processedData = { ...formData };
@@ -220,7 +255,14 @@ function submitFormData(formData) {
     if (processedData.dataFine) {
         processedData.dataFine = addTimeToDate(processedData.dataFine, true);
     }
+    // check conditional fields
+    if(processedData.tipologia === 'VISITA') {
+        delete processedData.numeroGiorni;
+    }
 
+    console.log(processedData);
+    isLoading(false);
+    return;
     // convert the processed data to JSON
     const jsonFormData = JSON.stringify(processedData);
 
@@ -252,12 +294,12 @@ function submitFormData(formData) {
         })
         .then(data => {
             //remove loading state
-            document.body.classList.remove('loading');
+            isLoading(false);
             window.location.href = './feedback.html';
         })
         .catch(error => {
             //remove loading state
-            document.body.classList.remove('loading');
+            isLoading(false);
             //user feedback
             console.error({error});
             showErrorToast(error.message);
@@ -306,7 +348,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const input = event.target;
 
         //filter for only required input and textarea
-        if(['INPUT', 'TEXTAREA'].includes(input.tagName) && VALIDATION_RULES[input.name].required) {
+        if(['INPUT', 'TEXTAREA'].includes(input.tagName) && 
+            (VALIDATION_RULES[input.name].required || input.name === 'numeroGiorni')) {
             let value = getFieldValue(input);
             const [isValid, message] = validate(value, input.name);
             updateFieldStatus(input.name, isValid, message);

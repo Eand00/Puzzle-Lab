@@ -37,6 +37,12 @@ fieldset legend {
 
 }
 
+.form-group--inline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
@@ -196,27 +202,23 @@ form .form-group .valid::after {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
 }
 .switch input {
     display: none;
 }
-.switch label {
+.switch .label-container {
     display: flex;
     align-items: center;
     justify-content: space-around;
     position: relative;
     width: 100%;
-    padding: 1rem 0;
-    font-size: 1rem;
+    padding:0;
     font-weight: 700;
     text-transform: uppercase;
-    line-height: 1.2rem;
     border: 1px solid var(--color-base-primary);
     border-radius: 2rem;
-    cursor: pointer;
 }
-.switch label::after {
+.switch .label-container::after {
     content: "";
     display: block;
     position: absolute;
@@ -231,13 +233,72 @@ form .form-group .valid::after {
     z-index: -1;
     transition: all 0.3s ease-in-out;
 }
-.switch input:checked + label::after {
+.switch input:last-of-type:checked + .label-container::after {
     left: 50%;
 }
-.switch label span {
+.switch .label-container label {
     display: block;
     width: 50%;
     text-align: center;
+    font-size: 1rem;
+    margin: 0;
+    padding: 1rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* switch vertical */
+
+.switch--vertical {
+    flex-direction: column;
+}
+.switch--vertical .label-container {
+    flex-direction: column;
+    border-radius: 1.5rem;
+}
+.switch--vertical .label-container::after {
+    width: 100%;
+    height: 50%;
+}
+.switch--vertical input:last-of-type:checked + .label-container::after {
+    top: 50%;
+    left: 0;
+}
+.switch--vertical .label-container label {
+    width: 100%;
+}
+
+#fasciaOrariaGroup {
+    margin-bottom: 0;
+}
+
+#fasciaOrariaGroup legend {
+    top: 0;
+}
+
+#numeroGiorniGroup {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0;
+}
+
+#numeroGiorniGroup label {
+    width: 50%;
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 0;
+    text-transform: uppercase;
+}
+
+#numeroGiorniGroup input {
+    text-align: center;
+}
+
+#fasciaOrariaGroup .label-container,
+#numeroGiorniGroup input {
+    width: 140px;
 }
 
 /* Loading State */

@@ -370,7 +370,7 @@ footer {
 	align-items: center;
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 992px) {
 	footer {
 		flex-direction: row;
 		justify-content: space-around;
