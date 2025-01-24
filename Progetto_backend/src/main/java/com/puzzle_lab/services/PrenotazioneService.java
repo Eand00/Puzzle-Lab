@@ -55,7 +55,7 @@ public class PrenotazioneService extends RichiestaService{
 	            throw new IllegalArgumentException("I laboratori sono obbligatori.");
 	        }
 
-	        // Split the string by semicolon and validate each laboratory
+	        // Dividi la stringa per punto e virgola e valida ogni laboratorio
 	        String[] labs = laboratori.split(",");
 	        for (String lab : labs) {
 	            String trimmedLab = lab.trim();
