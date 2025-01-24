@@ -218,18 +218,6 @@ function formValidation(form) {
 }
 
 /**
- * @function addTimeToDate
- * @param {string} dateString - The date string in YYYY-MM-DD format
- * @returns {string} - The date string in ISO format (YYYY-MM-DDThh:mm:ss.sssZ)
- * @description Converts a date string to ISO format with time
- */
-function addTimeToDate(dateString, isEndDate = false) {
-    const date = new Date(dateString);
-    date.setHours(0, 0, 0, 0);
-    return date.toISOString();
-}
-
-/**
  * @function isLoading
  * @param {boolean} state - The state of the loading
  * @description Adds or removes the loading state to the body
@@ -244,25 +232,15 @@ function isLoading(state = false) {
  * @description Handles the API submission of the form data
  */
 function submitFormData(formData) {
-    //add loading state
+    // add loading state
     isLoading(true);
 
-    // add time to the date fields
+    // process data and remove unnecessary fields based on conditions
     const processedData = { ...formData };
-    if (processedData.dataInizio) {
-        processedData.dataInizio = addTimeToDate(processedData.dataInizio);
-    }
-    if (processedData.dataFine) {
-        processedData.dataFine = addTimeToDate(processedData.dataFine, true);
-    }
-    // check conditional fields
     if(processedData.tipologia === 'VISITA') {
         delete processedData.numeroGiorni;
     }
 
-    console.log(processedData);
-    isLoading(false);
-    return;
     // convert the processed data to JSON
     const jsonFormData = JSON.stringify(processedData);
 
@@ -301,7 +279,6 @@ function submitFormData(formData) {
             //remove loading state
             isLoading(false);
             //user feedback
-            console.error({error});
             showErrorToast(error.message);
         });
 }

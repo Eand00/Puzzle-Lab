@@ -10,6 +10,12 @@
  * Date: 2024-12-06
  */
 
+ form {
+	width: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+ }
+
  fieldset {
 	border: none;
 	padding: 0;
@@ -270,6 +276,7 @@ form .form-group .valid::after {
 
 #fasciaOrariaGroup {
     margin-bottom: 0;
+    gap: 1rem;
 }
 
 #fasciaOrariaGroup legend {

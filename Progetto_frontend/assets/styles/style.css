@@ -195,8 +195,8 @@ header.header-scroll {
 	transition: all 0.3s ease-in-out;
 }
 #navbarText.show::after {
-	width: 300%;
-	height: 200%;
+	width: 100vw;
+	height: 100vh;
 }
 .logo-brand {
 	display: block;
@@ -307,7 +307,7 @@ header.header-scroll {
 	}
 
 	#navbarText .social-icons-container a {
-		color: var(--color-dark);
+		color: var(--color-light);
 		text-decoration: none;
 		height: 1.5rem;
 		width: 1.5rem;
@@ -318,7 +318,7 @@ header.header-scroll {
 	}
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1050px) {
 	.nav-link {
 		font-size: 1.2rem;
 	}
