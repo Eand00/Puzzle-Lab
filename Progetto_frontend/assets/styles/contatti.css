@@ -26,11 +26,6 @@ main .claim {
 	text-transform: uppercase;
 	text-wrap: balance;
 }
-fieldset {
-	border: none;
-	padding: 0;
-	padding-block: 3rem;
-}
 .contact-container {
 	display: flex;
 	flex-direction: column;

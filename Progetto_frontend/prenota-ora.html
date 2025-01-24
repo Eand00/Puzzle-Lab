@@ -65,6 +65,20 @@
                     <input type="tel" id="numero" name="numero" pattern="[\+]?[0-9\s]{10,}" placeholder="+39 987 654 3210">
                 </div>
                 <fieldset>
+                    <legend>Durata della visita</legend>
+                    <div class="form-group switch">
+                        <input type="checkbox" id="tipologia" name="tipologia" class="form-check-input">
+                        <label for="tipologia" class="text-base"><span class="left">Visita</span><span class="right">Soggiorno</span></label>
+                    </div>
+                    <!--
+                    tipologia: VISITA | SOGGIORNO 
+                    laboratori: number
+                    fasciaOraria: MATTINA | POMERIGGIO
+                    numeroGiorni: number 
+                    -->
+                </fieldset>
+                <fieldset>
+                    <legend>Disponibilità</legend>  
                     <div class="form-group">
                         <label for="dataInizio">Data inizio disponibilità</label>
                         <input type="date" id="dataInizio" name="dataInizio" required>

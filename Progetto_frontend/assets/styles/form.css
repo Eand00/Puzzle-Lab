@@ -10,6 +10,21 @@
  * Date: 2024-12-06
  */
 
+ fieldset {
+	border: none;
+	padding: 0;
+	padding-block: 3rem;
+}
+
+fieldset legend {
+	font-size: 1.2rem;
+    text-align: center;
+	font-weight: 700;
+	text-transform: uppercase;
+    position: relative;
+    top: 1.5rem;
+}
+
 .form-group {
     margin-bottom: 1.5rem;
     padding-inline: 3rem;
@@ -174,6 +189,55 @@ form .form-group .valid::after {
 }
 .form-group .invalid + .error-message {
     display: block;
+}
+
+/* switch */
+.switch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+.switch input {
+    display: none;
+}
+.switch label {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+    width: 100%;
+    padding: 1rem 0;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.2rem;
+    border: 1px solid var(--color-base-primary);
+    border-radius: 2rem;
+    cursor: pointer;
+}
+.switch label::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background-color: var(--color-primary);
+    background-clip: content-box;
+    border-radius: 2rem;
+    border: 5px solid transparent;
+    z-index: -1;
+    transition: all 0.3s ease-in-out;
+}
+.switch input:checked + label::after {
+    left: 50%;
+}
+.switch label span {
+    display: block;
+    width: 50%;
+    text-align: center;
 }
 
 /* Loading State */

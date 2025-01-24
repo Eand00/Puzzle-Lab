@@ -53,6 +53,11 @@ const VALIDATION_RULES = {
         message: 'Il campo non può essere vuoto',
         required: false
     },
+    tipologia: {
+        regex: /.*/,
+        message: '',
+        required: false
+    },
     privacy: {
         regex: 'checked',
         message: 'Il campo deve essere selezionato',
