@@ -46,7 +46,7 @@ fetch(API_BASE_URL+'richieste')
                     <p>Da: ${item.nome || 'N/A'} ${item.cognome || 'N/A'}</p>
                     <p>email: ${item.email || 'N/A'}</p>
                     <p>organizzazione: ${item.organizzazione || 'N/A'}</p>
-                    <p id="data">data: ${item.dataCreazione || 'N/A'}</p>
+                    <p id="data">data: ${item.dataCreazione ? formattaData(item.dataCreazione) : ''}</p>
                 `;
 
                 // modifica status
@@ -70,10 +70,10 @@ fetch(API_BASE_URL+'richieste')
                 
                 if(item.tipo === "prenotazione") {
                     details.innerHTML += `
-                        <p>Inizio disponibilità: ${item.dataInizio || 'N/A'}</p>
-                        <p>Fine disponibilità: ${item.dataFine || 'N/A'}</p>
-                        <p>Laboratori: ${item.laboratori || 'N/A'}</p>
-                        <p>Tipologia: ${item.tipologia || 'N/A'}</p>
+                        <p>Inizio disponibilità: ${item.dataInizio ? formattaData(item.dataInizio) : 'N/A'}</p>
+                        <p>Fine disponibilità: ${item.dataFine ? formattaData(item.dataFine) : 'N/A'}</p>
+                        <p>Laboratori: ${formattaStringa(item.laboratori)}</p>
+                        <p>Tipologia: ${formattaStringa(item.tipologia)}</p>
                     `;
                     if(item.tipologia === "SOGGIORNO"){
                         details.innerHTML += `
@@ -81,7 +81,7 @@ fetch(API_BASE_URL+'richieste')
                         `;
                     } else {
                         details.innerHTML += `
-                        <p>Fascia oraria: ${item.fasciaOraria || 'N/A'}</p>
+                        <p>Fascia oraria: ${formattaStringa(item.fasciaOraria)}</p>
                         `;
                     }
                 }
@@ -102,6 +102,22 @@ fetch(API_BASE_URL+'richieste')
                 richiesta.appendChild(summary);
                 richiesteContainer.appendChild(richiesta);
             });
+        }
+
+        function formattaStringa(stringa) {
+            if (!stringa) return 'N/A';
+            return stringa.split(',') // Dividi la stringa in base alla virgola
+                .map(lab => lab
+                    .toLowerCase() // Trasforma tutto in minuscolo
+                    .replace(/_/g, ' ') // Sostituisci gli underscore con spazi
+                    .replace(/\b\w/g, char => char.toUpperCase()) // Metti in maiuscolo le iniziali
+                )
+                .join(', '); // Riconcatena gli elementi con una virgola e uno spazio
+        }
+
+        function formattaData(dateString) {
+            const [year, month, day] = new Date(dateString).toISOString().split('T')[0].split('-');
+            return `${day}-${month}-${year}`;
         }
 
         function updateStatus(item, richiesta) {
@@ -202,11 +218,11 @@ fetch(API_BASE_URL+'richieste')
                     ${item.tipo === "prenotazione" ? `
                         <label>
                             Inizio disponibilità:
-                            <input type="date" name="dataInizio" value="${item.dataInizio ? new Date(item.dataInizio).toISOString().split('T')[0] : ''}">
+                            <input type="date" name="dataInizio" value="${item.dataInizio}">
                         </label>
                         <label>
                             Fine disponibilità:
-                            <input type="date" name="dataFine" value="${item.dataFine ? new Date(item.dataFine).toISOString().split('T')[0] : ''}">
+                            <input type="date" name="dataFine" value="${item.dataFine}">
                         </label>
                         <label>
                             Laboratori:
@@ -268,16 +284,8 @@ fetch(API_BASE_URL+'richieste')
                 testo: form.elements['testo'].value
             };
             if (item.tipo === 'prenotazione') {
-                const dataInizioValue = form.elements['dataInizio'].value; // formato yyyy-MM-dd
-                const dataFineValue = form.elements['dataFine'].value; // formato yyyy-MM-dd
-            
-                if (dataInizioValue) {
-                    updatedData.dataInizio = new Date(dataInizioValue).toISOString(); // Converte in formato ISO completo
-                }
-            
-                if (dataFineValue) {
-                    updatedData.dataFine = new Date(dataFineValue).toISOString(); // Converte in formato ISO completo
-                }
+                updatedData.dataInizio = form.elements['dataInizio'].value;
+                updatedData.dataFine = form.elements['dataFine'].value;
             }
             
             console.log('Dati aggiornati da inviare:', updatedData);
