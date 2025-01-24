@@ -2,7 +2,7 @@
  * @file form-conditional-fields.js
  * @version 1.0.0
  * @author Puzzle Lab
- * @contributors Bonura Vincenzo, Lupano Alberto, Picciotto Luca
+ * @contributors Bonura Vincenzo
  * @date 2025-01-24
  * @description This script handles the client-side logic for the conditional fields in the form
  * @see README_FRONTEND.md for additional information.
