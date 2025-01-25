@@ -1,7 +1,20 @@
+/**
+ * @file header-components.js
+ * @version 1.0.0
+ * @author Puzzle Lab
+ * @contributors Bonura Vincenzo, Eand Avdiu
+ * @date 2025-01-07
+ * @update 2025-01-25
+ * @description Header component with navigation and authentication features
+ * @extends HTMLElement
+ * @see README.md per ulteriori informazioni
+ */
+
 import { logout } from '../services/auth.service.js';
+import { showToast } from '../utils/toast.util.js';
 
 /**
- * Header component with navigation and page title
+ * Componente header con navigazione e titolo della pagina
  * @customElement header-component
  */
 class HeaderComponent extends HTMLElement {
@@ -16,22 +29,36 @@ class HeaderComponent extends HTMLElement {
 
     connectedCallback() {
         this.render();
+        this.setupEventListeners();
     }
 
     /**
-     * Determina se il link passato corrisponde alla pagina corrente
+     * Controlla se il link corrisponde alla pagina corrente
      * @param {string} href - Il percorso del link
      * @returns {boolean}
+     * @private
      */
     isCurrentPage(href) {
         const currentPath = window.location.pathname;
-        const linkPath = href.split('/').pop(); // Prende solo il nome del file
+        const linkPath = href.split('/').pop();
         return currentPath.endsWith(linkPath);
+    }
+
+    /**
+     * Gestione del logout
+     * @private
+     */
+    handleLogout() {
+        const success =logout();
+        if (success) {
+            window.location.href = './login.html';
+        } else {
+            showToast('error', 'Errore', 'Logout fallito');
+        }
     }
 
     render() {
         const pageTitle = this.getAttribute('page-title') || 'Dashboard';
-        const isLoggedIn = localStorage.getItem('jwtToken') !== null;
 
         this.innerHTML = `
             <div class="splash"></div>
@@ -75,15 +102,11 @@ class HeaderComponent extends HTMLElement {
                 </div>
             </header>
         `;
-
-        this.setupEventListeners();
     }
-
-
 
     setupEventListeners() {
         this.querySelector('#logoutBtn').addEventListener('click', () => {
-            logout();
+            this.handleLogout();
         });
     }
 }

@@ -1,11 +1,13 @@
+import { getAuthToken } from '../services/auth.service.js';
+
 // Wrapper fetch con gestione del token
 export async function apiClient(url, options = {}) {
-    const token = localStorage.getItem('jwtToken');
     const headers = {
         'Content-Type': 'application/json',
         ...options.headers,
     };
 
+    const token = getAuthToken();
     if (token) {
         headers['Authorization'] = `Bearer ${token}`;
     }

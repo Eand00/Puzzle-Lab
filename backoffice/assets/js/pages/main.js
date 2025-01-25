@@ -1,11 +1,14 @@
-import { checkAuth } from '../services/auth.service.js';
+import { isAuthenticated } from '../services/auth.service.js';
+
+//Auth Guard
+if (!isAuthenticated()) {
+    window.location.href = './login.html';
+}
 
 document.addEventListener('DOMContentLoaded', () => {
-    checkAuth();
     
-    // Rimuove la splash-image
+    //rimozione splashscreen
     const splash = document.querySelector('.splash');
-    console.log('splash');
     splash.classList.add('closing');
     setTimeout(() => {
         splash.remove();

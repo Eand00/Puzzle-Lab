@@ -59,7 +59,8 @@ backoffice/
 
 ## Informazioni generali
 
-Il backoffice è sviluppato in HTML, CSS e Javascript vanilla, senza dipendenze da framework esterni. L'architettura è basata su Web Components per la modularità dell'interfaccia e su Services per la gestione della logica di business.
+Il backoffice è sviluppato in HTML, CSS e Javascript vanilla, senza dipendenze da framework esterni.
+L'architettura è basata su Web Components per la modularità dell'interfaccia e su Services per la gestione della logica di business.
 
 ## Scelte progettuali
 
@@ -101,13 +102,17 @@ La logica di business è organizzata in services dedicati:
   - CRUD operazioni
   - Gestione permessi
 
-### Gestione autenticazione
+### Autenticazione
 
-L'autenticazione è implementata tramite JWT stored in localStorage. Ogni chiamata API viene automaticamente arricchita con il token di autenticazione tramite l'utility api-client.js.
+L'autenticazione è implementata tramite JWT memorizzato in localStorage.
+La responsabilità della gestione della logica di business di autenticazione è delegata al service auth.service.js, che incapsula interamente la gestione del token JWT, mantenendo in metodi privati l'accesso in scrittura al localStorage.
 
-<!-- XXX: note per lo sviluppo
-- nel file config.js ci saranno gli endpoint delle API
-- la pagina index.html l'ho pensata come dashboard, per esempio includendo un widget con il totale delle richieste arrivate, separato per stato e con le ultime richieste arrivate e non ancora elaborate. Ma è solo un'idea, al limite si può abolire e rinominare index la pagina requests
-- la pagina requests.html è la principale, con la visualizzazione delle richieste e le funzionalità di gestione
-- la pagina users.html è la pagina per la gestione degli utenti
--->
+### API
+
+L'API è implementata tramite fetch.
+La responsabilità della gestione della logica è delegata all'utility api-client.js.
+
+### Messaggi di feedback
+
+I messaggi di feedback sono implementati tramite il componente toast.
+La responsabilità della gestione della logica è delegata all'utility toast.util.js.
