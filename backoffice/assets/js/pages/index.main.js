@@ -1,5 +1,4 @@
-import { getRequestStats, getRecentRequests } from '../services/requests.service.js';
-import { logout } from '../services/auth.service.js';
+import { getRequestStats, getAllRequests } from '../services/requests.service.js';
 
 /**
  * Populates recent requests list
@@ -78,26 +77,14 @@ function updateDashboardStats(stats) {
 }
 
 /**
- * @function setupEventListeners
- * @description Setup event listeners for the page
- */
-function setupEventListeners() {
-    document.addEventListener('logout', () => {
-        logout();
-    });
-}
-
-/**
  * @function initDashboard
  * @description Initializes dashboard components
  */
 async function initDashboard() {
     try {
-        setupEventListeners();
         const stats = await getRequestStats();
         updateDashboardStats(stats);
-
-        const recentRequests = await getRecentRequests();
+        const recentRequests = await getAllRequests();
         populateRecentRequests(recentRequests);
     } catch (error) {
         const toast = document.querySelector('toast-component');

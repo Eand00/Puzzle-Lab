@@ -24,16 +24,23 @@
         <!-- Lista richieste -->
         <section class="requests-list">
             <div class="requests-list-header">
-                <h2>Elenco Richieste</h2>
                 <div class="requests-list-filters">
                     <form id="filterForm" class="filters-form">
                         <div class="form-group--inline">
+                            <label for="search">Cerca:</label><br>
+                            <input type="text" id="search" name="search"><br>
+                            
+                            <label><input type="radio" name="tipo" value="" checked> Tutti</label>
+                            <label><input type="radio" name="tipo" value="prenotazione"> Prenotazioni</label>
+                            <label><input type="radio" name="tipo" value="informazione"> Informazioni</label>
+                            
                             <label for="status">Stato</label>
                             <select id="status" name="status">
                                 <option value="">Tutti</option>
-                                <option value="new">Nuove</option>
-                                <option value="in-progress">In Lavorazione</option>
-                                <option value="completed">Completate</option>
+                                <option value="RICEVUTA">Ricevute</option>
+                                <option value="PRESA_IN_CARICO">Prese in carico</option>
+                                <option value="CONFERMATA">Confermate</option>
+                                <option value="RIFIUTATA">Rifiutate</option>
                             </select>
                         </div>
                     </form>
@@ -41,6 +48,7 @@
                 
             </div>
             <!-- La lista verrà popolata dinamicamente -->
+            <div id="requests"></div>
         </section>
     </main>
 

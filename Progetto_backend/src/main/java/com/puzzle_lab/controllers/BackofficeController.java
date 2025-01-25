@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.puzzle_lab.entities.Informazione;
 import com.puzzle_lab.entities.Prenotazione;
 import com.puzzle_lab.entities.Richiesta;
+import com.puzzle_lab.entities.Status;
 import com.puzzle_lab.entities.Utente;
 import com.puzzle_lab.services.InformazioneService;
 import com.puzzle_lab.services.PrenotazioneService;
@@ -159,6 +160,24 @@ public class BackofficeController {
         try {
             Optional<Richiesta> richieste = richiestaService.trovaPerData(data);
             return ResponseEntity.ok(richieste);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @Operation(summary = "Update stato", description = "Modifica lo stato di una richiesta")
+    @ApiResponse(responseCode = "200", description = "Stato aggiornato")
+    @ApiResponse(responseCode = "500", description = "Errore interno del server")
+    @PutMapping("/richieste/status")
+    public ResponseEntity<Optional<Richiesta>> modificaStatusRichiesta(@RequestParam Long id, @RequestParam Status status) {
+        try {
+            Optional<Richiesta> richiesta = richiestaService.trovaPerId(id);
+            if (richiesta.isPresent()) {
+            	Richiesta richiestaAggiornata = richiesta.get();
+            	richiestaAggiornata.setStatus(status);
+            	richiestaService.save(richiestaAggiornata);
+            }
+            return ResponseEntity.ok(richiesta);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
