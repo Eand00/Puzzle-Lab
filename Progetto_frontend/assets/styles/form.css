@@ -115,11 +115,53 @@ fieldset legend {
     display: none;
 }
 
+.checkbox-group {
+    border: 1px solid var(--color-base-primary);
+    border-radius: 2rem;
+    margin: 0 3rem 1.5rem;
+    position: relative;
+    transition: margin-bottom 0.3s ease-in-out;
+}
+
 .checkbox-container {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 1rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 1rem;
+}
+
+.checkbox-multiselect input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-multiselect label {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    border: 5px solid transparent;
+    border-bottom: 0px;
+    background-color: var(--color-white);
+    background-clip: padding-box;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+}
+
+.checkbox-multiselect--first label {
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+}
+
+.checkbox-multiselect--last label {
+    border-bottom-left-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+    border-bottom: 5px solid transparent;
+}
+
+.checkbox-multiselect input[type="checkbox"]:checked + label {
+    background-color: var(--color-primary);
 }
 
 .checkbox-container label {

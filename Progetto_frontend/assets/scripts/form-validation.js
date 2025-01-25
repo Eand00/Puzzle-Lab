@@ -68,6 +68,11 @@ const VALIDATION_RULES = {
         message: 'Il campo deve contenere un numero valido',
         required: false //dynamically set by the conditional fields
     },
+    'laboratori[]': {
+        regex: /.*/,
+        message: 'Nessun laboratorio selezionato',
+        required: false
+    },
     privacy: {
         regex: 'checked',
         message: 'Il campo deve essere selezionato',
@@ -125,6 +130,11 @@ function validate(data, type) {
             return [data >= 2, 'Il numero di giorni deve essere maggiore di 1'];
         }
     }
+
+    //laboratori
+    if(type === 'laboratori[]') {
+        return [true, ''];
+    }
     
     //checkboxes
     if(['privacy', 'sensibleData', 'tos'].includes(type)) {
@@ -172,6 +182,7 @@ function formValidation(form) {
     const errors = {};
     const formData = {};
     let isValid = true;
+    const laboratori = [];
     form.querySelectorAll('input, textarea').forEach(input => {
         //Skip validation for radio buttons
         if(input.type === 'radio') {
@@ -180,7 +191,15 @@ function formValidation(form) {
             }
             return;
         }
-        
+
+        //populate the laboratori array
+        if(input.name === 'laboratori[]') {
+            if(input.checked) {
+                laboratori.push(input.value);
+            }
+            return;
+        }
+
         //get the value of the field
         if(input.type !== 'checkbox') {
             formData[input.name] = input.value;
@@ -201,6 +220,9 @@ function formValidation(form) {
             }
         }
     });
+
+    //controllo array laboratori
+    formData.laboratori = laboratori.length > 0 ? laboratori : ['NESSUNA_SCELTA'];
 
     //error handling
     if(Object.keys(errors).length > 0) {
