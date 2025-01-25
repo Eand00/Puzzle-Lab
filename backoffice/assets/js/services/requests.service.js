@@ -1,5 +1,6 @@
 import { apiClient } from '../utils/api-client.js';
 import { API_BASE_URL } from '../config/config.js';
+import { API_RICHIESTE_URL } from '../config/config.js';
 
 /**
  * Calculates request statistics
@@ -29,6 +30,39 @@ export async function getRequestStats() {
  * Fetches recent requests
  * @returns {Promise<Array>} Recent requests
  */
-export async function getRecentRequests() {
-    return apiClient(`${API_BASE_URL}/back-office/richieste`);
+export async function getAllRequests() {
+    return apiClient(API_RICHIESTE_URL);
+}
+
+
+
+export async function updateRequestStatus(id, status) {
+    const response = await apiClient(`${API_RICHIESTE_URL}/status?id=${id}&status=${status}`, {
+        method: 'PUT',
+    });
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    return response.json();
+}
+
+export async function deleteRequest(id) {
+    const response = await fetch(`${API_RICHIESTE_URL}`, {
+        method: 'DELETE',
+        body : JSON.stringify(id)
+        });
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    return response.json();
+}
+
+/**
+ * Update a request
+ * @param {Object} request - Request object with updated data
+ * @returns {Promise<Object>} Updated request
+ */
+export async function updateRequest(request) {
+    const response = await fetch(`${API_RICHIESTE_URL}`, {
+        method: 'PUT',
+        body: JSON.stringify(request)
+    });
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    return response.json();
 }
