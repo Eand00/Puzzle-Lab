@@ -40,31 +40,61 @@
         <!-- Main -->
         <main>
             <section class="container-fluid first-section">
-                <h2 class="text-center text-uppercase text-base light">Compila il form e scopri la <span class="bold">verità sulla mafia</span></h2>
+                <h2 class="text-center text-uppercase text-base light px-5">Compila il form e scopri la <span class="bold">verità sulla mafia</span></h2>
             </section>
             <form action="./feedback.html" method="post" data-validate>
                 <input type="hidden" name="tipo" value="prenotazione">
-                <div class="form-group">
-                    <label for="nome" class="text-base">Nome</label>
-                    <input type="text" id="nome" name="nome" required minlength="2" pattern="[A-zÀ-ù'\s]+" placeholder="Mario">
-                </div>
-                <div class="form-group">
-                    <label for="cognome" class="text-base">Cognome</label>
-                    <input type="text" id="cognome" name="cognome" required minlength="2" pattern="[A-zÀ-ù'\s]+" placeholder="Rossi">
-                </div>
-                <div class="form-group">
-                    <label for="organizzazione" class="text-base">Organizzazione </label>
-                    <input type="text" id="organizzazione" name="organizzazione" placeholder="Istituto Comprensivo S. Pertini" minlength="2" maxlength="100" pattern="[A-zÀ-ù'\s]+" required>
-                </div>
-                <div class="form-group">
-                    <label for="email" class="text-base">Email</label>
-                    <input type="email" id="email" name="email" required placeholder="email@example.com">
-                </div>
-                <div class="form-group">
-                    <label for="numero">Telefono <span class="text-muted">(opzionale)</span></label>
-                    <input type="tel" id="numero" name="numero" pattern="[\+]?[0-9\s]{10,}" placeholder="+39 987 654 3210">
-                </div>
                 <fieldset>
+                    <div class="form-group">
+                        <label for="nome" class="text-base">Nome</label>
+                        <input type="text" id="nome" name="nome" required minlength="2" pattern="[A-zÀ-ù'\s]+" placeholder="Mario">
+                    </div>
+                    <div class="form-group">
+                        <label for="cognome" class="text-base">Cognome</label>
+                        <input type="text" id="cognome" name="cognome" required minlength="2" pattern="[A-zÀ-ù'\s]+" placeholder="Rossi">
+                    </div>
+                    <div class="form-group">
+                        <label for="organizzazione" class="text-base">Organizzazione </label>
+                        <input type="text" id="organizzazione" name="organizzazione" placeholder="Istituto Comprensivo S. Pertini" minlength="2" maxlength="100" pattern="[A-zÀ-ù'\s]+" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="text-base">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="numero">Telefono <span class="text-muted">(opzionale)</span></label>
+                        <input type="tel" id="numero" name="numero" pattern="[\+]?[0-9\s]{10,}" placeholder="+39 987 654 3210">
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Durata della visita</legend>
+                    <div class="form-group switch">
+                        <input type="radio" id="tipologia_visita" name="tipologia" value="VISITA" checked>
+                        <input type="radio" id="tipologia_soggiorno" name="tipologia" value="SOGGIORNO">
+                        <div class="label-container">
+                            <label for="tipologia_visita" class="text-base">VISITA</label>
+                            <label for="tipologia_soggiorno" class="text-base">SOGGIORNO</label>
+                        </div>
+                    </div>
+                    <div class="form-group form-group--inline" id="fasciaOrariaGroup">
+                        <legend class="text-base">Fascia oraria preferita</legend>
+                        <div class="switch switch--vertical">
+                            <input type="radio" id="mattina" name="fasciaOraria" value="MATTINA" checked>
+                            <input type="radio" id="pomeriggio" name="fasciaOraria" value="POMERIGGIO">
+                            <div class="label-container">
+                                <label for="mattina">Mattina</label>
+                                <label for="pomeriggio">Pomeriggio</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group form-group--inline" id="numeroGiorniGroup" style="display: none;">
+                        <label for="numeroGiorni" class="text-base">Numero di giorni</label>
+                        <input type="number" id="numeroGiorni" name="numeroGiorni" min="2">
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Disponibilità</legend>  
                     <div class="form-group">
                         <label for="dataInizio">Data inizio disponibilità</label>
                         <input type="date" id="dataInizio" name="dataInizio" required>
@@ -74,6 +104,48 @@
                         <input type="date" id="dataFine" name="dataFine" required>
                     </div>
                 </fieldset>
+                <fieldset>
+                    <legend>Laboratori</legend>
+                    <div class="checkbox-group">
+                        <div class="checkbox-multiselect checkbox-multiselect--first">
+                            <input type="checkbox" id="lab_storia_di_cascina" name="laboratori[]" value="STORIA_DI_CASCINA">
+                            <label for="lab_storia_di_cascina" class="text-base">Storia di Cascina</label>
+                        </div>
+                        <div class="checkbox-multiselect">
+                            <input type="checkbox" id="lab_bruno_caccia" name="laboratori[]" value="BRUNO_CACCIA">
+                            <label for="lab_bruno_caccia" class="text-base">Bruno Caccia</label>
+                        </div>
+                        <div class="checkbox-multiselect">
+                            <input type="checkbox" id="lab_introduzione_al_tema_mafia" name="laboratori[]" value="INTRODUZIONE_AL_TEMA_MAFIA">
+                            <label for="lab_introduzione_al_tema_mafia" class="text-base">Introduzione al tema Mafia</label>
+                        </div>
+                        <div class="checkbox-multiselect">
+                            <input type="checkbox" id="lab_i_beni_confiscati" name="laboratori[]" value="I_BENI_CONFISCATI">
+                            <label for="lab_i_beni_confiscati" class="text-base">I beni confiscati</label>
+                        </div>
+                        <div class="checkbox-multiselect">
+                            <input type="checkbox" id="lab_le_mafie_in_piemonte" name="laboratori[]" value="LE_MAFIE_IN_PIEMONTE">
+                            <label for="lab_le_mafie_in_piemonte" class="text-base">Le mafie in Piemonte</label>
+                        </div>
+                        <div class="checkbox-multiselect">
+                            <input type="checkbox" id="lab_sostenibilita_ambientale" name="laboratori[]" value="SOSTENIBILITA_AMBIENTALE">
+                            <label for="lab_sostenibilita_ambientale" class="text-base">Sostenibilità ambientale</label>
+                        </div>
+                        <div class="checkbox-multiselect">
+                            <input type="checkbox" id="lab_la_mafia_attraverso_il_cinema" name="laboratori[]" value="LA_MAFIA_ATTRAVERSO_IL_CINEMA">
+                            <label for="lab_la_mafia_attraverso_il_cinema" class="text-base">La Mafia attraverso il cinema</label>
+                        </div>
+                        <div class="checkbox-multiselect">
+                            <input type="checkbox" id="lab_il_gioco_non_e_un_azzardo" name="laboratori[]" value="IL_GIOCO_NON_E_UN_AZZARDO">
+                            <label for="lab_il_gioco_non_e_un_azzardo" class="text-base">Il gioco non è un azzardo</label>
+                        </div>
+                        <div class="checkbox-multiselect checkbox-multiselect--last">
+                            <input type="checkbox" id="lab_chi_non_gioca_vince" name="laboratori[]" value="CHI_NON_GIOCA_VINCE">
+                            <label for="lab_chi_non_gioca_vince" class="text-base">Chi non gioca vince</label>
+                        </div>
+                    </div>
+                </fieldset>
+                
                 <div class="form-group">
                     <label for="testo">Messaggio</label>
                     <textarea id="testo" name="testo" rows="10" placeholder="Vi scrivo in merito a..."></textarea>
@@ -110,5 +182,7 @@
 		<!-- Custom scripts -->
 		<script src="./assets/scripts/main.js"></script>
         <script src="./assets/scripts/form-validation.js"></script>
+        <script src="./assets/scripts/form-conditional-fields.js"></script>
 	</body>
 </html>
+
