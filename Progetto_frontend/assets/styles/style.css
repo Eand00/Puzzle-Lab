@@ -476,6 +476,8 @@ footer {
 /* Cookie banner */
 .infoBanner {
 	display: flex;
+	align-items: center;
+	justify-content: center;
 	gap: 0.5rem;
     position: fixed;
     bottom: 0;
@@ -497,6 +499,13 @@ footer {
 .btn-container button {
 	padding: 0.25rem 0.5rem;
 	cursor: pointer;
-
+}
+@media (min-width: 768px) {
+	.infoBanner {
+		gap: 2rem;
+	}
+	.btn-container {
+		flex-direction: row;
+	}
 }
 
