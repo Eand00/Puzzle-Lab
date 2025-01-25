@@ -40,6 +40,7 @@
     padding: var(--spacing-lg);
     border-radius: 8px;
     text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .stat-number {
@@ -98,12 +99,12 @@
 
 .request-card {
     background: var(--color-white);
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    overflow: hidden;
+    position: relative;
 }
 
 .request-card-header {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     padding: var(--spacing-md);
     display: flex;
     justify-content: space-between;
@@ -113,8 +114,29 @@
 
 .request-basic-info {
     display: flex;
+    flex-direction: column;
+    align-items: flex-starts;
+    gap: var(--spacing-sm);
+}
+
+.request-basic-info .row-1 {
+    font-size: var(--font-size-xs);
+    color: var(--color-base-secondary);
+}
+
+.request-basic-info .row-2 {
+    display: flex;
     align-items: center;
     gap: var(--spacing-sm);
+}
+
+.request-type {
+    background: var(--color-white);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 8px;
+    font-weight: bold;
+    color: var(--color-base-secondary);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .request-id {
@@ -135,15 +157,25 @@
 }
 
 .request-card-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
     padding: 0;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease, padding 0.3s ease;
+    transition: all 0.3s ease;
+    background: var(--color-white);
+    z-index: 9999;
 }
 
 .request-card[data-expanded="true"] .request-card-content {
+    top: calc(100% - var(--spacing-sm));
     padding: var(--spacing-md);
     max-height: 500px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .request-info {

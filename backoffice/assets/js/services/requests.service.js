@@ -54,7 +54,7 @@ export async function getAllRequests() {
  * @returns {Promise<Array>} Array di richieste
  */
 export async function getRequestsByStatus(status) {
-    return apiClient(`${API_RICHIESTE_URL}?status=${status}`);
+    return apiClient(`${API_RICHIESTE_URL}/status?status=${status}`);
 }
 
 /**
@@ -88,9 +88,8 @@ export async function deleteRequest(id) {
 }
 
 /**
- * @function updateRequest
- * @description Aggiorna una richiesta
- * @param {Object} request - Oggetto richiesta con i dati aggiornati
+ * Update a request
+ * @param {Object} request - Request object with updated data
  * @returns {Promise<Object>} Updated request
  */
 export async function updateRequest(request) {

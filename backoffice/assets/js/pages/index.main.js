@@ -32,10 +32,16 @@ function populateRecentRequests(requests) {
                 <div class="request-card" data-expanded="false">
                     <div class="request-card-header">
                         <div class="request-basic-info">
-                            <span class="request-id">#${request.id}</span>
-                            <span class="status-badge ${request.status.toLowerCase()}">${request.nome} ${request.cognome} || ${request.organizzazione}</span>
+                            <div class="row-1">
+                                <span class="request-id">#${request.id}</span>
+                                <span class="request-type ${request.tipo.toLowerCase()}">${request.tipo.charAt(0).toUpperCase() + request.tipo.slice(1)}</span> | 
+                                <span class="request-date">${new Date(request.dataCreazione).toLocaleDateString()}</span>
+                            </div>
+                            <div class="row-2">
+                                <span class="status-badge ${request.status.toLowerCase()}">${request.nome} ${request.cognome} || ${request.organizzazione}</span>
+                            </div>
                         </div>
-                        <button class="expand-btn" onclick="this.closest('.request-card').setAttribute('data-expanded', this.closest('.request-card').getAttribute('data-expanded') === 'true' ? 'false' : 'true')">
+                        <button class="expand-btn">
                             <svg viewBox="0 0 24 24" width="24" height="24">
                                 <path d="M7 10l5 5 5-5z"/>
                             </svg>
@@ -70,6 +76,29 @@ function populateRecentRequests(requests) {
             `).join('')}
         </div>
     `;
+
+    document.querySelectorAll('.expand-btn').forEach(button => {
+        button.addEventListener('click', () => toggleRequestCard(button));
+    });
+}
+
+/**
+ * @function toggleRequestCard
+ * @description Attiva o disattiva la visualizzazione dei dettagli della richiesta
+ * @param {HTMLElement} button - Bottone che ha attivato la funzione
+ */
+function toggleRequestCard(button) {
+    const card = button.closest('.request-card');
+    const toggleStatus = card.getAttribute('data-expanded');
+    if(toggleStatus === 'false') {
+        document.querySelectorAll('.request-card').forEach(card => {
+            card.setAttribute('data-expanded', 'false');
+        });
+    }
+    
+    card.setAttribute('data-expanded', toggleStatus === 'false' ? 'true' : 'false');
+
+    
 }
 
 /**
@@ -100,8 +129,12 @@ async function initDashboard() {
         const stats = await getRequestStats();
         updateDashboardStats(stats);
         const requests = await getRequestsByStatus('RICEVUTA');
+
+        //ordina dal più recente
+        requests.sort((a, b) => new Date(b.id) - new Date(a.id));
+
+        //prende le 10 più recenti
         const recentRequests = requests.length > 10 ? requests.slice(0, 10) : requests;
-        console.log(recentRequests);
         populateRecentRequests(recentRequests);
     } catch (error) {
         showToast('error', 'Errore', error.message);
