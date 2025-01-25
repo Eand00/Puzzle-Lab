@@ -1,13 +1,13 @@
 /**
- * @file lab-card-component.js
+ * @file lab-grid-component.js
  * @version 1.0.0
  * @author Puzzle Lab
  * @contributors Bonura Vincenzo, Lupano Alberto, Picciotto Luca
  * @date 2024-12-29
- * @description A custom element that renders iterated lab-card-component elements
+ * @description Un componente custom che visualizza una griglia di card di laboratori
  * @extends HTMLElement
- * @property {string} data-labs - The data of the laboratories
- * @see README_FRONTEND.md for additional information.
+ * @property {string} data-labs - I dati dei laboratori
+ * @see README_FRONTEND.md per ulteriori informazioni.
  */
 
 class LabGridCOmponent extends HTMLElement {
@@ -17,18 +17,18 @@ class LabGridCOmponent extends HTMLElement {
 
     /**
      * @method connectedCallback
-     * @description This method is called when the component is connected to the DOM
+     * @description Questo metodo viene invocato quando il componente è collegato al DOM
      */
     connectedCallback() {
         let labs = [];
         labs = JSON.parse(this.getAttribute('data-labs') || '[]');
 
-        //prepare the fragment of code to be inserted in the DOM
+        //prepara il frammento di codice da inserire nel DOM
         const fragment = document.createDocumentFragment();
         const grid = document.createElement('div');
         grid.classList.add('laboratories-grid');
 
-        //insert the labs in the grid
+        //inserisce i laboratori nella griglia
         for (let lab of labs) {
             const card = document.createElement('lab-card-component');
             card.setAttribute('title', lab.title);
@@ -42,4 +42,7 @@ class LabGridCOmponent extends HTMLElement {
     }
 }
 
+/**
+ * Definisce il componente lab-grid-component come custom element.
+ */
 customElements.define('lab-grid-component', LabGridCOmponent);

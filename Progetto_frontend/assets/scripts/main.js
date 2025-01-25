@@ -4,13 +4,14 @@
  * @author Puzzle Lab
  * @contributors Bonura Vincenzo, Lupano Alberto, Picciotto Luca
  * @date 2024-11-25
- * @description This script handles the client-side logic for the site, including form submissions and interactions with the API.
- * @see README_FRONTEND.md for additional information.
+ * @update 2025-01-25
+ * @description Questo script gestisce la logica client-side per il sito, inclusa la gestione dei form e le interazioni con l'API.
+ * @see README_FRONTEND.md per ulteriori informazioni.
  */
 
 /**
  * @function showCookieBanner
- * @description Shows a cookie banner
+ * @description Mostra un banner per i cookie
  */
 function showCookieBanner() {
     const cookieBanner = document.createElement('div');
@@ -29,7 +30,7 @@ function showCookieBanner() {
 
 /**
  * @function acceptCookies
- * @description Stores a token in localStorage to indicate that cookies have been accepted
+ * @description Memorizza un token in localStorage per indicare che i cookie sono stati accettati
  */
 function acceptCookies() { 
     localStorage.setItem('acceptedCookies', 'true');
@@ -38,7 +39,7 @@ function acceptCookies() {
 
 /**
  * @function rejectCookies
- * @description Removes the cookie banner from the DOM
+ * @description Rimuove il banner per i cookie dal DOM
  */
 function rejectCookies() {
     document.body.removeChild(document.querySelector('.infoBanner'));
@@ -46,7 +47,7 @@ function rejectCookies() {
 
 /**
  * @function closeCookieBanner
- * @description Closes the cookie banner
+ * @description Chiude il banner per i cookie
  */
 function closeCookieBanner() {
     let cookieBanner = document.querySelector('.infoBanner');
@@ -56,7 +57,7 @@ function closeCookieBanner() {
     }, 500);
 }
 
-//initialize the cookie banner
+//inizializza il banner per i cookie
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOMContentLoaded');
     if (!localStorage.getItem('acceptedCookies')) {

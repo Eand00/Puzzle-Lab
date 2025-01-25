@@ -4,32 +4,33 @@
  * @author Puzzle Lab
  * @contributors Bonura Vincenzo, Lupano Alberto, Picciotto Luca
  * @date 2024-11-29
- * @description This script handles the client-side logic for the index page
- * @see README_FRONTEND.md for additional information.
+ * @update 2025-01-25
+ * @description Questo script gestisce la logica client-side per la pagina index
+ * @see README_FRONTEND.md per ulteriori informazioni.
  */
 
 /**
  * @constant containerScroll
  * @type {HTMLElement}
- * @description The container element for the testimonial carousel.
+ * @description L'elemento container per il carousel delle testimonianze.
  */
 const containerScroll = document.getElementById("testimonial-container");
 /**
  * @variable scrollIndex
  * @type {HTMLElement}
- * @description The index of setTimeout of scroll function.
+ * @description L'indice di setTimeout della funzione scroll.
  */
 let scrollIndex;
 /**
  * @variable carouselIndex
  * @type {HTMLElement}
- * @description The index of setTimeout of carousel function.
+ * @description L'indice di setTimeout della funzione carousel.
  */
 let carouselIndex;
 
 /**
  * @function scroll
- * @description Adds the scroll class to the testimonial-container element.
+ * @description Aggiunge la classe scroll all'elemento testimonial-container.
  */
 function scroll() {
     containerScroll.classList.add("scroll");
@@ -37,7 +38,7 @@ function scroll() {
 
 /**
  * @function carousel
- * @description Scrolls the carousel to the next card.
+ * @description Scorre il carousel alla prossima card.
  */
 function carousel() {
     const firstElement = document.getElementsByClassName("card")[0];
@@ -49,7 +50,7 @@ function carousel() {
 
 /**
  * @function handleMediaQueries
- * @description Adjusts the carousel behavior based on media query changes.
+ * @description Regola il comportamento del carousel in base alle modifiche delle media query.
  */
 function handleMediaQueries() {
     const mediaQuery = window.matchMedia("(max-width: 1440px)");
@@ -63,5 +64,5 @@ function handleMediaQueries() {
     }
 }
 
-setInterval(handleMediaQueries, 5000);
-
+//attende il caricamento del DOM per invocare la funzione di inizializzazione
+document.addEventListener('DOMContentLoaded', handleMediaQueries);

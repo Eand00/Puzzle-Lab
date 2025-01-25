@@ -45,7 +45,6 @@ Si è scelto l'utilizzo dei Web Components per le parti di codice che si ripeton
 - Modularità: consente un approccio DRY per le parti comuni del sito
 - Manutenibilità: si può sviluppare e modificare un componente in modo indipendente
 - Organizzazione: la logica centralizzata rende più semplice la gestione del codice
-- Progressive Enhancement: se JS è disabilitato dall'utente, un fallback permette l'usabilità del sito
 
 **Nota**: I componenti attuali non utilizzano Shadow DOM, condividendo lo scope CSS globale dell'applicazione. Questo è una scelta progettuale intenzionale per mantenere la coerenza stilistica con il resto del sito, sfruttando il CSS già presente.
 
@@ -65,20 +64,6 @@ Si è scelto l'utilizzo dei Web Components per le parti di codice che si ripeton
   - title: stringa
   - image: stringa
   - href: stringa
-
-<!-- TODO:
-### Gestione Javascript disabilitato
-
-Per garantire una migliore esperienza utente, è stato implementato un sistema di fallback per la visualizzazione del sito quando il Javascript è disabilitato, utilizzando il tag `<noscript>` per i contenuti dinamici, quali i web components. Questo approccio consente di garantire una visualizzazione completa del sito anche in presenza di limitazioni imposte dall'utente. Inoltre, permette di mantenere un'indicizzazione completa del sito da parte dei motori di ricerca.
-
-### Creazione altri componenti
-- form-component.js
-  centralizzazione della validazione lato client, dell'invio dati, della gestione feedback
-- cta-component.js
-  centralizzazione stile CTA
-- faq-component.js
-  centralizzazione stile FAQ
--->
 
 ### Validazione forms
 

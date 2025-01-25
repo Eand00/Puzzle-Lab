@@ -4,9 +4,9 @@
  * @author Puzzle Lab
  * @contributors Bonura Vincenzo, Lupano Alberto, Picciotto Luca
  * @date 2024-12-14
- * @description This script handles the header component of the site.
+ * @description Questo script gestisce il componente header del sito.
  * @extends HTMLElement
- * @see README_FRONTEND.md for additional information.
+ * @see README_FRONTEND.md per ulteriori informazioni.
  */
 
 class HeaderComponent extends HTMLElement {
@@ -68,8 +68,8 @@ class HeaderComponent extends HTMLElement {
     }
 
     /**
-     * This method is called when the component is connected to the DOM.
-     * It is used to initialize the component.
+     * Questo metodo viene invocato quando il componente è collegato al DOM.
+     * Viene utilizzato per inizializzare il componente.
      */
     connectedCallback() {
         // Clone the template content and append it to the DOM
@@ -84,7 +84,7 @@ class HeaderComponent extends HTMLElement {
     }
 
     /**
-     * Sets the active page in the navigation
+     * Imposta la pagina attiva nella navigazione
      */
     setActivePage() {
         const activePage = this.getAttribute('active-page');
@@ -99,7 +99,7 @@ class HeaderComponent extends HTMLElement {
     }
 
     /**
-     * Sets up all event listeners for the component
+     * Imposta tutti gli event listeners per il componente
      */
     setupEventListeners() {
         this.setupNavbarToggle();
@@ -107,7 +107,7 @@ class HeaderComponent extends HTMLElement {
     }
 
     /**
-     * Sets up the navbar toggle functionality
+     * Imposta la funzionalità del navbar toggle
      */
     setupNavbarToggle() {
         const navbarToggle = this.querySelector('#navbarBtn');
@@ -125,7 +125,7 @@ class HeaderComponent extends HTMLElement {
     }
 
     /**
-     * Sets up the scroll handler for header styling
+     * Gestisce lo stile del header in base alla scroll
      */
     setupScrollHandler() {
         const header = this.querySelector('header');
@@ -137,4 +137,8 @@ class HeaderComponent extends HTMLElement {
     }
 }
 
+
+/**
+ * Definisce il componente header-component come custom element.
+ */
 customElements.define("header-component", HeaderComponent);

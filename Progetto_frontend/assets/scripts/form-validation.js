@@ -4,13 +4,14 @@
  * @author Puzzle Lab
  * @contributors Bonura Vincenzo, Lupano Alberto, Picciotto Luca
  * @date 2024-12-21
- * @description This script handles the client-side logic for the form validation
- * @see README_FRONTEND.md for additional information.
+ * @update 2025-01-25
+ * @description Questo file contiene la logica di validazione dei campi nei form.
+ * @see README_FRONTEND.md per ulteriori informazioni.
  */
 
 /**
  * @constant {{RegExp, string, boolean}} VALIDATION_RULES
- * @description The rules for the validation of the fields, with a feedback message
+ * @description Le regole per la validazione dei campi, con un messaggio di feedback
  */
 const VALIDATION_RULES = {
     nome: {
@@ -66,7 +67,7 @@ const VALIDATION_RULES = {
     numeroGiorni: {
         regex: /^\d+$/,
         message: 'Il campo deve contenere un numero valido',
-        required: false //dynamically set by the conditional fields
+        required: false //impostato dinamicamente dai campi condizionali
     },
     privacy: {
         regex: 'checked',
@@ -87,9 +88,9 @@ const VALIDATION_RULES = {
 
 /**
  * @function getFieldValue(field)
- * @param {HTMLInputElement} field - The field to get the value from
- * @returns {string | boolean} - The value of the field
- * @description Get the correct value of the field filtered by the type
+ * @param {HTMLInputElement} field - Il campo da cui ottenere il valore
+ * @returns {string | boolean} - Il valore del campo
+ * @description Ottiene il valore corretto del campo filtrato dal tipo
  */
 function getFieldValue(field) {
     return field.type === 'checkbox' ? field.checked : field.value;
@@ -97,8 +98,8 @@ function getFieldValue(field) {
 
 /**
  * @function initErrorMessages(form)
- * @param {HTMLFormElement} form - The form to initialize
- * @description Insert the span elements for the error messages in the form
+ * @param {HTMLFormElement} form - Il form da inizializzare
+ * @description Inserisce gli span per i messaggi di errore nel form
  */
 function initErrorMessages(form) {
     form.querySelectorAll('input, textarea').forEach(input => {
@@ -110,15 +111,15 @@ function initErrorMessages(form) {
 
 /**
  * @function validate(data, type)
- * @param {string} data - The data to validate
- * @param {string} type - The type of the data to validate
- * @returns {[boolean, string]} [isValid, message] - The result of the validation
- * @description Validates the data based on the type
+ * @param {string} data - Il dato da validare
+ * @param {string} type - Il tipo del dato da validare
+ * @returns {[boolean, string]} [isValid, message] - Il risultato della validazione
+ * @description Valida il dato in base al tipo
  */
 function validate(data, type) {
     const rule = VALIDATION_RULES[type];
 
-    //numeroGiorni conditional validation
+    //validazione condizionale numeroGiorni
     if(type === 'numeroGiorni') {
         const isSoggiorno = document.getElementById('tipologia_soggiorno').checked;
         if(isSoggiorno) {
@@ -126,54 +127,54 @@ function validate(data, type) {
         }
     }
     
-    //checkboxes
+    //validazione checkbox
     if(['privacy', 'sensibleData', 'tos'].includes(type)) {
         return [data === 'on' || data === true, rule.message];
     }
 
-    //not recognized fields
+    //campo non riconosciuto
     if(!rule) {
         return [false, 'Campo non riconosciuto'];
     }
 
-    //not required fields
+    //campo non obbligatorio
     if(!rule.required) {
         return [true, ''];
     }
 
-    //validation
+    //validazione
     return [rule.regex.test(data), rule.message];
 }
 
 /**
  * @function updateFieldStatus(field, isValid, message)
- * @param {string} field - The field to update
- * @param {boolean} isValid - The validity of the field
- * @param {string} message - The message to display
- * @description Updates the status of the field
+ * @param {string} field - Il campo da aggiornare
+ * @param {boolean} isValid - La validità del campo
+ * @param {string} message - Il messaggio da visualizzare
+ * @description Aggiorna lo stato del campo
  */
 function updateFieldStatus(field, isValid, message) {
     const fieldElement = document.getElementById(field);
 
-    //update the field status
+    //aggiorna lo stato del campo
     fieldElement.classList.toggle('invalid', !isValid);
     fieldElement.classList.toggle('valid', isValid);  
 
-    //update the error message
+    //aggiorna il messaggio di errore
     fieldElement.parentNode.querySelector('.error-message').textContent = message;
 }
 
 /**
  * @function formValidation
- * @param {HTMLFormElement} form - The form to validate
- * @description Validates the form by iterating over the fields and checking the correctness of the data
+ * @param {HTMLFormElement} form - Il form da validare
+ * @description Valida il form iterando sui campi e controllando la correttezza dei dati
  */
 function formValidation(form) {
     const errors = {};
     const formData = {};
     let isValid = true;
     form.querySelectorAll('input, textarea').forEach(input => {
-        //Skip validation for radio buttons
+        //salta la validazione per i radio button
         if(input.type === 'radio') {
             if(input.checked) {
                 formData[input.name] = input.value;
@@ -181,20 +182,20 @@ function formValidation(form) {
             return;
         }
         
-        //get the value of the field
+        //ottiene il valore del campo
         if(input.type !== 'checkbox') {
             formData[input.name] = input.value;
         }
 
         if(input.required) {
-            //get the value of the field OR the checkbox status
+            //ottiene il valore del campo o lo stato del checkbox
             let value = getFieldValue(input);
             const [fieldValid, message] = validate(value, input.name);
 
-            //UI feedback
+            //feedback UI
             updateFieldStatus(input.name, fieldValid, message);
 
-            //Errors update
+            //aggiorna gli errori
             if(!fieldValid) {
                 errors[input.name] = message;
                 isValid = false;
@@ -202,14 +203,14 @@ function formValidation(form) {
         }
     });
 
-    //error handling
+    //gestione degli errori
     if(Object.keys(errors).length > 0) {
         
-        //Smooth scroll to the first invalid field
+        //smooth scroll al primo campo invalido
         const invalidFields = form.querySelector('.invalid');
         invalidFields.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
 
-        //focus the first invalid field (timeout to avoid blocking smooth scroll)
+        //focus al primo campo invalido (timeout per evitare il blocco del smooth scroll)
         setTimeout(() => invalidFields.focus(), 500);
 
         return false;
@@ -219,8 +220,8 @@ function formValidation(form) {
 
 /**
  * @function isLoading
- * @param {boolean} state - The state of the loading
- * @description Adds or removes the loading state to the body
+ * @param {boolean} state - Lo stato del caricamento
+ * @description Aggiunge o rimuove lo stato di caricamento al body
  */
 function isLoading(state = false) {
     document.body.classList.toggle('loading', state);
@@ -228,26 +229,26 @@ function isLoading(state = false) {
 
 /**
  * @function submitFormData(formData)
- * @param {Object} formData - The validated form data to submit
- * @description Handles the API submission of the form data
+ * @param {Object} formData - I dati del form validati
+ * @description Gestione dell'invio dei dati del form all'API
  */
 function submitFormData(formData) {
-    // add loading state
+    // aggiunge lo stato di caricamento
     isLoading(true);
 
-    // process data and remove unnecessary fields based on conditions
+    // processa i dati e rimuove i campi non necessari in base alle condizioni
     const processedData = { ...formData };
     if(processedData.tipologia === 'VISITA') {
         delete processedData.numeroGiorni;
     }
 
-    // convert the processed data to JSON
+    // converte i dati processati in JSON
     const jsonFormData = JSON.stringify(processedData);
 
     // API URL
     const API_BASE_URL = 'http://localhost:8080/richieste/';
 
-    // API request options
+    // opzioni della richiesta API
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -271,22 +272,22 @@ function submitFormData(formData) {
             return response.text();
         })
         .then(data => {
-            //remove loading state
+            //rimuove lo stato di caricamento
             isLoading(false);
             window.location.href = './feedback.html';
         })
         .catch(error => {
-            //remove loading state
+            //rimuove lo stato di caricamento
             isLoading(false);
-            //user feedback
+            //feedback utente
             showErrorToast(error.message);
         });
 }
 
 /**
  * @function showErrorToast
- * @param {string} message - The error message to display
- * @description Shows a toast message with the error
+ * @param {string} message - Il messaggio di errore da visualizzare
+ * @description Mostra un toast con il messaggio di errore
  */
 function showErrorToast(message) {
     const toast = document.createElement('div');
@@ -302,7 +303,7 @@ function showErrorToast(message) {
     `;
     document.body.appendChild(toast);
     
-    // Auto-remove after 5 seconds
+    // rimuove il toast dopo 5 secondi
     setTimeout(() => {
         if (toast.parentElement) {
             toast.remove();
@@ -310,21 +311,21 @@ function showErrorToast(message) {
     }, 5000);
 }
 
-//initialize the form validation
+//inizializza la validazione del form
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('form[data-validate]');
 
-    //disable HTML5 validation
+    //disabilita la validazione HTML5
     form.setAttribute('novalidate', '');
 
-    //initialize the error messages containers
+    //inizializza i container per i messaggi di errore
     initErrorMessages(form);
 
-    //handle validation on input
+    //gestione della validazione sui campi di input
     form.addEventListener('input', (event) => {
         const input = event.target;
 
-        //filter for only required input and textarea
+        //filtra solo per i campi obbligatori e il campo numeroGiorni
         if(['INPUT', 'TEXTAREA'].includes(input.tagName) && 
             (VALIDATION_RULES[input.name].required || input.name === 'numeroGiorni')) {
             let value = getFieldValue(input);
@@ -333,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, true);
 
-    //handle the submission validation
+    //gestione della validazione al submit
     form.addEventListener('submit', (event) => {
         event.preventDefault();
         formValidation(form);

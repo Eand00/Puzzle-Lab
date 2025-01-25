@@ -4,9 +4,9 @@
  * @author Puzzle Lab
  * @contributors Bonura Vincenzo, Lupano Alberto, Picciotto Luca
  * @date 2024-12-14
- * @description This script handles the footer component of the site.
+ * @description Questo componente gestisce il footer del sito.
  * @extends HTMLElement
- * @see README_FRONTEND.md for additional information.
+ * @see README_FRONTEND.md per ulteriori informazioni.
  */
 
 class FooterComponent extends HTMLElement {
@@ -68,8 +68,8 @@ class FooterComponent extends HTMLElement {
                
 
   /**
-   * This method is called when the component is connected to the DOM.
-   * It is used to initialize the component.
+   * Questo metodo viene invocato quando il componente è collegato al DOM.
+   * Viene utilizzato per inizializzare il componente.
    */
   connectedCallback() {
     const content = this.template.content.cloneNode(true);
@@ -77,4 +77,7 @@ class FooterComponent extends HTMLElement {
   }
 }
 
+/**
+ * Definisce il componente footer-component come custom element.
+ */
 customElements.define("footer-component", FooterComponent);

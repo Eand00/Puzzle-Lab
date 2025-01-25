@@ -1,3 +1,16 @@
+/** 
+ * File: utility.css
+ * Description: Foglio di stile per le regole di utilità.
+ * Version: 1.0.0
+ * 
+ * Questo file contiene le regole di utilità riutilizzabili in tutto il progetto.
+ * 
+ * Author: Puzzle Lab
+ * Contributors: Bonura Vincenzo, Lupano Alberto, Picciotto Luca
+ * Date: 2024-11-25
+ * Update: 2025-01-25
+ */
+
 :root {
     /* Color Palette principale */
     --color-accent-orange: #FAB700;

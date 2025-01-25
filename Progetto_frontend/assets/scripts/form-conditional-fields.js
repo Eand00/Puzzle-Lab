@@ -4,13 +4,14 @@
  * @author Puzzle Lab
  * @contributors Bonura Vincenzo
  * @date 2025-01-24
- * @description This script handles the client-side logic for the conditional fields in the form
- * @see README_FRONTEND.md for additional information.
+ * @update 2025-01-25
+ * @description Questo script gestisce la logica lato client per i campi condizionali nei form
+ * @see README_FRONTEND.md per ulteriori informazioni.
  */
 
 /**
  * @function handleConditionalFields
- * @description This function handles the conditional fields in the form
+ * @description Questa funzione gestisce i campi condizionali nei form
  */
 function handleConditionalFields() {
     const tipologiaRadios = document.getElementsByName('tipologia');
@@ -21,19 +22,19 @@ function handleConditionalFields() {
 
     /**
      * @function toggleFields
-     * @description This function toggles the fields based on the selected 'tipologia' radio button
+     * @description Questa funzione attiva o disattiva i campi in base alla selezione del radio button 'tipologia'
      */
     function toggleFields() {
         const isSoggiorno = document.getElementById('tipologia_soggiorno').checked;
         
-        //toggle the fascia oraria fields
+        //attiva o disattiva il campo fasciaOraria in base alla selezione del radio button 'tipologia'
         fasciaOrariaGroup.style.display = isSoggiorno ? 'none' : 'flex';
         fasciaOrariaInputs.forEach(input => {
             input.required = !isSoggiorno;
             if (isSoggiorno) input.checked = false;
         });
 
-        //toggle the numero giorni fields
+        //attiva o disattiva il campo numeroGiorni in base alla selezione del radio button 'tipologia'
         numeroGiorniGroup.style.display = isSoggiorno ? 'flex' : 'none';
         numeroGiorniInput.required = isSoggiorno;
         if (!isSoggiorno) {
@@ -42,14 +43,14 @@ function handleConditionalFields() {
         }
     }
 
-    //initialize the fields state
+    //inizializza lo stato dei campi
     toggleFields();
 
-    //add event listeners for the changes
+    //aggiunge event listeners per i cambiamenti
     tipologiaRadios.forEach(radio => {
         radio.addEventListener('change', toggleFields);
     });
 }
 
-//initialize the fields state when the DOM is loaded
+//attende il caricamento del DOM per invocare la funzione di inizializzazione
 document.addEventListener('DOMContentLoaded', handleConditionalFields);

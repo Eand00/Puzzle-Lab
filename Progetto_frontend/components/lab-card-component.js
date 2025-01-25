@@ -4,12 +4,12 @@
  * @author Puzzle Lab
  * @contributors Bonura Vincenzo, Lupano Alberto, Picciotto Luca
  * @date 2024-12-27
- * @description A custom element that displays a laboratory card
+ * @description Un componente custom che visualizza una card di un laboratorio
  * @extends HTMLElement
- * @property {string} title - The title of the laboratory
- * @property {string} image - The image of the laboratory
- * @property {string} href - The link to the laboratory
- * @see README_FRONTEND.md for additional information.
+ * @property {string} title - Il titolo del laboratorio
+ * @property {string} image - L'immagine del laboratorio
+ * @property {string} href - Il link al laboratorio
+ * @see README_FRONTEND.md per ulteriori informazioni.
  */
 
 class LabCardComponent extends HTMLElement {
@@ -19,7 +19,7 @@ class LabCardComponent extends HTMLElement {
 
     /**
      * @method connectedCallback
-     * @description This method is called when the component is connected to the DOM
+     * @description Questo metodo viene invocato quando il componente è collegato al DOM
      */
     connectedCallback() {
         const title = this.getAttribute('title') || 'Laboratorio';
@@ -36,4 +36,7 @@ class LabCardComponent extends HTMLElement {
     }
 }
 
+/**
+ * Definisce il componente lab-card-component come custom element.
+ */
 customElements.define("lab-card-component", LabCardComponent);
