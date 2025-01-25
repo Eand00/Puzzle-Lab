@@ -222,7 +222,7 @@ function formValidation(form) {
     });
 
     //controllo array laboratori
-    formData.laboratori = laboratori.length > 0 ? laboratori : ['NESSUNA_SCELTA'];
+    formData.laboratori = laboratori.length > 0 ? laboratori : ['DECIDERO_DOPO'];
 
     //error handling
     if(Object.keys(errors).length > 0) {
@@ -282,7 +282,7 @@ function submitFormData(formData) {
 
     //XXX test di loading state, rimuovere in produzione
     const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-    delay(2000)
+    delay(1000)
         .then(() => fetch(API_URL, requestOptions))
         .then(response => {
             if(!response.ok) {
