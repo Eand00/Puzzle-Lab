@@ -1,11 +1,22 @@
+/**
+ * @file requests.service.js
+ * @version 1.0.0
+ * @author Puzzle Lab
+ * @contributors Samuele, Sicura, Eand Avdiu, Vincenzo Bonura
+ * @date 2025-01-22
+ * @update 2025-01-25
+ * @description Service per la gestione delle richieste
+ * @see README.md per ulteriori informazioni
+ */
+
 import { apiClient } from '../utils/api-client.js';
-import { API_BASE_URL } from '../config/config.js';
 import { API_RICHIESTE_URL } from '../config/config.js';
 
 /**
- * Calculates request statistics
- * @param {Array} requests - Array of requests
- * @returns {Object} Statistics object
+ * @function calculateStats
+ * @description Calcola le statistiche delle richieste
+ * @param {Array} requests - Array di richieste
+ * @returns {Object} Oggetto contenente le statistiche
  */
 function calculateStats(requests) {
     return {
@@ -18,24 +29,41 @@ function calculateStats(requests) {
 }
 
 /**
- * Fetches dashboard statistics
- * @returns {Promise<Object>} Statistics data
+ * @function getRequestStats
+ * @description Recupera le statistiche della dashboard
+ * @returns {Promise<Object>} Dati delle statistiche
  */
 export async function getRequestStats() {
-    const requests = await apiClient(`${API_BASE_URL}/back-office/richieste`);
+    const requests = await apiClient(`${API_RICHIESTE_URL}`);
     return calculateStats(requests);
 }
 
 /**
- * Fetches recent requests
- * @returns {Promise<Array>} Recent requests
+ * @function getAllRequests
+ * @description Recupera tutte le richieste
+ * @returns {Promise<Array>} Array di richieste
  */
 export async function getAllRequests() {
     return apiClient(API_RICHIESTE_URL);
 }
 
+/**
+ * @function getRequestsByStatus
+ * @description Recupera le richieste filtrate per status
+ * @param {string} status - Status della richiesta
+ * @returns {Promise<Array>} Array di richieste
+ */
+export async function getRequestsByStatus(status) {
+    return apiClient(`${API_RICHIESTE_URL}?status=${status}`);
+}
 
-
+/**
+ * @function updateRequestStatus
+ * @description Aggiorna lo status di una richiesta
+ * @param {string} id - ID della richiesta
+ * @param {string} status - Status della richiesta
+ * @returns {Promise<Object>} Oggetto contenente la richiesta aggiornata
+ */
 export async function updateRequestStatus(id, status) {
     const response = await apiClient(`${API_RICHIESTE_URL}/status?id=${id}&status=${status}`, {
         method: 'PUT',
@@ -44,6 +72,12 @@ export async function updateRequestStatus(id, status) {
     return response.json();
 }
 
+/**
+ * @function deleteRequest
+ * @description Cancella una richiesta
+ * @param {string} id - ID della richiesta
+ * @returns {Promise<Object>} Oggetto contenente la richiesta cancellata
+ */
 export async function deleteRequest(id) {
     const response = await fetch(`${API_RICHIESTE_URL}`, {
         method: 'DELETE',
@@ -54,8 +88,9 @@ export async function deleteRequest(id) {
 }
 
 /**
- * Update a request
- * @param {Object} request - Request object with updated data
+ * @function updateRequest
+ * @description Aggiorna una richiesta
+ * @param {Object} request - Oggetto richiesta con i dati aggiornati
  * @returns {Promise<Object>} Updated request
  */
 export async function updateRequest(request) {

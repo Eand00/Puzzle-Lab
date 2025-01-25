@@ -3,7 +3,7 @@
  * @version 1.0.0
  * @author Puzzle Lab
  * @contributors Bonura Vincenzo, Eand Avdiu
- * @date 2025-01-07
+ * @date 2025-01-15
  * @update 2025-01-25
  * @description Header component with navigation and authentication features
  * @extends HTMLElement

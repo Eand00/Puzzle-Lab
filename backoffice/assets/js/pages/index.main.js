@@ -1,8 +1,22 @@
-import { getRequestStats, getAllRequests } from '../services/requests.service.js';
+/**
+ * @file index.main.js
+ * @version 1.0.0
+ * @author Puzzle Lab
+ * @contributors Bonura Vincenzo, Eand Avdiu
+ * @date 2025-01-15
+ * @update 2025-01-25
+ * @description Script per la pagina index
+ * @see README.md per ulteriori informazioni
+ */
+
+import { getRequestStats, getAllRequests, getRequestsByStatus } from '../services/requests.service.js';
+import { showToast } from '../utils/toast.util.js';
+
 
 /**
- * Populates recent requests list
- * @param {Array} requests - Array of recent requests
+ * @function populateRecentRequests
+ * @description Popola la lista delle richieste recenti
+ * @param {Array} requests - Array di richieste recenti
  */
 function populateRecentRequests(requests) {
     const container = document.querySelector('.requests-list');
@@ -60,7 +74,8 @@ function populateRecentRequests(requests) {
 
 /**
  * @function updateDashboardStats
- * @param {Object} stats - Dashboard statistics
+ * @description Aggiorna le statistiche della dashboard
+ * @param {Object} stats - Oggetto contenente le statistiche
  */
 function updateDashboardStats(stats) {
     const statsElements = {
@@ -78,17 +93,18 @@ function updateDashboardStats(stats) {
 
 /**
  * @function initDashboard
- * @description Initializes dashboard components
+ * @description Inizializza i componenti della dashboard
  */
 async function initDashboard() {
     try {
         const stats = await getRequestStats();
         updateDashboardStats(stats);
-        const recentRequests = await getAllRequests();
+        const requests = await getRequestsByStatus('RICEVUTA');
+        const recentRequests = requests.length > 10 ? requests.slice(0, 10) : requests;
+        console.log(recentRequests);
         populateRecentRequests(recentRequests);
     } catch (error) {
-        const toast = document.querySelector('toast-component');
-        toast.showToast('error', 'Errore', error.message);
+        showToast('error', 'Errore', error.message);
     }
 }
 
