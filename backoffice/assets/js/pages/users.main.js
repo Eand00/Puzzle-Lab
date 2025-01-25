@@ -1,3 +1,14 @@
+/**
+ * @file users.main.js
+ * @version 1.0.0
+ * @author Puzzle Lab
+ * @contributors Daniele Wei Chen, Eand Avdiu, Vincenzo Bonura
+ * @date 2025-01-22
+ * @update 2025-01-25
+ * @description Gestione degli utenti
+ * @see README.md per ulteriori informazioni
+ */
+
 import { getAllUsers, createUser, updateUser, deleteUser } from '../services/users.service.js';
 
 let currentUser = null;
@@ -20,11 +31,11 @@ function renderUsers(users) {
             <td>${user.nome}</td>
             <td>${user.cognome}</td>
             <td>${user.ruolo}</td>
-            <td>
-                <button class="btn-secondary btn-sm edit-btn">
+            <td class="actions-cell">
+                <button class="btn-secondary edit-btn">
                     Modifica
                 </button>
-                <button class="btn-danger btn-sm delete-btn">
+                <button class="btn-primary danger delete-btn">
                     Elimina
                 </button>
             </td>
