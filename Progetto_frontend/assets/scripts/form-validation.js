@@ -222,7 +222,7 @@ function formValidation(form) {
     });
 
     //controllo array laboratori
-    formData.laboratori = laboratori.length > 0 ? laboratori : ['DECIDERO_DOPO'];
+    formData.laboratori = laboratori.length > 0 ? laboratori.join(',') : 'DECIDERO_DOPO';
 
     //error handling
     if(Object.keys(errors).length > 0) {
