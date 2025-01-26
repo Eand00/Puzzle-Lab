@@ -200,6 +200,43 @@ function populateRequests(requests) {
     setupEventListeners(requestsContainer);
 }
 
+function applyFilters(requests) {
+    const filterForm = document.getElementById('filterForm');
+    const search = filterForm.querySelector('#search').value.toLowerCase();
+    const tipo = filterForm.querySelector('input[name="tipo"]:checked').value;
+    const status = filterForm.querySelector('#status').value;
+
+    return requests.filter(request => {
+        const matchesSearch =
+            request.nome.toLowerCase().includes(search) ||
+            request.cognome.toLowerCase().includes(search) ||
+            request.organizzazione.toLowerCase().includes(search) ||
+            request.email.toLowerCase().includes(search) ||
+            request.testo.toLowerCase().includes(search);
+
+        const matchesTipo = tipo === 'all' || request.tipo === tipo;
+
+        const matchesStatus = status === 'all' || request.status === status;
+
+        return matchesSearch && matchesTipo && matchesStatus;
+    });
+}
+
+function setupFilterEventListeners() {
+    const filterForm = document.getElementById('filterForm');
+    filterForm.addEventListener('input', async () => {
+        try {
+            const allRequests = await getAllRequests();
+
+            const filteredRequests = applyFilters(allRequests);
+
+            populateRequests(filteredRequests);
+        } catch (error) {
+            showToast('error', 'Errore', error.message);
+        }
+    });
+}
+
 /**
  * @function initRequests
  * @description Inizializza la pagina delle richieste
@@ -207,6 +244,7 @@ function populateRequests(requests) {
 async function initRequests() {
     try {
         await refreshRequests();
+        setupFilterEventListeners();
     } catch (error) {
         showToast('error', 'Errore', error.message);
     }
