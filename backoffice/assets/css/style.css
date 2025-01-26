@@ -18,12 +18,15 @@
     --color-info: #17a2b8;
     
     --color-white: #ffffff;
+    --color-white-light: #f6f7f8;
     --color-black: #000000;
     --color-dark: #343a40;
     --color-light: #d8d9da;
 
     /* Typography */
     --text-size-base: 16px;
+    --text-size-sm: 14px;
+    --text-size-xs: 12px;
     --font-family-base: "Inter", sans-serif;
     --font-family-heading: "Montserrat", sans-serif;
 
@@ -42,6 +45,9 @@
     --font-size-md: 1.5rem;
     --font-size-lg: 1.875rem;
     --font-size-xl: 2rem;
+
+    /* shadow */
+    --shadow-base: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 /* Global Reset */
@@ -195,6 +201,15 @@ input, select, textarea {
 .btn-primary.info,
 .btn-secondary.info {
     --color: var(--color-info);
+}
+.btn-primary.generic,
+.btn-secondary.generic {
+    --color: var(--color-base-secondary);
+}
+.btn-primary.disabled,
+.btn-secondary.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 /* Tables */

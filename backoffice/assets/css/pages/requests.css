@@ -14,50 +14,12 @@
     gap: 2rem;
 }
 
-.request{
-    position: relative;
-    margin: 0 auto;
-    margin-bottom: 20px;
-    padding: 40px;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-}
-/* Stile per il select */
-.request .statusSelect {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: auto; /* Cambia la larghezza */
-    max-width: 200px; /* Imposta una larghezza massima */
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-}
-
-/* Stile per la data */
-.request #data {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    margin: 0;
-    font-size: 0.9em;
-    color: #555;
-}
-
-.requests-container h2 {
-    margin-top: 0;
-}
-
 /* Lista richieste */
 .requests-list {
     background: var(--color-white);
-    padding: 2rem;
+    padding: var(--spacing-xl);
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    flex: 1;
-    overflow-y: auto;
+    box-shadow: var(--shadow-base);
 }
 
 .requests-list-header {
@@ -77,6 +39,146 @@
     align-items: flex-end;
 }
 
+#requests {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+/* Card richiesta */
+.request-card{
+    position: relative;
+    background: var(--color-white-light);
+    padding: var(--spacing-sm);
+    border-radius: var(--spacing-md);
+    box-shadow: var(--shadow-base);
+    display: flex;
+    flex-direction: column;
+    border-left: var(--spacing-md) solid var(--color-base-secondary);
+}
+
+
+.request-card.ricevuta {
+    border-left-color: var(--color-warning);
+}
+
+.request-card.presa_in_carico {
+    border-left-color: var(--color-info);
+}
+
+.request-card.rifiutata {
+    border-left-color: var(--color-danger);
+}
+
+.request-card.confermata,
+.request-card.archiviata {
+    border-left-color: var(--color-success);
+}
+
+.row-1,
+.row-2 {
+    display: flex;
+}
+.card-info > div, 
+.basic-info > div {
+    line-height: 2rem;
+}
+
+.card-info-id {
+    font-weight: bold;
+    color: var(--color-base-secondary);
+}
+.card-info-tipo {
+    background: var(--color-white);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 8px;
+    font-weight: bold;
+    color: var(--color-base-secondary);
+    box-shadow: inset var(--shadow-base);
+}
+.card-info-date {
+    font-size: var(--font-size-xs);
+    color: var(--color-base-secondary);
+    grid-column: 1 / 3;
+    font-weight: bold;
+}
+
+.basic-info {
+    flex: 1;
+}
+.basic-info-title {
+    font-weight: bold;
+}
+.basic-info span.label {
+    display: inline-block;
+    font-weight: bold;
+    color: var(--color-base-secondary);
+    padding: 0 var(--spacing-sm);
+}
+
+/* Actions */
+
+.actions-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.actions-container button {
+    width: 80px;
+}
+
+/* Status Form */
+
+.status-form {
+    display: flex;
+    gap: 0;
+    justify-content: flex-end;
+}
+
+.statusSelect {
+    width: auto;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+    border-radius: var(--spacing-sm);
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border: 1px solid var(--color-light);
+    background: var(--color-white);
+    box-shadow: inset var(--shadow-base);
+}
+
+
+.status-form button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: var(--spacing-sm);
+}
+
+.toggle-details-btn {
+    align-self: flex-end;
+    border-bottom-right-radius: var(--spacing-sm);  
+}
+
+/* Details */
+
+.request-card .request-details {
+    max-height: 0px;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+.request-card.show-details .request-details {
+    max-height: 1000px;
+}
+
+/* Filters */
+
+.requests-container h2 {
+    margin-top: 0;
+}
 
 .filters-form input[type="text"]{
     margin-right: 4rem;
@@ -132,87 +234,4 @@
         flex-direction: column;
         gap: 1rem;
     }
-}
-
-.request-details {
-    display: none; /* Hide details by default */
-    transition: all 0.3s ease-in-out;
-}
-
-.request-details.visible {
-    display: block; /* Show details when toggled */
-}
-
-.edit-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1rem;
-}
-
-.edit-form input,
-.edit-form select {
-    padding: 0.5rem;
-    border: 1px solid var(--color-border);
-    border-radius: 4px;
-}
-
-.edit-actions {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-.btn-primary {
-    background: var(--color-primary);
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.btn-secondary {
-    background: var(--color-secondary);
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-}
-.edit-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-
-.edit-form input,
-.edit-form textarea {
-    padding: 0.5rem;
-    border: 1px solid var(--color-border);
-    border-radius: 4px;
-}
-
-.action-buttons {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.save-btn {
-    background-color: var(--color-success);
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.cancel-btn {
-    background-color: var(--color-secondary);
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
 }

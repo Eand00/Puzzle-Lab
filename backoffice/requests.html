@@ -27,16 +27,17 @@
                 <div class="requests-list-filters">
                     <form id="filterForm" class="filters-form">
                         <div class="form-group--inline">
+                            <h2>Filtri</h2>
                             <label for="search">Cerca:</label><br>
                             <input type="text" id="search" name="search"><br>
                             
-                            <label><input type="radio" name="tipo" value="" checked> Tutti</label>
+                            <label><input type="radio" name="tipo" value="all" checked> Tutti</label>
                             <label><input type="radio" name="tipo" value="prenotazione"> Prenotazioni</label>
                             <label><input type="radio" name="tipo" value="informazione"> Informazioni</label>
                             
                             <label for="status">Stato</label>
                             <select id="status" name="status">
-                                <option value="">Tutti</option>
+                                <option value="all">Tutti</option>
                                 <option value="RICEVUTA">Ricevute</option>
                                 <option value="PRESA_IN_CARICO">In Lavorazione</option>
                                 <option value="CONFERMATA">Confermmate</option>
