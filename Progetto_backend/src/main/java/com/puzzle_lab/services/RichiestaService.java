@@ -12,6 +12,8 @@ import com.puzzle_lab.entities.Richiesta;
 import com.puzzle_lab.entities.Status;
 import com.puzzle_lab.repos.RichiestaDAO;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class RichiestaService {
 
@@ -99,6 +101,7 @@ public class RichiestaService {
 		return richiestaDAO.findByStatus(Status.valueOf(status));
 	}
 
+	@Transactional
 	public void cancellaPerId(long id) {
 		if (!richiestaDAO.existsById(id)) {
 			throw new IllegalArgumentException("La richiesta non esiste.");
@@ -107,9 +110,5 @@ public class RichiestaService {
 		richiesta.setCancellato(true);
 		richiesta.setDataPrevistaCancellazione(LocalDateTime.now().plusYears(1));
 		richiestaDAO.save(richiesta);
-	}
-
-	public Richiesta save(Richiesta richiesta) {
-		return richiestaDAO.save(richiesta);
 	}
 }
