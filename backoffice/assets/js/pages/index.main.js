@@ -41,11 +41,6 @@ function populateRecentRequests(requests) {
                                 <span class="status-badge ${request.status.toLowerCase()}">${request.nome} ${request.cognome} || ${request.organizzazione}</span>
                             </div>
                         </div>
-                        <button class="expand-btn">
-                            <svg viewBox="0 0 24 24" width="24" height="24">
-                                <path d="M7 10l5 5 5-5z"/>
-                            </svg>
-                        </button>
                     </div>
 
                     <div class="request-card-content">
@@ -77,28 +72,18 @@ function populateRecentRequests(requests) {
         </div>
     `;
 
-    document.querySelectorAll('.expand-btn').forEach(button => {
-        button.addEventListener('click', () => toggleRequestCard(button));
+    document.querySelectorAll('.request-card').forEach(card => {
+        card.addEventListener('click', () => toggleRequestCard(card));
     });
 }
 
 /**
  * @function toggleRequestCard
  * @description Attiva o disattiva la visualizzazione dei dettagli della richiesta
- * @param {HTMLElement} button - Bottone che ha attivato la funzione
+ * @param {HTMLElement} card - Card della richiesta
  */
-function toggleRequestCard(button) {
-    const card = button.closest('.request-card');
-    const toggleStatus = card.getAttribute('data-expanded');
-    if(toggleStatus === 'false') {
-        document.querySelectorAll('.request-card').forEach(card => {
-            card.setAttribute('data-expanded', 'false');
-        });
-    }
-    
-    card.setAttribute('data-expanded', toggleStatus === 'false' ? 'true' : 'false');
-
-    
+function toggleRequestCard(card) {
+    card.setAttribute('data-expanded', card.getAttribute('data-expanded') === 'true' ? 'false' : 'true');
 }
 
 /**
@@ -128,13 +113,13 @@ async function initDashboard() {
     try {
         const stats = await getRequestStats();
         updateDashboardStats(stats);
-        const requests = await getRequestsByStatus('RICEVUTA');
+        const requests = await getAllRequests();
 
         //ordina dal più recente
         requests.sort((a, b) => new Date(b.id) - new Date(a.id));
 
         //prende le 10 più recenti
-        const recentRequests = requests.length > 10 ? requests.slice(0, 10) : requests;
+        const recentRequests = requests.length > 15 ? requests.slice(0, 15) : requests;
         populateRecentRequests(recentRequests);
     } catch (error) {
         showToast('error', 'Errore', error.message);
