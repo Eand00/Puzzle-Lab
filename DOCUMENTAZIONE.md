@@ -416,9 +416,6 @@ Crea e salva una nuova prenotazione e invia una email di notifica.
   - `201 Created`: Se la prenotazione è stata creata con successo, viene restituito un messaggio di conferma: `Prenotazione creata con successo.`
   - `400 Bad Request`: Se c'è un errore nella richiesta (ad esempio, parametri non validi), viene restituito un messaggio di errore con il dettaglio dell'eccezione.
 
-
-
-
 ---
 
 
