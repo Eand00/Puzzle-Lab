@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Gen 18, 2025 alle 20:04
+-- Creato il: Gen 25, 2025 alle 10:55
 -- Versione del server: 10.4.28-MariaDB
 -- Versione PHP: 8.2.4
 
@@ -80,28 +80,31 @@ INSERT INTO `informazioni` (`testo`, `id`) VALUES
 --
 
 CREATE TABLE `prenotazioni` (
-  `data_fine` datetime(6) NOT NULL,
-  `data_inizio` datetime(6) NOT NULL,
+  `data_fine` date NOT NULL,
+  `data_inizio` date NOT NULL,
   `testo` text NOT NULL,
-  `id` bigint(20) NOT NULL
+  `id` bigint(20) NOT NULL,
+  `fascia_oraria` enum('MATTINA','POMERIGGIO') DEFAULT NULL,
+  `laboratori` varchar(255) NOT NULL,
+  `numero_giorni` int(11) DEFAULT NULL,
+  `tipologia` enum('SOGGIORNO','VISITA') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `prenotazioni`
 --
 
-INSERT INTO `prenotazioni` (`data_fine`, `data_inizio`, `testo`, `id`) VALUES
-('2025-01-06 10:00:00.000000', '2025-01-05 10:00:00.000000', 'Testo di esempio per prenotazione 1', 1),
-('2025-01-07 11:00:00.000000', '2025-01-06 11:00:00.000000', 'Testo di esempio per prenotazione 2', 2),
-('2025-01-08 12:00:00.000000', '2025-01-07 12:00:00.000000', 'Testo di esempio per prenotazione 3', 3),
-('2025-01-09 13:00:00.000000', '2025-01-08 13:00:00.000000', 'Testo di esempio per prenotazione 4', 4),
-('2025-01-10 14:00:00.000000', '2025-01-09 14:00:00.000000', 'Testo di esempio per prenotazione 5', 5),
-('2025-01-11 15:00:00.000000', '2025-01-10 15:00:00.000000', 'Testo di esempio per prenotazione 6', 6),
-('2025-01-12 16:00:00.000000', '2025-01-11 16:00:00.000000', 'Testo di esempio per prenotazione 7', 7),
-('2025-01-13 17:00:00.000000', '2025-01-12 17:00:00.000000', 'Testo di esempio per prenotazione 8', 8),
-('2025-01-14 18:00:00.000000', '2025-01-13 18:00:00.000000', 'Testo di esempio per prenotazione 9', 9),
-('2025-01-15 19:00:00.000000', '2025-01-14 19:00:00.000000', 'Testo di esempio per prenotazione 10', 10),
-('2025-01-15 23:00:00.000000', '2025-01-14 23:00:00.000000', 'asda', 21);
+INSERT INTO `prenotazioni` (`data_fine`, `data_inizio`, `testo`, `id`, `fascia_oraria`, `laboratori`, `numero_giorni`, `tipologia`) VALUES
+('2025-01-04', '2025-01-03', 'Testo di esempio per prenotazione 1', 1, NULL, 'STORIA_DI_CASCINA,BRUNO_CACCIA,INTRODUZIONE_AL_TEMA_MAFIA', 2, 'SOGGIORNO'),
+('2025-01-07', '2025-01-06', 'Testo di esempio per prenotazione 2', 2, 'MATTINA', 'INTRODUZIONE_AL_TEMA_MAFIA,I_BENI_CONFISCATI', NULL, 'VISITA'),
+('2025-01-07', '2025-01-06', 'Testo di esempio per prenotazione 3', 3, 'MATTINA', 'STORIA_DI_CASCINA', NULL, 'VISITA'),
+('2025-01-09', '2025-01-08', 'Testo di esempio per prenotazione 4', 4, NULL, 'LA_MAFIA_ATTRAVERSO_IL_CINEMA', 3, 'SOGGIORNO'),
+('2025-01-10', '2025-01-09', 'Testo di esempio per prenotazione 5', 5, NULL, 'IL_GIOCO_NON_E_UN_AZZARDO,CHI_NON_GIOCA_VINCE', 2, 'SOGGIORNO'),
+('2025-01-11', '2025-01-10', 'Testo di esempio per prenotazione 6', 6, 'POMERIGGIO', 'SOSTENIBILITA_AMBIENTALE,LA_MAFIA_ATTRAVERSO_IL_CINEMA', NULL, 'VISITA'),
+('2025-01-12', '2025-01-11', 'Testo di esempio per prenotazione 7', 7, 'POMERIGGIO', 'BRUNO_CACCIA,INTRODUZIONE_AL_TEMA_MAFIA,I_BENI_CONFISCATI', NULL, 'VISITA'),
+('2025-01-13', '2025-01-12', 'Testo di esempio per prenotazione 8', 8, 'MATTINA', 'LE_MAFIE_IN_PIEMONTE,SOSTENIBILITA_AMBIENTALE', NULL, 'VISITA'),
+('2025-01-14', '2025-01-13', 'Testo di esempio per prenotazione 9', 9, NULL, 'LA_MAFIA_ATTRAVERSO_IL_CINEMA', 2, 'SOGGIORNO'),
+('2025-01-15', '2025-01-14', 'Testo di esempio per prenotazione 10', 10, NULL, 'IL_GIOCO_NON_E_UN_AZZARDO,CHI_NON_GIOCA_VINCE', 2, 'SOGGIORNO');
 
 -- --------------------------------------------------------
 
@@ -113,7 +116,7 @@ CREATE TABLE `richieste` (
   `id` bigint(20) NOT NULL,
   `cancellato` bit(1) NOT NULL,
   `cognome` varchar(255) NOT NULL,
-  `data_creazione` datetime(6) DEFAULT NULL,
+  `data_creazione` date DEFAULT NULL,
   `data_prevista_cancellazione` datetime(6) DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `nome` varchar(255) NOT NULL,
@@ -127,27 +130,26 @@ CREATE TABLE `richieste` (
 --
 
 INSERT INTO `richieste` (`id`, `cancellato`, `cognome`, `data_creazione`, `data_prevista_cancellazione`, `email`, `nome`, `numero`, `organizzazione`, `status`) VALUES
-(1, b'0', 'Rossi', '2025-01-01 10:00:00.000000', NULL, 'mario.rossi@example.com', 'Mario', '1234567890', 'Azienda X', 'RICEVUTA'),
-(2, b'1', 'Bianchi', '2025-01-02 11:00:00.000000', '2025-01-15 10:00:00.000000', 'luigi.bianchi@example.com', 'Luigi', '2345678901', 'Azienda Y', 'RIFIUTATA'),
-(3, b'0', 'Verdi', '2025-01-03 12:00:00.000000', NULL, 'anna.verdi@example.com', 'Anna', '3456789012', 'Azienda Z', 'CONFERMATA'),
-(4, b'1', 'Neri', '2025-01-04 13:00:00.000000', '2025-01-18 10:00:00.000000', 'paola.neri@example.com', 'Paola', '4567890123', 'Azienda W', 'ARCHIVIATA'),
-(5, b'0', 'Blu', '2025-01-05 14:00:00.000000', NULL, 'carlo.blu@example.com', 'Carlo', '5678901234', 'Azienda V', 'PRESA_IN_CARICO'),
-(6, b'1', 'Gialli', '2025-01-06 15:00:00.000000', '2025-01-20 10:00:00.000000', 'elena.gialli@example.com', 'Elena', '6789012345', 'Azienda U', 'ARCHIVIATA'),
-(7, b'0', 'Arancio', '2025-01-07 16:00:00.000000', NULL, 'sara.arancio@example.com', 'Sara', '7890123456', 'Azienda T', 'RICEVUTA'),
-(8, b'0', 'Viola', '2025-01-08 17:00:00.000000', NULL, 'giulia.viola@example.com', 'Giulia', '8901234567', 'Azienda S', 'CONFERMATA'),
-(9, b'0', 'Azzurri', '2025-01-09 18:00:00.000000', NULL, 'marco.azzurri@example.com', 'Marco', '9012345678', 'Azienda R', 'PRESA_IN_CARICO'),
-(10, b'1', 'Marroni', '2025-01-10 19:00:00.000000', '2025-01-25 10:00:00.000000', 'laura.marroni@example.com', 'Laura', '0123456789', 'Azienda Q', 'RIFIUTATA'),
-(11, b'0', 'Rossi', '2025-01-11 10:00:00.000000', NULL, 'claudio.rossi@example.com', 'Claudio', '0987654321', 'Azienda O', 'RICEVUTA'),
-(12, b'1', 'Bianchi', '2025-01-12 11:00:00.000000', '2025-02-01 10:00:00.000000', 'gianni.bianchi@example.com', 'Gianni', '1122334455', 'Azienda N', 'RIFIUTATA'),
-(13, b'0', 'Verdi', '2025-01-13 12:00:00.000000', NULL, 'maria.verdi@example.com', 'Maria', '2233445566', 'Azienda M', 'CONFERMATA'),
-(14, b'1', 'Neri', '2025-01-14 13:00:00.000000', '2025-02-05 10:00:00.000000', 'lucia.neri@example.com', 'Lucia', '3344556677', 'Azienda L', 'ARCHIVIATA'),
-(15, b'0', 'Blu', '2025-01-15 14:00:00.000000', NULL, 'alessio.blu@example.com', 'Alessio', '4455667788', 'Azienda K', 'PRESA_IN_CARICO'),
-(16, b'1', 'Gialli', '2025-01-16 15:00:00.000000', '2025-02-10 10:00:00.000000', 'serena.gialli@example.com', 'Serena', '5566778899', 'Azienda J', 'ARCHIVIATA'),
-(17, b'0', 'Arancio', '2025-01-17 16:00:00.000000', NULL, 'sofia.arancio@example.com', 'Sofia', '6677889900', 'Azienda I', 'RICEVUTA'),
-(18, b'0', 'Viola', '2025-01-18 17:00:00.000000', NULL, 'giada.viola@example.com', 'Giada', '7788990011', 'Azienda H', 'CONFERMATA'),
-(19, b'0', 'Azzurri', '2025-01-19 18:00:00.000000', NULL, 'antonio.azzurri@example.com', 'Antonio', '8899001122', 'Azienda G', 'PRESA_IN_CARICO'),
-(20, b'1', 'Marroni', '2025-01-20 19:00:00.000000', '2025-02-20 10:00:00.000000', 'luisa.marroni@example.com', 'Luisa', '9900112233', 'Azienda F', 'RIFIUTATA'),
-(21, b'0', 'Avdiu', '2025-01-13 21:28:33.000000', NULL, 'avdiu.eand@gmail.com', 'Eand', '+39 3483156301', 'non lo so', 'RICEVUTA');
+(1, b'0', 'Rossi', '2025-01-01', NULL, 'mario.rossi@example.com', 'Mario', '1234567890', 'Azienda X', 'PRESA_IN_CARICO'),
+(2, b'0', 'Bianchi', '2025-01-02', NULL, 'luigi.bianchi@example.com', 'Luigi', '2345678901', 'Azienda Y', 'RIFIUTATA'),
+(3, b'0', 'Verdi', '2025-01-03', NULL, 'anna.verdi@example.com', 'Anna', '3456789012', 'Azienda Z', 'CONFERMATA'),
+(4, b'1', 'Neri', '2025-01-04', '2025-01-18 10:00:00.000000', 'paola.neri@example.com', 'Paola', '4567890123', 'Azienda W', 'ARCHIVIATA'),
+(5, b'0', 'Blu', '2025-01-05', NULL, 'carlo.blu@example.com', 'Carlo', '5678901234', 'Azienda V', 'PRESA_IN_CARICO'),
+(6, b'1', 'Gialli', '2025-01-06', '2025-01-20 10:00:00.000000', 'elena.gialli@example.com', 'Elena', '6789012345', 'Azienda U', 'ARCHIVIATA'),
+(7, b'0', 'Arancio', '2025-01-07', NULL, 'sara.arancio@example.com', 'Sara', '7890123456', 'Azienda T', 'RICEVUTA'),
+(8, b'1', 'Viola', '2025-01-08', '2026-01-21 20:46:27.000000', 'giulia.viola@example.com', 'Giulia', '8901234567', 'Azienda S', 'CONFERMATA'),
+(9, b'1', 'Azzurri', '2025-01-09', '2026-01-21 20:49:05.000000', 'marco.azzurri@example.com', 'Marco', '9012345678', 'Azienda R', 'PRESA_IN_CARICO'),
+(10, b'1', 'Marroni', '2025-01-10', '2025-01-25 10:00:00.000000', 'laura.marroni@example.com', 'Laura', '0123456789', 'Azienda Q', 'RIFIUTATA'),
+(11, b'0', 'Rossi', '2025-01-11', NULL, 'claudio.rossi@example.com', 'Claudio', '3442212679', 'Azienda O', 'RICEVUTA'),
+(12, b'1', 'Bianchi', '2025-01-12', '2025-02-01 10:00:00.000000', 'gianni.bianchi@example.com', 'Gianni', '1122334455', 'Azienda N', 'RIFIUTATA'),
+(13, b'0', 'Verdi', '2025-01-13', NULL, 'maria.verdi@example.com', 'Maria', '2233445566', 'Azienda M', 'CONFERMATA'),
+(14, b'1', 'Neri', '2025-01-14', '2025-02-05 10:00:00.000000', 'lucia.neri@example.com', 'Lucia', '3344556677', 'Azienda L', 'ARCHIVIATA'),
+(15, b'0', 'Blu', '2025-01-15', NULL, 'alessio.blu@example.com', 'Alessio', '4455667788', 'Azienda K', 'PRESA_IN_CARICO'),
+(16, b'1', 'Gialli', '2025-01-16', '2025-02-10 10:00:00.000000', 'serena.gialli@example.com', 'Serena', '5566778899', 'Azienda J', 'ARCHIVIATA'),
+(17, b'0', 'Arancio', '2025-01-17', NULL, 'sofia.arancio@example.com', 'Sofia', '6677889900', 'Azienda I', 'RICEVUTA'),
+(18, b'0', 'Viola', '2025-01-18', NULL, 'giada.viola@example.com', 'Giada', '7788990011', 'Azienda H', 'CONFERMATA'),
+(19, b'0', 'Azzurri', '2025-01-19', NULL, 'antonio.azzurri@example.com', 'Antonio', '8899001122', 'Azienda G', 'PRESA_IN_CARICO'),
+(20, b'1', 'Marroni', '2025-01-20', '2025-02-20 10:00:00.000000', 'luisa.marroni@example.com', 'Luisa', '9900112233', 'Azienda F', 'RIFIUTATA');
 
 -- --------------------------------------------------------
 
@@ -170,7 +172,9 @@ CREATE TABLE `utenti` (
 --
 
 INSERT INTO `utenti` (`email`, `cognome`, `nome`, `password`, `ruolo`, `cancellato`, `data_prevista_cancellazione`) VALUES
-('eand.avdiu@edu.itspiemonte.it', 'Avdiu', 'Eand', '$2a$10$4tZD/YbYS/aDObw775PNEe45R1XhhmY6csJflXu6pkBwc45DLW89y', 'USER', b'0', NULL);
+('caccia.saperi@gmail.com', 'Cascina', 'Admin', '$2a$10$HKpdpusvQekCI/kg8nTk.OvLMHWhOax/CtEy4BSX3gPbUgeXSDueq', 'ADMIN', b'0', NULL),
+('eand.avdiu@edu.itspiemonte.it', 'Avdiu', 'Eand', '$2a$10$4tZD/YbYS/aDObw775PNEe45R1XhhmY6csJflXu6pkBwc45DLW89y', 'USER', b'0', NULL),
+('samuele.sicura@edu.itspiemonte.it', 'Sicura', 'Samuele', '$2a$10$fH7SH.ZL7TZet/qauPHbge2zO7K8Pb5agQYAYlGmLPOHcHfOrp8uy', 'USER', b'0', NULL);
 
 --
 -- Indici per le tabelle scaricate
