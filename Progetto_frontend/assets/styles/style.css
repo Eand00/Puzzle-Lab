@@ -29,6 +29,7 @@ html {
 	font-optical-sizing: auto;
 	font-style: normal;
 	text-wrap: auto;
+	text-wrap: balance;
 }
 
 /* font size */
@@ -195,8 +196,8 @@ header.header-scroll {
 	transition: all 0.3s ease-in-out;
 }
 #navbarText.show::after {
-	width: 300%;
-	height: 200%;
+	width: 100vw;
+	height: 100vh;
 }
 .logo-brand {
 	display: block;
@@ -307,7 +308,7 @@ header.header-scroll {
 	}
 
 	#navbarText .social-icons-container a {
-		color: var(--color-dark);
+		color: var(--color-light);
 		text-decoration: none;
 		height: 1.5rem;
 		width: 1.5rem;
@@ -318,7 +319,7 @@ header.header-scroll {
 	}
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1050px) {
 	.nav-link {
 		font-size: 1.2rem;
 	}
@@ -337,7 +338,7 @@ p.follows {
 .cta-container {
 	display: flex;
 	justify-content: center;
-	padding-block: 3rem;
+	padding: 1rem 3rem;
 }
 .cta-button {
 	display: block;
@@ -345,7 +346,7 @@ p.follows {
 	line-height: 3.5rem;
 	text-decoration: none;
 	color: var(--color-black);
-	margin: 1rem 0;
+	margin: 0;
 	width: calc(100vw - 2rem);
 	max-width: 20rem;
 	height: 3.5rem;
@@ -370,7 +371,7 @@ footer {
 	align-items: center;
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 992px) {
 	footer {
 		flex-direction: row;
 		justify-content: space-around;
@@ -476,6 +477,8 @@ footer {
 /* Cookie banner */
 .infoBanner {
 	display: flex;
+	align-items: center;
+	justify-content: center;
 	gap: 0.5rem;
     position: fixed;
     bottom: 0;
@@ -497,6 +500,13 @@ footer {
 .btn-container button {
 	padding: 0.25rem 0.5rem;
 	cursor: pointer;
-
+}
+@media (min-width: 768px) {
+	.infoBanner {
+		gap: 2rem;
+	}
+	.btn-container {
+		flex-direction: row;
+	}
 }
 

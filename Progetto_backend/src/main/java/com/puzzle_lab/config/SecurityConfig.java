@@ -36,6 +36,9 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/back-office/**").authenticated() // Path sicuri
                 .requestMatchers("/login", "/logout", "/swagger-ui/**", "/v3/api-docs/**").permitAll() // Public access to login/logout
+
+
+                .requestMatchers("back-office/utente").hasRole("ADMIN") // solo admin può accedere al back-office"
                 .anyRequest().permitAll() // Tutti gli altri request richiedono autenticazione
             )
 

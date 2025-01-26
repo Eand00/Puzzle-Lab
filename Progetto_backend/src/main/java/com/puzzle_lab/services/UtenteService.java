@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import com.puzzle_lab.entities.Utente;
 import com.puzzle_lab.repos.UtenteDAO;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class UtenteService {
 
@@ -31,6 +33,7 @@ public class UtenteService {
 	}
 
 	// Salva un utente nel database
+	@Transactional 
     public Utente salvaUtente(Utente utente) {
         //validaUtente(utente); // Effettua la convalida
     	utente.setPassword(passwordEncoder.encode(utente.getPassword()));
@@ -38,6 +41,7 @@ public class UtenteService {
     }
 
     // Aggiorna un utente esistente
+	@Transactional
     public Utente aggiornaUtente(Utente utente) {
         if (!utenteDAO.existsById(utente.getEmail())) {
             throw new IllegalArgumentException("Utente con email " + utente.getEmail() + " non trovato.");
@@ -47,6 +51,7 @@ public class UtenteService {
     }
 
     // Elimina un utente per email
+	@Transactional
     public void eliminaUtente(String email) {
         if (!utenteDAO.existsById(email)) {
             throw new IllegalArgumentException("Utente con email " + email + " non esiste.");
