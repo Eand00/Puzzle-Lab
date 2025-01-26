@@ -197,7 +197,6 @@ function populateRequests(requests) {
     }
 
     requestsContainer.innerHTML = requests.map(request => createRequestCard(request)).join('');
-    setupEventListeners(requestsContainer);
 }
 
 function applyFilters(requests) {
@@ -243,6 +242,8 @@ function setupFilterEventListeners() {
  */
 async function initRequests() {
     try {
+        const requestsContainer = document.getElementById('requests');
+        setupEventListeners(requestsContainer);
         await refreshRequests();
         setupFilterEventListeners();
     } catch (error) {
