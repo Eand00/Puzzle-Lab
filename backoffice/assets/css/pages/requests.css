@@ -127,7 +127,7 @@
 }
 
 .actions-container button {
-    width: 80px;
+    min-width: 70px;
 }
 
 /* Status Form */
@@ -148,6 +148,7 @@
     border: 1px solid var(--color-light);
     background: var(--color-white);
     box-shadow: inset var(--shadow-base);
+    outline: none;
 }
 
 

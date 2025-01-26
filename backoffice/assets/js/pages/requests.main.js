@@ -62,7 +62,7 @@ function createRequestCard(request) {
     `;
 
     return `
-        <div class="request-card ${request.status.toLowerCase()}">
+        <div class="request-card ${request.status.toLowerCase()}" data-id="${request.id}">
             <div class="row-1">
                 ${cardInfo}
                 ${basicInfo}
@@ -89,10 +89,10 @@ function createStatusSelect(currentStatus) {
     return `
         <div class="actions-container">
             <div class="status-form">
-                <select class="statusSelect">${statusOptions}</select>
-                <button class="btn-primary generic disabled save-status-btn">Salva</button>
+                <select data-original-status="${currentStatus}" class="statusSelect">${statusOptions}</select>
+                <button class="btn-primary generic disabled save-status-btn" disabled>-</button>
             </div>
-            <button class="btn-primary info toggle-details-btn">Dettagli</button>
+            <button class="btn-primary info toggle-details-btn">Mostra dettagli</button>
         </div>
     `;
 }
@@ -126,8 +126,50 @@ function setupEventListeners(container) {
         const requestCard = event.target.closest('.request-card');
         if(!requestCard) return;
 
-        if(event.target.classList.contains('toggle-details-btn')) {
+        //dettagli
+        if(event.target.matches('.toggle-details-btn')) {
             requestCard.classList.toggle('show-details');
+            event.target.textContent = requestCard.classList.contains('show-details') ? 'Nascondi dettagli' : 'Mostra dettagli';
+        }
+
+        //salva Status
+        if(event.target.matches('.save-status-btn') && !event.target.disabled) {
+            const select = requestCard.querySelector('.statusSelect');
+            const originalStatus = select.dataset.originalStatus;
+            const newStatus = select.value;
+
+            if(originalStatus !== newStatus) {
+                try {
+                    await updateRequestStatus(requestCard.dataset.id, newStatus);
+                    showToast('success', 'Status aggiornato', 'La richiesta è stata aggiornata con successo');
+                } catch (error) {
+                    showToast('error', 'Errore', error.message);
+                } finally {
+                    await refreshRequests();
+                }
+            }
+        }
+    });
+
+    container.addEventListener('change', async (event) => {
+        //status
+        if(event.target.matches('.statusSelect')) {
+            const select = event.target;
+            const saveBtn = select.nextElementSibling;
+            const originalStatus = select.dataset.originalStatus;
+
+            //toggle saveBtn
+            if(originalStatus !== select.value) {
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'Salva';
+                saveBtn.classList.remove('disabled', 'generic');
+                saveBtn.classList.add('success');
+            } else {
+                saveBtn.disabled = true;
+                saveBtn.textContent = '-';
+                saveBtn.classList.remove('success');
+                saveBtn.classList.add('disabled', 'generic');
+            }
         }
     });
 }
