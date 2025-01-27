@@ -15,12 +15,14 @@ import { API_RICHIESTE_URL } from '../config/config.js';
 /**
  * @function getAllRequests
  * @description Recupera tutte le richieste
+ * @param {string} order - Ordine di visualizzazione delle richieste
  * @returns {Promise<Array>} Array di richieste
  * @throws {Error} - Errore con messaggio di feedback
  */
-export async function getAllRequests() {
+export async function getAllRequests(order = 'DESC') {
     try {
-        return await apiClient(API_RICHIESTE_URL);
+        const requests = await apiClient(API_RICHIESTE_URL);
+        return requests.sort((a, b) => order === 'DESC' ? b.id - a.id : a.id - b.id);
     } catch (error) {
         throw new Error(error.message || 'Errore durante il recupero delle richieste');
     }
@@ -30,12 +32,14 @@ export async function getAllRequests() {
  * @function getRequestsByStatus
  * @description Recupera le richieste filtrate per status
  * @param {string} status - Status della richiesta
+ * @param {string} order - Ordine di visualizzazione delle richieste
  * @returns {Promise<Array>} Array di richieste
  * @throws {Error} - Errore con messaggio di feedback
  */
-export async function getRequestsByStatus(status) {
+export async function getRequestsByStatus(status, order = 'DESC') {
     try {
-        return await apiClient(`${API_RICHIESTE_URL}/status?status=${status}`);
+        const requests = await apiClient(`${API_RICHIESTE_URL}/status?status=${status}`);
+        return requests.sort((a, b) => order === 'DESC' ? b.id - a.id : a.id - b.id);
     } catch (error) {
         throw new Error(error.message || 'Errore durante il recupero delle richieste');
     }
