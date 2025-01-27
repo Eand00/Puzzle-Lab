@@ -338,7 +338,7 @@ p.follows {
 .cta-container {
 	display: flex;
 	justify-content: center;
-	padding: 1rem 3rem;
+	margin: 1rem auto;
 }
 .cta-button {
 	display: block;
