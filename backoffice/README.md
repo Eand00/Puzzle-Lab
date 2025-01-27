@@ -8,7 +8,10 @@
     - Web Components
     - Services
     - Gestione autenticazione
-4. Note tecniche per lo sviluppo
+    - API
+    - Messaggi di feedback
+    - Filtri
+4. Note tecniche e sviluppi futuri
 
 ## Struttura del progetto
 
@@ -46,9 +49,11 @@ backoffice/
 │       │
 │       ├── utils/
 │       │   ├── api-client.js       # Fetch wrapper
+│       │   └── toast.util.js       # Toast utility
 │       │   └── validators.js       # Form validations
 │       │
 │       └── pages/
+│           ├── main.js             # Global logic
 │           ├── index.main.js       # Dashboard logic
 │           ├── login.main.js       # Login page logic
 │           ├── requests.main.js    # Requests page logic
@@ -94,18 +99,24 @@ La logica di business è organizzata in services dedicati:
   
 - **requests.service.js**
   Gestione richieste prenotazione
-  - CRUD operazioni
+  - Operazioni CRUD
   - Filtri e ricerche
   
 - **users.service.js**
   Gestione utenti amministratori
-  - CRUD operazioni
+  - Operazioni CRUD
   - Gestione permessi
 
 ### Autenticazione
 
 L'autenticazione è implementata tramite JWT memorizzato in localStorage.
 La responsabilità della gestione della logica di business di autenticazione è delegata al service auth.service.js, che incapsula interamente la gestione del token JWT, mantenendo in metodi privati l'accesso in scrittura al localStorage.
+
+#### Auth Guard
+Si è implementato un sistema di guardia a protezione delle pagine accessibili solo agli utenti autenticati. Il sistema è gestito lato client atttraverso un controllo sull'esistenza del token e una splash screen di caricamento per inibire la visione delle pagine durante il tempo di verifica dell'autenticazione.
+A completamento, le richieste di dati via API richiedono l'autenticazione, pertanto non sono presenti sul client dati protetti, dunque la splash screen ha il solo scopo di proteggere la visualizzazione dell'interfaccia durante le operazioni di verifica.
+
+NOTA: Questa è una soluzione valida unicamente per gli scopi di questo prototipo, ulteriori valutazioni sono presenti al capitolo "Sviluppi futuri".
 
 ### API
 
@@ -116,3 +127,8 @@ La responsabilità della gestione della logica è delegata all'utility api-clien
 
 I messaggi di feedback sono implementati tramite il componente toast.
 La responsabilità della gestione della logica è delegata all'utility toast.util.js.
+
+## Note tecniche e sviluppi futuri
+
+### Auth Guard
+La soluzione presentata, valida in fase di presentazione del prototipo, andrà ristrutturata e resa più robusta in produzione, sostituendola con un approccio server-side.
