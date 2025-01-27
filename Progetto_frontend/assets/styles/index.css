@@ -380,6 +380,11 @@
 #faq details[open] > summary::after {
     transform: translateY(-50%) rotate(180deg);
 }
+
+#faq > details > p > a {
+    color: var(--color-dark);
+    text-decoration: underline;
+}
 /* section cta */
 #cta {
     padding: 2rem;

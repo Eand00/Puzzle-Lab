@@ -17,7 +17,8 @@ main h1 {
 .first-section p {
     max-width: 65ch;
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 1rem;
+    text-wrap: auto;
 }
 
 /* Intro Labs */
@@ -96,6 +97,14 @@ main h1 {
     text-transform: uppercase;
     text-align: center;
 }
+.button-back {
+    display: block;
+    width: 5rem;
+    position: absolute;
+    top: 12rem;
+    left: 3rem;
+    z-index: 1;
+}
 
 /* Description */
 .lab-description {
@@ -155,7 +164,7 @@ main h1 {
 }
 
 .cta-container {
-    padding-top: 0;
+    margin: 2rem auto;
 }
 
 
