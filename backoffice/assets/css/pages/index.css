@@ -17,6 +17,7 @@
 
 .dashboard-grid h2 {
     margin-top: 0;
+    padding: var(--spacing-md);
 }
 
 /* Statistiche */
@@ -111,6 +112,7 @@
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: var(--spacing-md);
     padding: var(--spacing-md);
+    padding-top: 0;
 }
 
 .request-card {
@@ -191,7 +193,7 @@
     max-height: 500px;
     width: 500px;
     border-radius: 8px;
-    box-shadow: var(--shadow-base);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 

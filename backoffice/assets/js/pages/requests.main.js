@@ -4,7 +4,7 @@
  * @author Puzzle Lab
  * @contributors Eand Avdiu, Samuele Sicura, Vincenzo Bonura
  * @date 2025-01-15
- * @update 2025-01-26
+ * @update 2025-01-27
  * @description Script per la pagina requests
  * @see README.md per ulteriori informazioni
  */
@@ -89,10 +89,10 @@ function createStatusSelect(currentStatus) {
     return `
         <div class="actions-container">
             <div class="status-form">
-                <select data-original-status="${currentStatus}" class="statusSelect">${statusOptions}</select>
+                <select data-original-status="${currentStatus}" class="statusSelect first">${statusOptions}</select>
                 <button class="btn-primary generic disabled save-status-btn" disabled>-</button>
             </div>
-            <button class="btn-primary info toggle-details-btn">Mostra dettagli</button>
+            <button class="btn-primary toggle-details-btn">Mostra dettagli</button>
         </div>
     `;
 }
@@ -199,6 +199,13 @@ function populateRequests(requests) {
     requestsContainer.innerHTML = requests.map(request => createRequestCard(request)).join('');
 }
 
+
+/**
+ * @function applyFilters
+ * @description Applica i filtri alle richieste
+ * @param {Array} requests - Array di richieste
+ * @returns {Array} - Array di richieste filtrate
+ */
 function applyFilters(requests) {
     const filterForm = document.getElementById('filterForm');
     const search = filterForm.querySelector('#search').value.toLowerCase();
@@ -221,6 +228,10 @@ function applyFilters(requests) {
     });
 }
 
+/**
+ * @function setupFilterEventListeners
+ * @description Imposta gli event listener per i filtri
+ */
 function setupFilterEventListeners() {
     const filterForm = document.getElementById('filterForm');
     filterForm.addEventListener('input', async () => {
@@ -251,4 +262,20 @@ async function initRequests() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', initRequests);
+function stickyFilters() {
+    const header = document.querySelector('.requests-list-header');
+    
+    window.addEventListener('scroll', () => {
+        if (!header) return;
+        
+        const headerRect = header.getBoundingClientRect();
+        const isStuck = headerRect.top <= 64;
+        header.classList.toggle('is-stuck', isStuck);
+    });
+    
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initRequests();
+    stickyFilters();
+});

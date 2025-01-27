@@ -24,19 +24,21 @@
         <!-- Lista richieste -->
         <section class="requests-list">
             <div class="requests-list-header">
+                <h2>Richieste</h2>
                 <div class="requests-list-filters">
-                    <form id="filterForm" class="filters-form">
-                        <div class="form-group--inline">
-                            <h2>Filtri</h2>
-                            <label for="search">Cerca:</label><br>
-                            <input type="text" id="search" name="search"><br>
-                            
-                            <label><input type="radio" name="tipo" value="all" checked> Tutti</label>
-                            <label><input type="radio" name="tipo" value="prenotazione"> Prenotazioni</label>
-                            <label><input type="radio" name="tipo" value="informazione"> Informazioni</label>
-                            
-                            <label for="status">Stato</label>
-                            <select id="status" name="status">
+                    <form id="filterForm" class="filters-form form-group--inline">
+                        <div class="input-group">
+                            <label for="search" class="first">Cerca:</label>
+                            <input type="text" id="search" name="search" class="last" />
+                        </div>
+                        <div class="input-group">
+                            <label class="first"><input type="radio" name="tipo" value="all" checked>Tutti</label>
+                            <label class="middle"><input type="radio" name="tipo" value="prenotazione">Prenotazioni</label>
+                            <label class="last"><input type="radio" name="tipo" value="informazione">Informazioni</label>
+                        </div>
+                        <div class="input-group">
+                            <label for="status" class="first">Stato</label>
+                            <select id="status" name="status" class="last">
                                 <option value="all">Tutti</option>
                                 <option value="RICEVUTA">Ricevute</option>
                                 <option value="PRESA_IN_CARICO">In Lavorazione</option>
