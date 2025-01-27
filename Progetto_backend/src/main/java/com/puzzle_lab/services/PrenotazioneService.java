@@ -13,6 +13,8 @@ import com.puzzle_lab.entities.Status;
 import com.puzzle_lab.entities.Tipologia;
 import com.puzzle_lab.repos.PrenotazioneDAO;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class PrenotazioneService extends RichiestaService{
 
@@ -55,7 +57,7 @@ public class PrenotazioneService extends RichiestaService{
 	            throw new IllegalArgumentException("I laboratori sono obbligatori.");
 	        }
 
-	        // Split the string by semicolon and validate each laboratory
+	        // Dividi la stringa per punto e virgola e valida ogni laboratorio
 	        String[] labs = laboratori.split(",");
 	        for (String lab : labs) {
 	            String trimmedLab = lab.trim();
@@ -101,6 +103,7 @@ public class PrenotazioneService extends RichiestaService{
 	    }
 
 	    // Esegui la validazione di una prenotazione e salvala
+	    @Transactional
 	    public void salvaPrenotazione(Prenotazione prenotazione) {
 	        validaPrenotazione(prenotazione); // Valida prima di salvare
 	        prenotazioneDAO.save(prenotazione);

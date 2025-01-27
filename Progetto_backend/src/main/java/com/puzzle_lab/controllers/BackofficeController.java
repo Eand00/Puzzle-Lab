@@ -261,6 +261,7 @@ public class BackofficeController {
         try {
             Optional<Richiesta> infoVecchia = informazioneService.trovaPerId(infoAggiornata.getId());
             if (infoVecchia.isPresent()) {
+            	informazioneService.validaInformazione(infoAggiornata);
                 Informazione informazione = (Informazione) infoVecchia.get();
                 informazione.setStatus(infoAggiornata.getStatus());
                 informazione.setCognome(infoAggiornata.getCognome());
@@ -268,7 +269,7 @@ public class BackofficeController {
                 informazione.setEmail(infoAggiornata.getEmail());
                 informazione.setOrganizzazione(infoAggiornata.getOrganizzazione());
                 informazione.setNumero(infoAggiornata.getNumero());
-                informazioneService.save(informazione);
+                informazioneService.salvaInformazione(informazione);
             }
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Informazione aggiornata con successo.");
         } catch (IllegalArgumentException ex) {
@@ -323,6 +324,7 @@ public class BackofficeController {
         try {
             Optional<Richiesta> prenoVecchia = prenotazioneService.trovaPerId(prenoAggiornata.getId());
             if (prenoVecchia.isPresent()) {
+            	prenotazioneService.validaPrenotazione(prenoAggiornata);
                 Prenotazione prenotazione = (Prenotazione) prenoVecchia.get();
                 prenotazione.setStatus(prenoAggiornata.getStatus());
                 prenotazione.setCognome(prenoAggiornata.getCognome());
@@ -337,7 +339,8 @@ public class BackofficeController {
                 prenotazione.setLaboratori(prenoAggiornata.getLaboratori()); 
                 prenotazione.setTipologia(prenoAggiornata.getTipologia());
 
-                prenotazioneService.save(prenotazione);
+                prenotazioneService.salvaPrenotazione(prenotazione);
+
             }
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Prenotazione aggiornata con successo.");
         } catch (IllegalArgumentException ex) {
