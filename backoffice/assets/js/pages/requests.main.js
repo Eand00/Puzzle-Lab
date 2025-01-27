@@ -123,7 +123,7 @@ function createPrenotazioneDetails(request) {
         .join('');
     return `
         <div class="request-details-row">
-            <span class="label">Tipologia</span> ${request.tipologia}<br/>
+            <span class="label">Tipologia</span> <span class="tipologia">${request.tipologia}</span><br/>
             ${request.tipologia === 'SOGGIORNO' 
                 ? `<span class="label">Numero giorni</span> <span class="data">${request.numeroGiorni}</span>` 
                 : `<span class="label">Fascia Oraria</span> <span class="data">${request.fasciaOraria}</span>`
@@ -477,7 +477,6 @@ function extractRequestDataFromCard(card) {
     const status = card.querySelector('.statusSelect').dataset.originalStatus;
     
     // Estrai dati base
-    const titleText = card.querySelector('.basic-info-title').textContent;
     const nome = card.querySelector('.firstname').textContent;
     const cognome = card.querySelector('.lastname').textContent;
     const org = card.querySelector('.organization').textContent;
@@ -507,7 +506,7 @@ function extractRequestDataFromCard(card) {
         requestData.dataFine = details.querySelector('.dataFine').textContent;
         requestData.laboratori = Array.from(details.querySelectorAll('.lab-name'))
             .map(lab => lab.textContent).join(', ');
-        requestData.tipologia = details.querySelector('.label').textContent;
+        requestData.tipologia = details.querySelector('.tipologia').textContent;
         
         if(requestData.tipologia === 'SOGGIORNO') {
             requestData.numeroGiorni = details.querySelector('.data').textContent;
@@ -595,7 +594,9 @@ function getFormData() {
         formData.dataInizio = document.getElementById('editDataInizio').value;
         formData.dataFine = document.getElementById('editDataFine').value;
         formData.laboratori = document.getElementById('editLaboratori').value;
-        
+        formData.tipologia = document.getElementById('editGiorniContainer').style.display === 'block' ? 
+        'SOGGIORNO' : 'VISITA';
+
         if(formData.tipologia === 'SOGGIORNO') {
             formData.numeroGiorni = document.getElementById('editNumeroGiorni').value;
         } else {
