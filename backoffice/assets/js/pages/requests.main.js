@@ -252,7 +252,6 @@ function populateRequests(requests) {
     requestsContainer.innerHTML = requests.map(request => createRequestCard(request)).join('');
 }
 
-
 /**
  * @function applyFilters
  * @description Applica i filtri alle richieste
@@ -271,12 +270,12 @@ function applyFilters(requests) {
             request.cognome.toLowerCase().includes(search) ||
             request.organizzazione.toLowerCase().includes(search) ||
             request.email.toLowerCase().includes(search) ||
-            request.testo.toLowerCase().includes(search);
+            request.testo.toLowerCase().includes(search) ||
+            (request.laboratori && 
+                request.laboratori.toLowerCase().replace(/_/g, ' ').includes(search));
 
         const matchesTipo = tipo === 'all' || request.tipo === tipo;
-
         const matchesStatus = status === 'all' || request.status === status;
-
         return matchesSearch && matchesTipo && matchesStatus;
     });
 }
