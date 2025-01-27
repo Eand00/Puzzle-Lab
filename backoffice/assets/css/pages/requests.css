@@ -81,6 +81,7 @@
 
 .filters-form {
     justify-content: flex-end;
+    user-select: none;
 }
 .input-group{
     display: flex;
@@ -148,6 +149,10 @@ main select.last {
     border-left: var(--spacing-md) solid var(--color-base-secondary);
 }
 
+.request-card.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
 
 .request-card.ricevuta {
     border-left-color: var(--color-warning);

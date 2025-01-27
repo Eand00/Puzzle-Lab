@@ -11,7 +11,6 @@
 
 import { apiClient } from '../utils/api-client.js';
 import { API_RICHIESTE_URL } from '../config/config.js';
-import { API_BACKOFFICE_URL } from '../config/config.js';
 
 /**
  * @function getAllRequests
@@ -49,26 +48,16 @@ export async function getRequestsByStatus(status) {
  * @returns {Promise<Object>} Richiesta aggiornata
  * @throws {Error} - Errore con messaggio di feedback
  */
-export async function updateRequest(data) {
-    const endpoint = data.tipo === 'prenotazione' 
-        ? 'prenotazioni' 
-        : 'informazioni';
-
-    const response = await apiClient(`${API_BACKOFFICE_URL}/${endpoint}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-    });
-
-    if (!response.ok) {
-        throw new Error(await response.text());
+export async function updateRequest(request) {
+    try {
+        return await apiClient(`${API_RICHIESTE_URL}`, {
+            method: 'PUT',
+            body: JSON.stringify(request)
+        });
+    } catch (error) {
+        throw new Error(error.message || 'Errore durante l\'aggiornamento della richiesta');
     }
-
-    return await response.json();
 }
-
 
 /**
  * @function updateRequestStatus

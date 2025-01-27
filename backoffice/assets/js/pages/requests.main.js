@@ -193,6 +193,22 @@ function setupCardEventListeners(container) {
          * @param {string} newStatus - Status nuovo
          */
         const updateCard = (select, newStatus) => {
+
+            //eliminazione card, se in vista filtro status o ARCHIVIATA
+            const filterStatus = filterForm.querySelector('#status').value;
+            if(filterStatus !== "all" || newStatus === "ARCHIVIATA") {
+                card.classList.add('fade-out');
+                setTimeout(() => {
+                    card.remove()
+                    const remainingCards = document.querySelectorAll('.request-card');
+                    if (remainingCards.length === 0) {
+                        const container = document.querySelector('#requests');
+                        container.innerHTML = '<p>Nessuna richiesta.</p>';
+                    }
+                }, 500);
+                return;
+            }
+
             const classes = {
                 old: select.dataset.originalStatus.toLowerCase(),
                 new: newStatus.toLowerCase()
@@ -314,10 +330,17 @@ function setupEditFormListeners() {
  */
 function setupFilterEventListeners() {
     const filterForm = document.getElementById('filterForm');
-    filterForm.addEventListener('input', async () => {
+    filterForm.addEventListener('input', async (event) => {
         try {
-            const allRequests = await getAllRequests();
-            const filteredRequests = applyFilters(allRequests);
+            let requests = [];
+            const select = filterForm.querySelector('#status');
+            const selectedStatus = filterForm.querySelector('#status').value;
+            if(selectedStatus !== "all") {
+                requests = await getRequestsByStatus(selectedStatus);
+            } else {
+                requests = await getAllRequests();
+            }
+            const filteredRequests = applyFilters(requests);
             populateRequests(filteredRequests);
         } catch (error) {
             showToast('error', 'Errore', error.message);
@@ -508,6 +531,21 @@ function getFormData() {
 }
 
 /**
+ * @function stickyFilters
+ * @description Gestisce il comportamento della UI del blocco filtri
+ */
+function stickyFilters() {
+    const header = document.querySelector('.requests-list-header');
+    
+    window.addEventListener('scroll', () => {
+        if (!header) return; 
+        const headerRect = header.getBoundingClientRect();
+        const isStuck = headerRect.top <= 64;
+        header.classList.toggle('is-stuck', isStuck);
+    });  
+}
+
+/**
  * @function initRequests
  * @description Inizializza la pagina delle richieste
  */
@@ -516,25 +554,12 @@ async function initRequests() {
         const requestsContainer = document.getElementById('requests');
         setupEventListeners(requestsContainer);
         await refreshRequests();
-        //setupFilterEventListeners();
     } catch (error) {
         showToast('error', 'Errore', error.message);
     }
 }
 
-function stickyFilters() {
-    const header = document.querySelector('.requests-list-header');
-    
-    window.addEventListener('scroll', () => {
-        if (!header) return;
-        
-        const headerRect = header.getBoundingClientRect();
-        const isStuck = headerRect.top <= 64;
-        header.classList.toggle('is-stuck', isStuck);
-    });
-    
-}
-
+// Inizializza la pagina
 document.addEventListener('DOMContentLoaded', () => {
     initRequests();
     stickyFilters();
