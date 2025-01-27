@@ -93,7 +93,8 @@
     color: var(--color-dark);
     border: 1px solid var(--color-base-secondary);
 }
-select, input {
+main select,
+main input {
     width: auto;
     padding: var(--spacing-xs) var(--spacing-sm);
     font-size: var(--font-size-xs);
@@ -104,22 +105,22 @@ select, input {
     outline: none;
 }
 
-label.first,
-input.first,
-select.first {
+main label.first,
+main input.first,
+main select.first {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
 
-label.middle,
-input.middle,
-select.middle {
+main label.middle,
+main input.middle,
+main select.middle {
     border-radius: 0;   
 }
 
-label.last,
-input.last,
-select.last {
+main label.last,
+main input.last,
+main select.last {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
@@ -199,11 +200,58 @@ select.last {
 .basic-info-title {
     font-weight: bold;
 }
-.basic-info span.label {
+.basic-info span.label,
+.request-details-row span.label {
     display: inline-block;
     font-weight: bold;
     color: var(--color-base-secondary);
     padding: 0 var(--spacing-sm);
+}
+
+/* Details */
+
+.request-card .request-details {
+    max-height: 0px;
+    width: 100%;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+.request-card.show-details .request-details {  
+    max-height: 1000px;
+}
+
+.request-details-container {
+    border-radius: var(--spacing-md);
+    background: var(--color-white);
+    margin-block: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    box-shadow: inset var(--shadow-base);
+}
+
+.request-details-row {
+    line-height: 2rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.request-details-row p {
+    font-size: var(--font-size-sm);
+    margin: 0;
+}
+
+span.lab-name {
+    display: inline-block;
+    background: var(--color-light);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--spacing-sm);
+    color: var(--color-base-secondary);
+    margin-right: var(--spacing-sm);
+}
+
+.request-details .actions{
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-sm);
 }
 
 /* Actions */
@@ -239,17 +287,7 @@ select.last {
     border-bottom-right-radius: var(--spacing-sm);  
 }
 
-/* Details */
 
-.request-card .request-details {
-    max-height: 0px;
-    overflow: hidden;
-    transition: all 0.3s ease-in-out;
-}
-
-.request-card.show-details .request-details {
-    max-height: 1000px;
-}
 
 
 

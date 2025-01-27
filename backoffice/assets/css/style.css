@@ -139,6 +139,7 @@ main {
 /* Forms */
 .form-group {
     margin-bottom: var(--spacing-md);
+    width: 100%;
 }
 
 .form-group--inline {
@@ -150,6 +151,13 @@ main {
 
 .form-group--inline label {
     margin-bottom: 0;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-sm);
+    align-items: center;
 }
 
 label {

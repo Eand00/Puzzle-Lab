@@ -52,8 +52,13 @@ function createRequestCard(request) {
         `;
     const details = `
         <div class="request-details">
-            <p>Note: ${request.testo}</p>
-            ${request.tipo === 'prenotazione' ? createPrenotazioneDetails(request) : ''}
+            <div class="request-details-container">
+                <div class="request-details-row">
+                    <span class="label">Messaggio</span>
+                    <p>${request.testo}</p>
+                </div>
+                ${request.tipo === 'prenotazione' ? createPrenotazioneDetails(request) : ''}
+            </div>
             <div class="actions">
                 <button class="btn-secondary edit-btn">Modifica</button>
                 <button class="btn-primary danger delete-btn">Elimina</button>
@@ -66,7 +71,7 @@ function createRequestCard(request) {
             <div class="row-1">
                 ${cardInfo}
                 ${basicInfo}
-                 ${createStatusSelect(request.status)}
+                ${createStatusSelect(request.status)}
             </div>
             <div class="row-2">
                 ${details}
@@ -104,15 +109,29 @@ function createStatusSelect(currentStatus) {
  * @returns {string} - HTML per i dettagli della prenotazione
  */
 function createPrenotazioneDetails(request) {
+    //formatta laboratori
+    const labs = request.laboratori.split(',')
+        .map(lab => {
+            lab = lab.replace(/_/g, ' ');
+            return `<span class="lab-name">${lab}</span>`;
+        })
+        .join('');
     return `
-        <p>Inizio disponibilità: ${new Date(request.dataInizio).toLocaleDateString()}</p>
-        <p>Fine disponibilità: ${new Date(request.dataFine).toLocaleDateString()}</p>
-        <p>Laboratori: ${request.laboratori.replace(/,([^ ])/g, ', $1')}</p>
-        <p>Tipologia: ${request.tipologia}</p>
-        ${request.tipologia === 'SOGGIORNO' 
-            ? `<p>Numero giorni: ${request.numeroGiorni}</p>` 
-            : `<p>Fascia Oraria: ${request.fasciaOraria}</p>`
-        }   
+        <div class="request-details-row">
+            <span class="label">Tipologia</span> ${request.tipologia}<br/>
+            ${request.tipologia === 'SOGGIORNO' 
+                ? `<span class="label">Numero giorni</span> <span class="data">${request.numeroGiorni}</span>` 
+                : `<span class="label">Fascia Oraria</span> <span class="data">${request.fasciaOraria}</span>`
+            }
+        </div>
+        <div class="request-details-row">
+            <span class="label">Disponibilità dal</span> <span class="dataInizio">${new Date(request.dataInizio).toLocaleDateString()}</span>
+            <span class="label">al</span> <span class="dataFine">${new Date(request.dataFine).toLocaleDateString()}</span>
+        </div>
+        <div class="request-details-row">
+            <span class="label">Laboratori</span> ${labs}
+        </div>
+           
     `;
 }
 
@@ -311,18 +330,18 @@ function extractRequestDataFromCard(card) {
     // Estrai dati specifici per prenotazione
     if(tipo === 'prenotazione') {
         const details = card.querySelector('.request-details');
-        requestData.dataInizio = details.children[1].textContent.replace('Inizio disponibilità: ', '');
-        requestData.dataFine = details.children[2].textContent.replace('Fine disponibilità: ', '');
-        requestData.laboratori = details.children[3].textContent.replace('Laboratori: ', '');
-        requestData.tipologia = details.children[4].textContent.replace('Tipologia: ', '');
+        requestData.dataInizio = details.querySelector('.dataInizio').textContent;
+        requestData.dataFine = details.querySelector('.dataFine').textContent;
+        requestData.laboratori = Array.from(details.querySelectorAll('.lab-name'))
+            .map(lab => lab.textContent).join(', ');
+        requestData.tipologia = details.querySelector('.label').textContent;
         
         if(requestData.tipologia === 'SOGGIORNO') {
-            requestData.numeroGiorni = details.children[5].textContent.replace('Numero giorni: ', '');
+            requestData.numeroGiorni = details.querySelector('.data').textContent;
         } else {
-            requestData.fasciaOraria = details.children[5].textContent.replace('Fascia Oraria: ', '');
+            requestData.fasciaOraria = details.querySelector('.data').textContent;
         }
     }
-    
     return requestData;
 }
 
@@ -364,8 +383,9 @@ function openEditModal(data) {
 }
 
 function formatDateForInput(dateString) {
-    const date = new Date(dateString);
-    return date.toISOString().split('T')[0];
+    const [day, month, year] = dateString.split('/');
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
 }
 
 function getFormData() {
