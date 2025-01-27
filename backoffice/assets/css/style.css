@@ -32,6 +32,7 @@
 
     /* Layout */
     --navbar-height: 64px;
+    --scrollbar-width: 19px;
 
     /* Spacing */
     --spacing-xs: 0.25rem;

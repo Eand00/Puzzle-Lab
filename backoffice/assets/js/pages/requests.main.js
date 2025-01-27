@@ -25,7 +25,12 @@ const REQUESTS_STATUS = {
     ARCHIVIATA: 'ARCHIVIATA'
 };
 
-
+/**
+ * @function createRequestCard
+ * @description Crea la card per una richiesta
+ * @param {Object} request - Richiesta
+ * @returns {string} - HTML per la card
+ */
 function createRequestCard(request) {
     const cardInfo = `
         <div class="card-info">
@@ -94,7 +99,7 @@ function createStatusSelect(currentStatus) {
     return `
         <div class="actions-container">
             <div class="status-form">
-                <select data-original-status="${currentStatus}" class="statusSelect first">${statusOptions}</select>
+                <select data-original-status="${currentStatus}" class="statusSelect first" name="request-status">${statusOptions}</select>
                 <button class="btn-primary generic disabled save-status-btn" disabled>-</button>
             </div>
             <button class="btn-primary toggle-details-btn">Mostra dettagli</button>
@@ -136,86 +141,160 @@ function createPrenotazioneDetails(request) {
 }
 
 /**
- * @function setupEventListeners
+ * @function handleStatusChange
+ * @description Gestisce il commportamento del bottone di salvataggio dello status
+ * @param {HTMLElement} select - Select per il cambio di status
+ */
+const handleStatusChange = (select) => {
+    const saveBtn = select.nextElementSibling;
+    const originalStatus = select.dataset.originalStatus;
+    const hasChanged = originalStatus !== select.value;
+
+    saveBtn.disabled = !hasChanged;
+    saveBtn.textContent = hasChanged ? 'Salva' : '-';
+    saveBtn.classList.toggle('success', hasChanged);
+    saveBtn.classList.toggle('disabled', !hasChanged);
+    saveBtn.classList.toggle('generic', !hasChanged);
+}
+
+/**
+ * @function setupCardEventListeners
  * @description Imposta gli event listener per le card delle richieste
  * @param {HTMLElement} container - Contenitore delle richieste
  */
-function setupEventListeners(container) {
+function setupCardEventListeners(container) {
+
+    /**
+     * @function handleToggleDetails
+     * @description Gestisce il click sul pulsante per mostrare/nascondere i dettagli della richiesta
+     * @param {HTMLElement} btn - Pulsante per mostrare/nascondere i dettagli
+     * @param {HTMLElement} card - Card della richiesta
+     */
+    const handleToggleDetails = (btn, card) => {
+        card.classList.toggle('show-details');
+        btn.textContent = card.classList.contains('show-details') 
+            ? 'Nascondi dettagli' 
+            : 'Mostra dettagli';
+    }
+
+    /**
+     * @function handleStatusUpdate
+     * @description Gestisce il click sul pulsante per cambiare lo status della richiesta
+     * @param {HTMLElement} btn - Pulsante per cambiare lo status
+     * @param {HTMLElement} card - Card della richiesta
+     */
+    const handleStatusUpdate = async (btn, card) => {
+        if(btn.disabled) return;
+
+        /**
+         * @function updateCard
+         * @description Aggiorna la card con il nuovo status
+         * @param {HTMLElement} select - Select per il cambio di status
+         * @param {string} newStatus - Status nuovo
+         */
+        const updateCard = (select, newStatus) => {
+            const classes = {
+                old: select.dataset.originalStatus.toLowerCase(),
+                new: newStatus.toLowerCase()
+            }
+            select.dataset.originalStatus = newStatus;
+            
+            card.classList.remove(classes.old);
+            card.classList.add(classes.new);
+
+            handleStatusChange(select);
+        }
+
+        const select = card.querySelector('.statusSelect');
+        const originalStatus = select.dataset.originalStatus;
+        const newStatus = select.value;
+
+        if(originalStatus === newStatus) return;
+
+        try {
+            await updateRequestStatus(card.dataset.id, newStatus);
+            updateCard(select, newStatus);
+            showToast('success', 'Status aggiornato', 'La richiesta è stata aggiornata con successo');
+        } catch (error) {
+            showToast('error', 'Errore', error.message);
+        }
+    }
+
+    /**
+     * @function handleEditRequest
+     * @description Gestisce il click sul pulsante per modificare la richiesta
+     * @param {HTMLElement} btn - Pulsante per modificare la richiesta
+     * @param {HTMLElement} card - Card della richiesta
+     */
+    const handleEditRequest = (btn, card) => {
+        const requestData = extractRequestDataFromCard(card);
+        openEditModal(requestData);
+    }
+
     container.addEventListener('click', async (event) => {
         const requestCard = event.target.closest('.request-card');
         if(!requestCard) return;
 
-        //dettagli
-        if(event.target.matches('.toggle-details-btn')) {
-            requestCard.classList.toggle('show-details');
-            event.target.textContent = requestCard.classList.contains('show-details') ? 'Nascondi dettagli' : 'Mostra dettagli';
+        const handlers = {
+            '.toggle-details-btn': handleToggleDetails,
+            '.save-status-btn': handleStatusUpdate,
+            '.edit-btn': handleEditRequest
         }
 
-        //salva Status
-        if(event.target.matches('.save-status-btn') && !event.target.disabled) {
-            const select = requestCard.querySelector('.statusSelect');
-            const originalStatus = select.dataset.originalStatus;
-            const newStatus = select.value;
-
-            if(originalStatus !== newStatus) {
-                try {
-                    await updateRequestStatus(requestCard.dataset.id, newStatus);
-                    showToast('success', 'Status aggiornato', 'La richiesta è stata aggiornata con successo');
-                } catch (error) {
-                    showToast('error', 'Errore', error.message);
-                } finally {
-                    await refreshRequests();
-                }
+        for(const [selector, handles] of Object.entries(handlers)) {
+            if(event.target.matches(selector)) {
+                await handles(event.target, requestCard);
+                return;
             }
         }
     });
+}
 
-    container.addEventListener('change', async (event) => {
-        //status
+/**
+ * @function setupStatuschangeListeners
+ * @description Imposta gli event listener per il cambio di status
+ * @param {HTMLElement} container - Contenitore delle richieste
+ */
+function setupStatusChangeListeners(container) {
+    container.addEventListener('change', (event) => {
         if(event.target.matches('.statusSelect')) {
-            const select = event.target;
-            const saveBtn = select.nextElementSibling;
-            const originalStatus = select.dataset.originalStatus;
-
-            //toggle saveBtn
-            if(originalStatus !== select.value) {
-                saveBtn.disabled = false;
-                saveBtn.textContent = 'Salva';
-                saveBtn.classList.remove('disabled', 'generic');
-                saveBtn.classList.add('success');
-            } else {
-                saveBtn.disabled = true;
-                saveBtn.textContent = '-';
-                saveBtn.classList.remove('success');
-                saveBtn.classList.add('disabled', 'generic');
-            }
+            handleStatusChange(event.target);
         }
     });
+}
 
-    container.addEventListener('click', async (event) => {
-        if(event.target.matches('.edit-btn')) {
-            const requestCard = event.target.closest('.request-card');
-            const requestData = extractRequestDataFromCard(requestCard);
-            openEditModal(requestData);
-        }
-    });
-
+/**
+ * @function setupModalEventListeners
+ * @description Imposta gli event listener per mostrare/nascondere il modale
+ */
+function setupModalEventListeners() {
     const modal = document.getElementById('editModal');
-    const span = document.querySelector('.close');
-    const cancelBtn = document.getElementById('cancelEdit');
+    const closeElements = [
+        document.querySelector('.close'),
+        document.getElementById('cancelEdit')
+    ]
+    
+    closeElements.forEach(element => 
+        element.addEventListener('click', () => modal.style.display = 'none')
+    );
+}
 
-    // Gestione chiusura modale
-    span.onclick = () => modal.style.display = 'none';
-    cancelBtn.onclick = () => modal.style.display = 'none';
-    window.onclick = (event) => {
-        if(event.target === modal) modal.style.display = 'none';
-    }
-
-    // Gestione submit form
-    document.getElementById('editForm').addEventListener('submit', async (e) => {
+/**
+ * @function setupEditFormListeners
+ * @description Imposta gli event listener per il form di modifica delle richieste
+ */
+function setupEditFormListeners() {
+    
+    /**
+     * @function handleSubmit
+     * @description Gestisce il submit del form
+     * @param {Event} e - Evento di submit
+     */
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = getFormData();
-        
+        const modal = document.getElementById('editModal');
+
         try {
             await updateRequest(formData.id, formData);
             showToast('success', 'Modifica effettuata', 'Richiesta aggiornata con successo');
@@ -224,7 +303,39 @@ function setupEventListeners(container) {
         } catch (error) {
             showToast('error', 'Errore', error.message);
         }
-    }); 
+    }
+
+    document.getElementById('editForm').addEventListener('submit', handleSubmit);
+}
+
+/**
+ * @function setupFilterEventListeners
+ * @description Imposta gli event listener per i filtri
+ */
+function setupFilterEventListeners() {
+    const filterForm = document.getElementById('filterForm');
+    filterForm.addEventListener('input', async () => {
+        try {
+            const allRequests = await getAllRequests();
+            const filteredRequests = applyFilters(allRequests);
+            populateRequests(filteredRequests);
+        } catch (error) {
+            showToast('error', 'Errore', error.message);
+        }
+    });
+}
+
+/**
+ * @function setupEventListeners
+ * @description Imposta gli event listener per le card delle richieste
+ * @param {HTMLElement} container - Contenitore delle richieste
+ */
+function setupEventListeners(container) {
+    setupCardEventListeners(container);
+    setupStatusChangeListeners(container);
+    setupModalEventListeners();
+    setupEditFormListeners();
+    setupFilterEventListeners();
 }
 
 /**
@@ -261,7 +372,7 @@ function populateRequests(requests) {
 function applyFilters(requests) {
     const filterForm = document.getElementById('filterForm');
     const search = filterForm.querySelector('#search').value.toLowerCase();
-    const tipo = filterForm.querySelector('input[name="tipo"]:checked').value;
+    const tipo = filterForm.querySelector('input[name="tipo"]:checked')?.value || 'all';
     const status = filterForm.querySelector('#status').value;
 
     return requests.filter(request => {
@@ -274,28 +385,9 @@ function applyFilters(requests) {
             (request.laboratori && 
                 request.laboratori.toLowerCase().replace(/_/g, ' ').includes(search));
 
-        const matchesTipo = tipo === 'all' || request.tipo === tipo;
+        const matchesTipo = tipo === 'all' || request.tipo.toLowerCase() === tipo;
         const matchesStatus = status === 'all' || request.status === status;
         return matchesSearch && matchesTipo && matchesStatus;
-    });
-}
-
-/**
- * @function setupFilterEventListeners
- * @description Imposta gli event listener per i filtri
- */
-function setupFilterEventListeners() {
-    const filterForm = document.getElementById('filterForm');
-    filterForm.addEventListener('input', async () => {
-        try {
-            const allRequests = await getAllRequests();
-
-            const filteredRequests = applyFilters(allRequests);
-
-            populateRequests(filteredRequests);
-        } catch (error) {
-            showToast('error', 'Errore', error.message);
-        }
     });
 }
 
@@ -424,7 +516,7 @@ async function initRequests() {
         const requestsContainer = document.getElementById('requests');
         setupEventListeners(requestsContainer);
         await refreshRequests();
-        setupFilterEventListeners();
+        //setupFilterEventListeners();
     } catch (error) {
         showToast('error', 'Errore', error.message);
     }

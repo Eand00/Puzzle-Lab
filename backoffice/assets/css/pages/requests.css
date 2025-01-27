@@ -55,7 +55,7 @@
 
 .requests-list-header.is-stuck::after {
     height: 100%;
-    width: 100vw;
+    width: calc(100vw - var(--scrollbar-width));
     border-top: 1px solid var(--color-light);
     box-shadow: var(--shadow-base);
     transition: all 0.3s ease-in-out;
@@ -161,9 +161,12 @@ main select.last {
     border-left-color: var(--color-danger);
 }
 
-.request-card.confermata,
-.request-card.archiviata {
+.request-card.confermata {
     border-left-color: var(--color-success);
+}
+
+.request-card.archiviata {
+    border-left-color: var(--color-base-secondary);
 }
 
 .row-1,
