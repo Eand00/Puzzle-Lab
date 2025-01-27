@@ -97,6 +97,14 @@ main h1 {
     text-transform: uppercase;
     text-align: center;
 }
+.button-back {
+    display: block;
+    width: 5rem;
+    position: absolute;
+    top: 12rem;
+    left: 3rem;
+    z-index: 1;
+}
 
 /* Description */
 .lab-description {
