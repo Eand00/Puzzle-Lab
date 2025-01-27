@@ -118,7 +118,7 @@ async function initDashboard() {
         //ordina dal più recente
         requests.sort((a, b) => new Date(b.id) - new Date(a.id));
 
-        //prende le 10 più recenti
+        //prende le 15 più recenti
         const recentRequests = requests.length > 15 ? requests.slice(0, 15) : requests;
         populateRecentRequests(recentRequests);
     } catch (error) {

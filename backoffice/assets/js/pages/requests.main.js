@@ -55,8 +55,8 @@ function createRequestCard(request) {
             <p>Note: ${request.testo}</p>
             ${request.tipo === 'prenotazione' ? createPrenotazioneDetails(request) : ''}
             <div class="actions">
-                <button class="delete-btn">Elimina</button>
-                <button class="edit-btn">Modifica</button>
+                <button class="btn-secondary edit-btn">Modifica</button>
+                <button class="btn-primary danger delete-btn">Elimina</button>
             </div>
         </div>
     `;
@@ -172,6 +172,40 @@ function setupEventListeners(container) {
             }
         }
     });
+
+    container.addEventListener('click', async (event) => {
+        if(event.target.matches('.edit-btn')) {
+            const requestCard = event.target.closest('.request-card');
+            const requestData = extractRequestDataFromCard(requestCard);
+            openEditModal(requestData);
+        }
+    });
+
+    const modal = document.getElementById('editModal');
+    const span = document.querySelector('.close');
+    const cancelBtn = document.getElementById('cancelEdit');
+
+    // Gestione chiusura modale
+    span.onclick = () => modal.style.display = 'none';
+    cancelBtn.onclick = () => modal.style.display = 'none';
+    window.onclick = (event) => {
+        if(event.target === modal) modal.style.display = 'none';
+    }
+
+    // Gestione submit form
+    document.getElementById('editForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = getFormData();
+        
+        try {
+            await updateRequest(formData.id, formData);
+            showToast('success', 'Modifica effettuata', 'Richiesta aggiornata con successo');
+            modal.style.display = 'none';
+            await refreshRequests();
+        } catch (error) {
+            showToast('error', 'Errore', error.message);
+        }
+    }); 
 }
 
 /**
@@ -234,6 +268,121 @@ function setupFilterEventListeners() {
             showToast('error', 'Errore', error.message);
         }
     });
+}
+
+function extractRequestDataFromCard(card) {
+    const id = card.dataset.id;
+    const tipo = card.querySelector('.card-info-tipo').textContent.toLowerCase();
+    
+    // Estrai dati base
+    const titleText = card.querySelector('.basic-info-title').textContent;
+    const [namePart, orgPart] = titleText.split('||').map(s => s.trim());
+    const [cognome, nome] = namePart.replace('Da ', '').split(' ');
+    
+    const email = card.querySelector('a[href^="mailto:"]').textContent;
+    const numero = card.querySelector('.basic-info-row').lastChild.textContent.trim();
+    
+    // Estrai testo richiesta
+    const testo = card.querySelector('.request-details p').textContent.replace('Note: ', '');
+    
+    // Inizializza oggetto richiesta
+    const requestData = {
+        id,
+        tipo,
+        nome,
+        cognome,
+        organizzazione: orgPart || '',
+        email,
+        numero,
+        testo
+    };
+    
+    // Estrai dati specifici per prenotazione
+    if(tipo === 'prenotazione') {
+        const details = card.querySelector('.request-details');
+        requestData.dataInizio = details.children[1].textContent.replace('Inizio disponibilità: ', '');
+        requestData.dataFine = details.children[2].textContent.replace('Fine disponibilità: ', '');
+        requestData.laboratori = details.children[3].textContent.replace('Laboratori: ', '');
+        requestData.tipologia = details.children[4].textContent.replace('Tipologia: ', '');
+        
+        if(requestData.tipologia === 'SOGGIORNO') {
+            requestData.numeroGiorni = details.children[5].textContent.replace('Numero giorni: ', '');
+        } else {
+            requestData.fasciaOraria = details.children[5].textContent.replace('Fascia Oraria: ', '');
+        }
+    }
+    
+    return requestData;
+}
+
+function openEditModal(data) {
+    const modal = document.getElementById('editModal');
+    
+    // Popola campi base
+    document.getElementById('editId').value = data.id;
+    document.getElementById('editNome').value = data.nome;
+    document.getElementById('editCognome').value = data.cognome;
+    document.getElementById('editOrganizzazione').value = data.organizzazione;
+    document.getElementById('editEmail').value = data.email;
+    document.getElementById('editNumero').value = data.numero;
+    
+    // Gestione campi prenotazione
+    const prenotazioneFields = document.getElementById('prenotazioneFields');
+    if(data.tipo === 'prenotazione') {
+        prenotazioneFields.style.display = 'block';
+        
+        document.getElementById('editDataInizio').value = formatDateForInput(data.dataInizio);
+        document.getElementById('editDataFine').value = formatDateForInput(data.dataFine);
+        document.getElementById('editLaboratori').value = data.laboratori;
+        
+        // Gestione campi specifici
+        if(data.tipologia === 'SOGGIORNO') {
+            document.getElementById('editGiorniContainer').style.display = 'block';
+            document.getElementById('editFasciaContainer').style.display = 'none';
+            document.getElementById('editNumeroGiorni').value = data.numeroGiorni;
+        } else {
+            document.getElementById('editGiorniContainer').style.display = 'none';
+            document.getElementById('editFasciaContainer').style.display = 'block';
+            document.getElementById('editFasciaOraria').value = data.fasciaOraria;
+        }
+    } else {
+        prenotazioneFields.style.display = 'none';
+    }
+    
+    modal.style.display = 'block';
+}
+
+function formatDateForInput(dateString) {
+    const date = new Date(dateString);
+    return date.toISOString().split('T')[0];
+}
+
+function getFormData() {
+    const formData = {
+        id: document.getElementById('editId').value,
+        nome: document.getElementById('editNome').value,
+        cognome: document.getElementById('editCognome').value,
+        organizzazione: document.getElementById('editOrganizzazione').value,
+        email: document.getElementById('editEmail').value,
+        numero: document.getElementById('editNumero').value,
+    };
+    
+    if(document.getElementById('prenotazioneFields').style.display === 'block') {
+        formData.tipo = 'prenotazione';
+        formData.dataInizio = document.getElementById('editDataInizio').value;
+        formData.dataFine = document.getElementById('editDataFine').value;
+        formData.laboratori = document.getElementById('editLaboratori').value;
+        
+        if(formData.tipologia === 'SOGGIORNO') {
+            formData.numeroGiorni = document.getElementById('editNumeroGiorni').value;
+        } else {
+            formData.fasciaOraria = document.getElementById('editFasciaOraria').value;
+        }
+    } else {
+        formData.tipo = 'informazione';
+    }
+    
+    return formData;
 }
 
 /**

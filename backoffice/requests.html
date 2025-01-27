@@ -54,6 +54,76 @@
         </section>
     </main>
 
+    <!-- Modale Modifica Richiesta -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Modifica Richiesta</h2>
+        <form id="editForm">
+            <input type="hidden" id="editId">
+            
+            <div class="form-group">
+                <label for="editNome">Nome</label>
+                <input type="text" id="editNome" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="editCognome">Cognome</label>
+                <input type="text" id="editCognome" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="editOrganizzazione">Organizzazione</label>
+                <input type="text" id="editOrganizzazione">
+            </div>
+            
+            <div class="form-group">
+                <label for="editEmail">Email</label>
+                <input type="email" id="editEmail" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="editNumero">Telefono</label>
+                <input type="tel" id="editNumero" required>
+            </div>
+            
+            <div id="prenotazioneFields" style="display: none;">
+                <div class="form-group">
+                    <label for="editDataInizio">Data Inizio</label>
+                    <input type="date" id="editDataInizio">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editDataFine">Data Fine</label>
+                    <input type="date" id="editDataFine">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editLaboratori">Laboratori</label>
+                    <input type="text" id="editLaboratori">
+                </div>
+                
+                <div class="form-group" id="editGiorniContainer">
+                    <label for="editNumeroGiorni">Numero Giorni</label>
+                    <input type="number" id="editNumeroGiorni" min="1">
+                </div>
+                
+                <div class="form-group" id="editFasciaContainer" style="display: none;">
+                    <label for="editFasciaOraria">Fascia Oraria</label>
+                    <select id="editFasciaOraria">
+                        <option value="MATTINA">Mattina</option>
+                        <option value="POMERIGGIO">Pomeriggio</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="modal-actions">
+                <button type="button" class="btn-primary danger delete-btn" id="cancelEdit">Annulla</button>
+                <button type="submit" class="btn-primary">Salva Modifiche</button>
+            </div>
+        </form>
+    </div>
+</div>
     <!-- Toast per messaggi di feedback -->
     <toast-component></toast-component>
 
