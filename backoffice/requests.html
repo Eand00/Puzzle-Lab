@@ -64,6 +64,8 @@
             <h2>Modifica Richiesta</h2>
             <form id="editForm">
                 <input type="hidden" id="editId">
+                <input type="hidden" id="editTipo">
+                <input type="hidden" id="editStatus">
                 <div class="form-row">
                     <div class="form-group">
                         <label for="editNome">Nome</label>
@@ -130,6 +132,24 @@
             </form>
         </div>
     </div>
+
+    <!-- Modale Eliminazione Richiesta -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Conferma eliminazione</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <!-- Il contenuto verrà inserito dinamicamente -->
+            </div>
+            <div class="modal-footer">
+                <button id="cancelDelete" class="btn-secondary">Annulla</button>
+                <button id="confirmDelete" class="btn-primary danger">Elimina</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast per messaggi di feedback -->
     <toast-component></toast-component>
 

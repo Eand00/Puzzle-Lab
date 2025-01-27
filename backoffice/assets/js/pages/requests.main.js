@@ -46,12 +46,12 @@ function createRequestCard(request) {
     const basicInfo = `
         <div class="basic-info">
             <div class="basic-info-title">
-                <span class="label">Da</span> ${request.cognome} ${request.nome} || ${request.organizzazione}
+                <span class="label">Da</span> <span class="lastname">${request.cognome}</span> <span class="firstname">${request.nome}</span> || <span class="organization">${request.organizzazione}</span>
             </div>
             <div class="basic-info-row">
                 <span class="label">@</span> 
                 <a href="mailto:${request.email}">${request.email}</a>
-                <span class="label">T</span> ${request.numero}
+                <span class="label">T</span> <span class="number">${request.numero}</span>
             </div>
         </div>
         `;
@@ -60,7 +60,7 @@ function createRequestCard(request) {
             <div class="request-details-container">
                 <div class="request-details-row">
                     <span class="label">Messaggio</span>
-                    <p>${request.testo}</p>
+                    <p class="message"s>${request.testo}</p>
                 </div>
                 ${request.tipo === 'prenotazione' ? createPrenotazioneDetails(request) : ''}
             </div>
@@ -244,7 +244,57 @@ function setupCardEventListeners(container) {
      */
     const handleEditRequest = (btn, card) => {
         const requestData = extractRequestDataFromCard(card);
-        openEditModal(requestData);
+        initEditModal(requestData);
+    }
+
+    /**
+     * @function handleDeleteRequest
+     * @description Gestisce la logica del modale di eliminazione richiesta
+     * @param {HTMLElement} btn - Pulsante per eliminare la richiesta
+     * @param {HTMLElement} card - Card della richiesta
+     */
+    const handleDeleteRequest = (btn, card) => {
+        const requestId = card.dataset.id;
+        const deleteModal = document.getElementById('deleteModal');
+        const confirmDeleteBtn = deleteModal.querySelector('#confirmDelete');
+
+        deleteModal.querySelector('.modal-body').innerHTML = `
+            <p class="text-center">Sei sicuro di voler eliminare la richiesta #${requestId}?<br>
+            <strong>Questa azione non può essere annullata.</strong></p>
+        `;
+
+        deleteModal.style.display = 'block';
+
+        const handleConfirmDelete = async () => {
+            try {
+                await deleteRequest(requestId);
+                card.classList.add('fade-out');
+                setTimeout(() => {
+                    card.remove();
+                    const remainingCards = document.querySelectorAll('.request-card');
+                    if (remainingCards.length === 0) {
+                        const container = document.querySelector('#requests');
+                        container.innerHTML = '<p>Nessuna richiesta.</p>';
+                    }
+                }, 500);
+                showToast('success', 'Eliminazione completata', 'La richiesta è stata eliminata con successo');
+            } catch (error) {
+                showToast('error', 'Errore', error.message);
+            } finally {
+                deleteModal.style.display = 'none';
+                confirmDeleteBtn.removeEventListener('click', handleConfirmDelete);
+            }
+        }
+
+        confirmDeleteBtn.addEventListener('click', handleConfirmDelete);
+
+        const closeModal = () => {
+            deleteModal.style.display = 'none';
+            confirmDeleteBtn.removeEventListener('click', handleConfirmDelete);
+        };
+        
+        deleteModal.querySelector('.close').addEventListener('click', closeModal);
+        deleteModal.querySelector('#cancelDelete').addEventListener('click', closeModal);
     }
 
     container.addEventListener('click', async (event) => {
@@ -254,7 +304,8 @@ function setupCardEventListeners(container) {
         const handlers = {
             '.toggle-details-btn': handleToggleDetails,
             '.save-status-btn': handleStatusUpdate,
-            '.edit-btn': handleEditRequest
+            '.edit-btn': handleEditRequest,
+            '.delete-btn': handleDeleteRequest
         }
 
         for(const [selector, handles] of Object.entries(handlers)) {
@@ -312,7 +363,7 @@ function setupEditFormListeners() {
         const modal = document.getElementById('editModal');
 
         try {
-            await updateRequest(formData.id, formData);
+            await updateRequest(formData);
             showToast('success', 'Modifica effettuata', 'Richiesta aggiornata con successo');
             modal.style.display = 'none';
             await refreshRequests();
@@ -414,33 +465,41 @@ function applyFilters(requests) {
     });
 }
 
+/**
+ * @function extractRequestDataFromCard
+ * @description Estrae i dati della richiesta dalla card
+ * @param {HTMLElement} card - Card della richiesta
+ * @returns {Object} - Dati della richiesta
+ */
 function extractRequestDataFromCard(card) {
     const id = card.dataset.id;
     const tipo = card.querySelector('.card-info-tipo').textContent.toLowerCase();
+    const status = card.querySelector('.statusSelect').dataset.originalStatus;
     
     // Estrai dati base
     const titleText = card.querySelector('.basic-info-title').textContent;
-    const [namePart, orgPart] = titleText.split('||').map(s => s.trim());
-    const [cognome, nome] = namePart.replace('Da ', '').split(' ');
-    
+    const nome = card.querySelector('.firstname').textContent;
+    const cognome = card.querySelector('.lastname').textContent;
+    const org = card.querySelector('.organization').textContent;
     const email = card.querySelector('a[href^="mailto:"]').textContent;
-    const numero = card.querySelector('.basic-info-row').lastChild.textContent.trim();
+    const numero = card.querySelector('.number').textContent.trim();
     
     // Estrai testo richiesta
-    const testo = card.querySelector('.request-details p').textContent.replace('Note: ', '');
+    const testo = card.querySelector('.message').textContent;
     
     // Inizializza oggetto richiesta
     const requestData = {
         id,
         tipo,
+        status,
         nome,
         cognome,
-        organizzazione: orgPart || '',
+        organizzazione: org || '',
         email,
         numero,
         testo
     };
-    
+    console.log(requestData);
     // Estrai dati specifici per prenotazione
     if(tipo === 'prenotazione') {
         const details = card.querySelector('.request-details');
@@ -459,11 +518,18 @@ function extractRequestDataFromCard(card) {
     return requestData;
 }
 
-function openEditModal(data) {
+/**
+ * @function initEditModal
+ * @description Inizializza il modale di modifica della richiesta
+ * @param {Object} data - Dati della richiesta
+ */
+function initEditModal(data) {
     const modal = document.getElementById('editModal');
     
     // Popola campi base
     document.getElementById('editId').value = data.id;
+    document.getElementById('editTipo').value = data.tipo;
+    document.getElementById('editStatus').value = data.status;
     document.getElementById('editNome').value = data.nome;
     document.getElementById('editCognome').value = data.cognome;
     document.getElementById('editOrganizzazione').value = data.organizzazione;
@@ -496,20 +562,32 @@ function openEditModal(data) {
     modal.style.display = 'block';
 }
 
+/**
+ * @function formatDateForInput
+ * @description Formatta la data per l'input
+ * @param {string} dateString - Data in formato stringa
+ * @returns {string} - Data in formato YYYY-MM-DD
+ */
 function formatDateForInput(dateString) {
     const [day, month, year] = dateString.split('/');
     const formattedDate = `${year}-${month}-${day}`;
     return formattedDate;
 }
 
+/**
+ * @function getFormData
+ * @description Ottiene i dati del form
+ * @returns {Object} - Dati del form
+ */
 function getFormData() {
     const formData = {
         id: document.getElementById('editId').value,
+        status: document.getElementById('editStatus').value,
         nome: document.getElementById('editNome').value,
         cognome: document.getElementById('editCognome').value,
         organizzazione: document.getElementById('editOrganizzazione').value,
         email: document.getElementById('editEmail').value,
-        numero: document.getElementById('editNumero').value,
+        numero: document.getElementById('editNumero').value
     };
     
     if(document.getElementById('prenotazioneFields').style.display === 'block') {

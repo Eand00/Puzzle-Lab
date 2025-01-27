@@ -10,7 +10,7 @@
  */
 
 import { apiClient } from '../utils/api-client.js';
-import { API_RICHIESTE_URL } from '../config/config.js';
+import { API_BACKOFFICE_URL, API_RICHIESTE_URL } from '../config/config.js';
 
 /**
  * @function getAllRequests
@@ -54,7 +54,8 @@ export async function getRequestsByStatus(status, order = 'DESC') {
  */
 export async function updateRequest(request) {
     try {
-        return await apiClient(`${API_RICHIESTE_URL}`, {
+        const endpoint = `${API_BACKOFFICE_URL}/${request.tipo.slice(0, -1) + 'i'}`;
+        return await apiClient(endpoint, {
             method: 'PUT',
             body: JSON.stringify(request)
         });

@@ -369,6 +369,27 @@ span.lab-name {
     position: relative;
 }
 
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-body {
+    margin-bottom: 20px;
+}
+
+.modal-body .text-center {
+    text-align: center;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
 .close {
     position: absolute;
     right: 20px;
