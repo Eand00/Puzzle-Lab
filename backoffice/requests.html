@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestione Richieste - Backoffice Caccia SAPERI</title>
+    <link rel="icon" type="image/png" sizes="96x96" href="./assets/images/favicon-96x96.png" />
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,16 +25,27 @@
         <!-- Lista richieste -->
         <section class="requests-list">
             <div class="requests-list-header">
-                <h2>Elenco Richieste</h2>
+                <h2>Richieste</h2>
                 <div class="requests-list-filters">
-                    <form id="filterForm" class="filters-form">
-                        <div class="form-group--inline">
-                            <label for="status">Stato</label>
-                            <select id="status" name="status">
-                                <option value="">Tutti</option>
-                                <option value="new">Nuove</option>
-                                <option value="in-progress">In Lavorazione</option>
-                                <option value="completed">Completate</option>
+                    <form id="filterForm" class="filters-form form-group--inline">
+                        <div class="input-group">
+                            <label for="search" class="first">Cerca:</label>
+                            <input type="text" id="search" name="search" class="last" />
+                        </div>
+                        <div class="input-group">
+                            <label class="first"><input type="radio" name="tipo" value="all" checked>Tutti</label>
+                            <label class="middle"><input type="radio" name="tipo" value="prenotazione">Prenotazioni</label>
+                            <label class="last"><input type="radio" name="tipo" value="informazione">Informazioni</label>
+                        </div>
+                        <div class="input-group">
+                            <label for="status" class="first">Stato</label>
+                            <select id="status" name="status" class="last">
+                                <option value="all">Tutti</option>
+                                <option value="RICEVUTA">Ricevute</option>
+                                <option value="PRESA_IN_CARICO">In Carico</option>
+                                <option value="CONFERMATA">Confermate</option>
+                                <option value="RIFIUTATA">Rifiutate</option>
+                                <option value="ARCHIVIATA">Archiviate</option>
                             </select>
                         </div>
                     </form>
@@ -41,8 +53,102 @@
                 
             </div>
             <!-- La lista verrà popolata dinamicamente -->
+            <div id="requests"></div>
         </section>
     </main>
+
+    <!-- Modale Modifica Richiesta -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Modifica Richiesta</h2>
+            <form id="editForm">
+                <input type="hidden" id="editId">
+                <input type="hidden" id="editTipo">
+                <input type="hidden" id="editStatus">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editNome">Nome</label>
+                        <input type="text" id="editNome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCognome">Cognome</label>
+                        <input type="text" id="editCognome" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editOrganizzazione">Organizzazione</label>
+                    <input type="text" id="editOrganizzazione">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editEmail">Email</label>
+                        <input type="email" id="editEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editNumero">Telefono</label>
+                        <input type="tel" id="editNumero" required>
+                    </div>
+                </div>
+
+                <div id="prenotazioneFields" style="display: none;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editDataInizio">Data Inizio</label>
+                            <input type="date" id="editDataInizio">
+                        </div>
+                        <div class="form-group">
+                            <label for="editDataFine">Data Fine</label>
+                            <input type="date" id="editDataFine">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editLaboratori">Laboratori</label>
+                        <input type="text" id="editLaboratori">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group" id="editGiorniContainer">
+                            <label for="editNumeroGiorni">Numero Giorni</label>
+                            <input type="number" id="editNumeroGiorni" min="1">
+                        </div>                    
+                        <div class="form-group" id="editFasciaContainer" style="display: none;">
+                            <label for="editFasciaOraria">Fascia Oraria</label>
+                            <select id="editFasciaOraria">
+                                <option value="MATTINA">Mattina</option>
+                                <option value="POMERIGGIO">Pomeriggio</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn-primary danger delete-btn" id="cancelEdit">Annulla</button>
+                    <button type="submit" class="btn-primary">Salva Modifiche</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modale Eliminazione Richiesta -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Conferma eliminazione</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <!-- Il contenuto verrà inserito dinamicamente -->
+            </div>
+            <div class="modal-footer">
+                <button id="cancelDelete" class="btn-secondary">Annulla</button>
+                <button id="confirmDelete" class="btn-primary danger">Elimina</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Toast per messaggi di feedback -->
     <toast-component></toast-component>

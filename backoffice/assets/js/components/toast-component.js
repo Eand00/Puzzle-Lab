@@ -4,7 +4,19 @@
  * @author Puzzle Lab
  * @contributors Bonura Vincenzo
  * @date 2025-01-15
- * @description This script handles the toast component for the backoffice.
+ * @update 2025-01-25
+ * @description Componente toast per il backoffice.
+ * @extends HTMLElement
+ */
+
+/**
+ * Tipi di toast supportati
+ * @typedef {'success' | 'error' | 'warning' | 'info'} ToastType
+ */
+
+/**
+ * Componente Toast per notifiche all'utente
+ * @customElement toast-component
  * @extends HTMLElement
  */
 class ToastComponent extends HTMLElement {
@@ -22,11 +34,11 @@ class ToastComponent extends HTMLElement {
     }
 
     /**
-     * Show a toast notification
-     * @param {string} type - Toast type (info, success, warning, error)
-     * @param {string} title - Toast title
-     * @param {string} message - Toast message
-     * @param {number} [duration=5000] - Duration in milliseconds
+     * Mostra un toast
+     * @param {ToastType} type - Tipo di toast (info, success, warning, error)
+     * @param {string} title - Titolo del toast
+     * @param {string} message - Messaggio del toast
+     * @param {number} [duration=5000] - Durata in millisecondi
      */
     showToast(type, title, message, duration = 5000) {
         const toast = document.createElement('div');
@@ -46,20 +58,19 @@ class ToastComponent extends HTMLElement {
         const container = this.querySelector('.toast-container');
         container.appendChild(toast);
 
-        // Setup close button
-        toast.querySelector('.toast-close').addEventListener('click', () => {
-            this.removeToast(toast);
-        });
+        // event listener per il pulsante di chiusura
+        toast.querySelector('.toast-close')
+            ?.addEventListener('click', () => this.removeToast(toast));
 
-        // Auto remove after duration
+        // Rimuovi automaticamente dopo duration
         setTimeout(() => {
             this.removeToast(toast);
         }, duration);
     }
 
     /**
-     * Remove a toast with animation
-     * @param {HTMLElement} toast - Toast element to remove
+     * Rimuove un toast con animazione
+     * @param {HTMLElement} toast - Toast element da rimuovere
      */
     removeToast(toast) {
         toast.classList.add('removing');
@@ -69,9 +80,9 @@ class ToastComponent extends HTMLElement {
     }
 
     /**
-     * Get icon SVG based on toast type
-     * @param {string} type - Toast type
-     * @returns {string} SVG markup
+     * Recupera l'icona SVG in base al tipo di toast
+     * @param {string} type - Tipo di toast
+     * @returns {string} Markup SVG
      */
     getIcon(type) {
         const icons = {

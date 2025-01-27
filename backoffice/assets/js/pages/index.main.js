@@ -1,9 +1,22 @@
-import { getRequestStats, getRecentRequests } from '../services/requests.service.js';
-import { logout } from '../services/auth.service.js';
+/**
+ * @file index.main.js
+ * @version 1.0.0
+ * @author Puzzle Lab
+ * @contributors Bonura Vincenzo, Eand Avdiu
+ * @date 2025-01-15
+ * @update 2025-01-25
+ * @description Script per la pagina index
+ * @see README.md per ulteriori informazioni
+ */
+
+import { getRequestStats, getAllRequests, getRequestsByStatus } from '../services/requests.service.js';
+import { showToast } from '../utils/toast.util.js';
+
 
 /**
- * Populates recent requests list
- * @param {Array} requests - Array of recent requests
+ * @function populateRecentRequests
+ * @description Popola la lista delle richieste recenti
+ * @param {Array} requests - Array di richieste recenti
  */
 function populateRecentRequests(requests) {
     const container = document.querySelector('.requests-list');
@@ -19,14 +32,15 @@ function populateRecentRequests(requests) {
                 <div class="request-card" data-expanded="false">
                     <div class="request-card-header">
                         <div class="request-basic-info">
-                            <span class="request-id">#${request.id}</span>
-                            <span class="status-badge ${request.status.toLowerCase()}">${request.nome} ${request.cognome} || ${request.organizzazione}</span>
+                            <div class="row-1">
+                                <span class="request-id">#${request.id}</span>
+                                <span class="request-type ${request.tipo.toLowerCase()}">${request.tipo.charAt(0).toUpperCase() + request.tipo.slice(1)}</span> | 
+                                <span class="request-date">${new Date(request.dataCreazione).toLocaleDateString()}</span>
+                            </div>
+                            <div class="row-2">
+                                <span class="status-badge ${request.status.toLowerCase()}">${request.nome} ${request.cognome} || ${request.organizzazione}</span>
+                            </div>
                         </div>
-                        <button class="expand-btn" onclick="this.closest('.request-card').setAttribute('data-expanded', this.closest('.request-card').getAttribute('data-expanded') === 'true' ? 'false' : 'true')">
-                            <svg viewBox="0 0 24 24" width="24" height="24">
-                                <path d="M7 10l5 5 5-5z"/>
-                            </svg>
-                        </button>
                     </div>
 
                     <div class="request-card-content">
@@ -57,11 +71,25 @@ function populateRecentRequests(requests) {
             `).join('')}
         </div>
     `;
+
+    document.querySelectorAll('.request-card').forEach(card => {
+        card.addEventListener('click', () => toggleRequestCard(card));
+    });
+}
+
+/**
+ * @function toggleRequestCard
+ * @description Attiva o disattiva la visualizzazione dei dettagli della richiesta
+ * @param {HTMLElement} card - Card della richiesta
+ */
+function toggleRequestCard(card) {
+    card.setAttribute('data-expanded', card.getAttribute('data-expanded') === 'true' ? 'false' : 'true');
 }
 
 /**
  * @function updateDashboardStats
- * @param {Object} stats - Dashboard statistics
+ * @description Aggiorna le statistiche della dashboard
+ * @param {Object} stats - Oggetto contenente le statistiche
  */
 function updateDashboardStats(stats) {
     const statsElements = {
@@ -78,30 +106,23 @@ function updateDashboardStats(stats) {
 }
 
 /**
- * @function setupEventListeners
- * @description Setup event listeners for the page
- */
-function setupEventListeners() {
-    document.addEventListener('logout', () => {
-        logout();
-    });
-}
-
-/**
  * @function initDashboard
- * @description Initializes dashboard components
+ * @description Inizializza i componenti della dashboard
  */
 async function initDashboard() {
     try {
-        setupEventListeners();
         const stats = await getRequestStats();
         updateDashboardStats(stats);
+        const requests = await getAllRequests();
 
-        const recentRequests = await getRecentRequests();
+        //ordina dal più recente
+        requests.sort((a, b) => new Date(b.id) - new Date(a.id));
+
+        //prende le 15 più recenti
+        const recentRequests = requests.length > 15 ? requests.slice(0, 15) : requests;
         populateRecentRequests(recentRequests);
     } catch (error) {
-        const toast = document.querySelector('toast-component');
-        toast.showToast('error', 'Errore', error.message);
+        showToast('error', 'Errore', error.message);
     }
 }
 

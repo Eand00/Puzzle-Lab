@@ -3,27 +3,29 @@
  * Description: Styles for the dashboard page
  * Version: 1.0.0
  * Author: Puzzle Lab
- * Contributors: Bonura Vincenzo
+ * Contributors: Bonura Vincenzo, Eand Avdiu
  * Date: 2025-01-15
+ * Update: 2025-01-25
  */
 
 .dashboard-grid {
     display: grid;
     grid-template-columns: 380px 1fr;
-    gap: 2rem;
+    gap: var(--spacing-xl);
     height: calc(100vh - var(--navbar-height) - 4rem);
 }
 
 .dashboard-grid h2 {
     margin-top: 0;
+    padding: var(--spacing-md);
 }
 
 /* Statistiche */
 .dashboard-stats {
     background: var(--color-white);
-    padding: 2rem;
+    padding: var(--spacing-xl);
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow-base);
     display: flex;
     flex-direction: column;
 }
@@ -31,26 +33,27 @@
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+    gap: var(--spacing-lg);
 }
 
 .stat-card {
     background: var(--color-light);
-    padding: 1.5rem;
+    padding: var(--spacing-lg);
     border-radius: 8px;
     text-align: center;
+    box-shadow: var(--shadow-base);
 }
 
 .stat-number {
     display: block;
-    font-size: 2.5rem;
+    font-size: calc(var(--font-size-xl) + 0.5rem);
     font-weight: 700;
     color: var(--color-base-primary);
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--spacing-sm);
 }
 
 .stat-label {
-    font-size: 1rem;
+    font-size: var(--font-size-base);
     color: var(--color-base-secondary);
 }
 
@@ -70,54 +73,57 @@
 /* Ultime richieste */
 .recent-requests {
     background: var(--color-white);
-    padding: 2rem;
+    padding: var(--spacing-xl);
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow-base);
     display: flex;
     flex-direction: column;
 }
 
 .requests-list {
     flex: 1;
-    overflow-y: auto;
+    position: relative;
+
+    &::after {
+        content:'';
+        position: absolute;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: 16px;
+    }
+}
+
+.requests-list:has(.request-card[data-expanded="true"])::after {
+    content:'';
+    position: absolute;
+    inset: 0;
+    background: var(--color-dark);
+    opacity: 0.5;
 }
 
 .view-all {
-    margin-top: 1.5rem;
+    margin-top: var(--spacing-lg);
     text-align: center;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .dashboard-grid {
-        grid-template-columns: 1fr;
-        height: auto;
-    }
 
-    .stats-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .stat-card.total {
-        grid-column: auto;
-    }
-}
 .requests-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1rem;
-    padding: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    padding-top: 0;
 }
 
 .request-card {
     background: var(--color-white);
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    overflow: hidden;
+    cursor: pointer;
 }
 
 .request-card-header {
-    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow-base);
+    padding: var(--spacing-md);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -126,8 +132,29 @@
 
 .request-basic-info {
     display: flex;
+    flex-direction: column;
+    align-items: flex-starts;
+    gap: var(--spacing-md);
+}
+
+.request-basic-info .row-1 {
+    font-size: var(--font-size-xs);
+    color: var(--color-base-secondary);
+}
+
+.request-basic-info .row-2 {
+    display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--spacing-sm);
+}
+
+.request-type {
+    background: var(--color-white);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 8px;
+    font-weight: bold;
+    color: var(--color-base-secondary);
+    box-shadow: inset var(--shadow-base);
 }
 
 .request-id {
@@ -148,41 +175,49 @@
 }
 
 .request-card-content {
+    position: absolute;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
     padding: 0;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease, padding 0.3s ease;
+    transition: all 0.3s ease;
+    background: var(--color-white);
+    z-index: 9999;
 }
 
 .request-card[data-expanded="true"] .request-card-content {
-    padding: 1rem;
+    padding: var(--spacing-md);
     max-height: 500px;
+    width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
 
 .request-info {
-    margin-bottom: 1rem;
-}
-
-.request-info p {
-    margin: 0.5rem 0;
-    font-size: 0.875rem;
+    margin-bottom: var(--spacing-md);
 }
 
 .request-details {
-    padding-top: 1rem;
+    padding-top: var(--spacing-md);
     border-top: 1px solid var(--color-light);
 }
 
+.request-info p,
 .request-details p {
-    margin: 0.5rem 0;
-    font-size: 0.875rem;
+    margin: var(--spacing-sm) 0;
+    font-size: var(--font-size-xs);
 }
+
 /* Status badges */
 .status-badge {
     display: inline-block;
     padding: 0.25rem 0.75rem;
     border-radius: 1rem;
-    font-size: 0.875rem;
+    font-size: var(--font-size-xs);
     font-weight: 500;
 }
 
@@ -205,4 +240,20 @@
 .status-badge.archiviata {
     background: var(--color-success);
     color: var(--color-white);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-card.total {
+        grid-column: auto;
+    }
 }

@@ -2,6 +2,7 @@ package com.puzzle_lab.controllers;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.puzzle_lab.entities.Informazione;
 import com.puzzle_lab.entities.Prenotazione;
 import com.puzzle_lab.entities.Richiesta;
+import com.puzzle_lab.entities.Status;
 import com.puzzle_lab.entities.Utente;
 import com.puzzle_lab.services.InformazioneService;
 import com.puzzle_lab.services.PrenotazioneService;
@@ -44,6 +47,24 @@ public class BackofficeController {
 
     @Autowired
     private UtenteService utenteService;
+    
+    @Operation(summary = "Ottieni richiesta per ID", description = "Recupera una richiesta utilizzando il suo ID univoco")
+    @ApiResponse(responseCode = "200", description = "Richiesta recuperata con successo")
+    @ApiResponse(responseCode = "404", description = "Richiesta non trovata")
+    @ApiResponse(responseCode = "500", description = "Errore interno del server")
+    @GetMapping("/richieste/{id}")
+    public ResponseEntity<Richiesta> ottieniRichiestaPerId(@PathVariable Long id) {
+        try {
+            Optional<Richiesta> richiesta = richiestaService.trovaPerId(id);
+            if (richiesta.isPresent()) {
+                return ResponseEntity.ok(richiesta.get());
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
     @Operation(summary = "Ottieni le richieste", description = "Recupera tutte le richieste non archiviate")
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
@@ -157,6 +178,24 @@ public class BackofficeController {
         try {
             Optional<Richiesta> richieste = richiestaService.trovaPerData(data);
             return ResponseEntity.ok(richieste);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @Operation(summary = "Update stato", description = "Modifica lo stato di una richiesta")
+    @ApiResponse(responseCode = "200", description = "Stato aggiornato")
+    @ApiResponse(responseCode = "500", description = "Errore interno del server")
+    @PutMapping("/richieste/status")
+    public ResponseEntity<Optional<Richiesta>> modificaStatusRichiesta(@RequestParam Long id, @RequestParam Status status) {
+        try {
+            Optional<Richiesta> richiesta = richiestaService.trovaPerId(id);
+            if (richiesta.isPresent()) {
+            	Richiesta richiestaAggiornata = richiesta.get();
+            	richiestaAggiornata.setStatus(status);
+            	richiestaService.save(richiestaAggiornata);
+            }
+            return ResponseEntity.ok(richiesta);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -295,11 +334,42 @@ public class BackofficeController {
                 prenotazione.setNumero(prenoAggiornata.getNumero());
                 prenotazione.setDataInizio(prenoAggiornata.getDataInizio());
                 prenotazione.setDataFine(prenoAggiornata.getDataFine());
+                prenotazione.setFasciaOraria(prenoAggiornata.getFasciaOraria());
+                prenotazione.setNumeroGiorni(prenoAggiornata.getNumeroGiorni());
+                prenotazione.setLaboratori(prenoAggiornata.getLaboratori()); 
+                prenotazione.setTipologia(prenoAggiornata.getTipologia());
+
                 prenotazioneService.salvaPrenotazione(prenotazione);
+
             }
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Prenotazione aggiornata con successo.");
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+    
+    @Operation(summary = "Ottieni tutti gli utenti", description = "Recupera gli utenti")
+    @ApiResponse(responseCode = "200", description = "Lista di utenti recuperata con successo")
+    @ApiResponse(responseCode = "500", description = "Errore interno del server")
+    @GetMapping("/utenti")
+    public ResponseEntity<List<Utente>> ottieniTuttiUtenti() {
+        try {
+            List<Utente> utenti = utenteService.findAll();
+            return ResponseEntity.ok(utenti);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    @Operation(summary = "Ottieni utente per email", description = "Recupera l'utente")
+    @ApiResponse(responseCode = "200", description = "Lista di utenti recuperata con successo")
+    @ApiResponse(responseCode = "500", description = "Errore interno del server")
+    @GetMapping("/utente/{email}")
+    public ResponseEntity<Utente> ottieniUtentePerEmail(@PathVariable String email) {
+        try {
+            Utente utente = utenteService.findByEmail(email);
+            return ResponseEntity.ok(utente);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -321,8 +391,25 @@ public class BackofficeController {
     @ApiResponse(responseCode = "400", description = "Richiesta non valida")
     @PutMapping("/utente")
     public ResponseEntity<String> modificaUtente(@RequestBody Utente utente) {
-        try {
-            utenteService.aggiornaUtente(utente);
+    	 try {
+    	        // Recupera l'utente esistente
+    	        Utente existingUser = utenteService.findByEmail(utente.getEmail());
+    	        
+    	        // Modifica solo i campi forniti
+    	        if (utente.getNome() != null) {
+    	            existingUser.setNome(utente.getNome());
+    	        }
+    	        if (utente.getCognome() != null) {
+    	            existingUser.setCognome(utente.getCognome());
+    	        }
+    	        if (utente.getRuolo() != null) {
+    	            existingUser.setRuolo(utente.getRuolo());
+    	        }
+				if (utente.getPassword() != null) {
+					existingUser.setPassword(utente.getPassword());
+				}
+    	        // Salva l'utente aggiornato
+    	        utenteService.aggiornaUtente(existingUser);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Utente aggiornato con successo.");
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
@@ -334,7 +421,7 @@ public class BackofficeController {
     @ApiResponse(responseCode = "400", description = "Richiesta non valida")
     @DeleteMapping("/utente")
     public ResponseEntity<String> eliminaUtente(@RequestBody String email) {
-        try {
+    	try {
             utenteService.eliminaUtente(email);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Utente cancellato con successo.");
         } catch (IllegalArgumentException ex) {

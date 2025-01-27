@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestione Utenti - Backoffice Caccia SAPERI</title>
+    <link rel="icon" type="image/png" sizes="96x96" href="./assets/images/favicon-96x96.png" />
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,8 +20,8 @@
     <!-- Header con navigazione -->
     <header-component page-title="Gestione Utenti"></header-component>
 
+    <!-- Main content -->
     <main class="users-container">
-        <!-- Lista utenti -->
         <section class="users-list">
             <div class="users-list-header">
                 <h2>Elenco Utenti</h2>
@@ -31,19 +32,64 @@
             <table class="users-table">
                 <thead>
                     <tr>
-                        <th>Username</th>
+                        <th>Email</th>
                         <th>Nome</th>
-                        <th>Stato</th>
-                        <th>Ultimo accesso</th>
-                        <th>Azioni</th>
+                        <th>Cognome</th>
+                        <th>Ruolo</th>
+                        <th class="actions-cell">Azioni</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <!-- La lista verrà popolata dinamicamente -->
+                <tbody id="usersTableBody">
+                    <!-- Users will be populated here -->
                 </tbody>
             </table>
         </section>
     </main>
+
+    <!-- Modal -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Nuovo Utente</h3>
+            <form id="userForm" novalidate>
+                <div class="form-group">
+                    <label for="email">Email*</label>
+                    <input type="email" id="email" name="email" required 
+                        pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="nome">Nome*</label>
+                    <input type="text" id="nome" name="nome" required 
+                        pattern="[A-Za-zÀ-ÿ\s']{2,}">
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="cognome">Cognome*</label>
+                    <input type="text" id="cognome" name="cognome" required
+                        pattern="[A-Za-zÀ-ÿ\s']{2,}">
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password<span id="passwordHelp"></span></label>
+                    <input type="password" id="password" name="password" required>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="ruolo">Ruolo*</label>
+                    <select id="ruolo" name="ruolo" required>
+                        <option value="">Seleziona ruolo</option>
+                        <option value="USER">User</option>
+                        <option value="ADMIN">Admin</option>
+                    </select>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Salva</button>
+                    <button type="button" class="btn-secondary" onclick="closeModal()">Annulla</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Toast per messaggi di feedback -->
     <toast-component></toast-component>
@@ -53,5 +99,6 @@
     <script type="module" src="assets/js/components/toast-component.js"></script>
     <script type="module" src="assets/js/pages/main.js"></script>
     <script type="module" src="assets/js/pages/users.main.js"></script>
+    
 </body>
 </html>
