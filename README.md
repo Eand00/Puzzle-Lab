@@ -83,6 +83,10 @@ Se l'importazione ha successo, vedrai un messaggio di conferma. Il database è o
      Java HotSpot(TM) 64-Bit Server VM (build ...)
      ```
 
+Per maggiori dettagli consultare:
+- [Documentazione Backend](Progetto_backend/README.md)
+- [Documentazione Frontend](Progetto_frontend/README_FRONTEND.md)
+
 ---
 
 ## 4. Avvio del server
