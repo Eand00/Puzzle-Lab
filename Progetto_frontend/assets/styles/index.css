@@ -39,6 +39,14 @@
     font-size: 2rem;
     margin: 1rem 0;
     line-height: 1.4em;
+    max-width: auto;
+}
+
+@media (min-width: 768px) {
+    #hero h3 {
+        font-size: 3rem;
+        max-width: 65ch;
+    }
 }
 
 #hero .star-rating {
@@ -202,6 +210,13 @@
     align-items: center;
 }
 
+@media (min-width: 1024px) {
+    #perche-noi .benefit-container {
+        flex-direction: row;
+        align-items: start;
+    }
+}
+
 #perche-noi .benefit {
     display: flex;
     flex-direction: column;
@@ -246,19 +261,47 @@
 }
 
 #come-funziona .step-label {
-    width: 33vw;
+    width: 50vw;
     height: 6rem;
-    background-color: var(--color-dark);
+    overflow: hidden;
+}
+
+#come-funziona .step-opacity {
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-accent-magenta);
     display: flex;
+    justify-content: end;
     align-items: center;
-    font-size: 3rem;
+    font-size: 4rem;
     font-weight: 700;
     line-height: 6rem;
     padding: 3rem;
     color: var(--color-light);
+    opacity: 0.8;
+}
+
+#come-funziona .reverse {
+    justify-content: start;
+}
+
+#come-funziona .left-attached .step-label {
+    background-image: url("../images/index/compila-form.png");
+    background-size: cover;
+}
+
+#come-funziona .right-attached .step-label {
+    background-image: url("../images/index/preparati-all-esperienza.png");
+    background-size: cover;
+}
+
+#come-funziona .right-attached + .left-attached .step-label {
+    background-image: url("../images/index/giornata-in-cascina.png");
+    background-size: cover;
 }
 
 #come-funziona .step-content {
+    max-width: 20rem;
     margin: 0 2rem;
 }
 
@@ -267,12 +310,24 @@
 }
 
 #come-funziona .left-attached .step-label {
-    border-radius: 0 45px 45px 0;
+    border-radius: 0 3rem 3rem 0;
     justify-content: flex-end;
 }
 
 #come-funziona .right-attached .step-content {
     text-align: right;
+}
+
+@media (min-width: 768px) {
+    #come-funziona .step-label {
+        height: 10rem;
+    }
+    #come-funziona .right-attached .step-label {
+        border-radius: 5rem 0 0 5rem;
+    }
+    #come-funziona .left-attached .step-label {
+        border-radius: 0 5rem 5rem 0;
+    }
 }
 
 /* testimonianze section */
