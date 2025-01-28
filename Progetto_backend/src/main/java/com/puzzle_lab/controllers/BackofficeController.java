@@ -47,24 +47,6 @@ public class BackofficeController {
 
     @Autowired
     private UtenteService utenteService;
-    
-    @Operation(summary = "Ottieni richiesta per ID", description = "Recupera una richiesta utilizzando il suo ID univoco")
-    @ApiResponse(responseCode = "200", description = "Richiesta recuperata con successo")
-    @ApiResponse(responseCode = "404", description = "Richiesta non trovata")
-    @ApiResponse(responseCode = "500", description = "Errore interno del server")
-    @GetMapping("/richieste/{id}")
-    public ResponseEntity<Richiesta> ottieniRichiestaPerId(@PathVariable Long id) {
-        try {
-            Optional<Richiesta> richiesta = richiestaService.trovaPerId(id);
-            if (richiesta.isPresent()) {
-                return ResponseEntity.ok(richiesta.get());
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
 
     @Operation(summary = "Ottieni le richieste", description = "Recupera tutte le richieste non archiviate")
     @ApiResponse(responseCode = "200", description = "Lista di richieste recuperata con successo")
@@ -193,7 +175,7 @@ public class BackofficeController {
             if (richiesta.isPresent()) {
             	Richiesta richiestaAggiornata = richiesta.get();
             	richiestaAggiornata.setStatus(status);
-            	richiestaService.salvaRichiesta(richiestaAggiornata);
+            	richiestaService.save(richiestaAggiornata);
             }
             return ResponseEntity.ok(richiesta);
         } catch (Exception ex) {
@@ -261,7 +243,6 @@ public class BackofficeController {
         try {
             Optional<Richiesta> infoVecchia = informazioneService.trovaPerId(infoAggiornata.getId());
             if (infoVecchia.isPresent()) {
-            	informazioneService.validaInformazione(infoAggiornata);
                 Informazione informazione = (Informazione) infoVecchia.get();
                 informazione.setStatus(infoAggiornata.getStatus());
                 informazione.setCognome(infoAggiornata.getCognome());
@@ -269,7 +250,7 @@ public class BackofficeController {
                 informazione.setEmail(infoAggiornata.getEmail());
                 informazione.setOrganizzazione(infoAggiornata.getOrganizzazione());
                 informazione.setNumero(infoAggiornata.getNumero());
-                informazioneService.salvaInformazione(informazione);
+                informazioneService.save(informazione);
             }
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Informazione aggiornata con successo.");
         } catch (IllegalArgumentException ex) {
@@ -324,7 +305,6 @@ public class BackofficeController {
         try {
             Optional<Richiesta> prenoVecchia = prenotazioneService.trovaPerId(prenoAggiornata.getId());
             if (prenoVecchia.isPresent()) {
-            	prenotazioneService.validaPrenotazione(prenoAggiornata);
                 Prenotazione prenotazione = (Prenotazione) prenoVecchia.get();
                 prenotazione.setStatus(prenoAggiornata.getStatus());
                 prenotazione.setCognome(prenoAggiornata.getCognome());
@@ -334,13 +314,7 @@ public class BackofficeController {
                 prenotazione.setNumero(prenoAggiornata.getNumero());
                 prenotazione.setDataInizio(prenoAggiornata.getDataInizio());
                 prenotazione.setDataFine(prenoAggiornata.getDataFine());
-                prenotazione.setFasciaOraria(prenoAggiornata.getFasciaOraria());
-                prenotazione.setNumeroGiorni(prenoAggiornata.getNumeroGiorni());
-                prenotazione.setLaboratori(prenoAggiornata.getLaboratori()); 
-                prenotazione.setTipologia(prenoAggiornata.getTipologia());
-
-                prenotazioneService.salvaPrenotazione(prenotazione);
-
+                prenotazioneService.save(prenotazione);
             }
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Prenotazione aggiornata con successo.");
         } catch (IllegalArgumentException ex) {

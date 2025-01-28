@@ -13,15 +13,11 @@ import { getAllUsers, createUser, updateUser, deleteUser } from '../services/use
 
 let currentUser = null;
 
-async function initUsers() {
-    try {
-        const users = await getAllUsers();
-        renderUsers(users);
-    } catch (error) {
-        showToast('error', 'Errore', error.message);
-    }
-}
-
+/**
+ * @function renderUsers
+ * @description Renderizza gli utenti nella tabella
+ * @param {Array} users - Array di utenti
+ */
 function renderUsers(users) {
     const tbody = document.getElementById('usersTableBody');
     
@@ -58,6 +54,12 @@ function renderUsers(users) {
     });
 }
 
+/**
+ * @function validateForm
+ * @description Validazione del form degli utenti
+ * @param {HTMLFormElement} form - Form degli utenti
+ * @returns {boolean} - True se la validazione è riuscita, false altrimenti
+ */
 function validateForm(form) {
     const email = form.email.value;
     const nome = form.nome.value;
@@ -98,12 +100,22 @@ function validateForm(form) {
     return true;
 }
 
+/**
+ * @function showError
+ * @description Mostra un messaggio di errore sotto un input
+ * @param {HTMLElement} input - Input a cui associare l'errore
+ * @param {string} message - Messaggio di errore
+ */
 function showError(input, message) {
     const errorSpan = input.nextElementSibling;
     errorSpan.textContent = message;
     errorSpan.style.display = 'block';
 }
 
+/**
+ * @function clearErrors
+ * @description Pulisce i messaggi di errore
+ */
 function clearErrors() {
     document.querySelectorAll('.error-message').forEach(span => {
         span.textContent = '';
@@ -111,6 +123,11 @@ function clearErrors() {
     });
 }
 
+/**
+ * @function openModal
+ * @description Apre il modal per la gestione degli utenti
+ * @param {Object} user - Utente da modificare (opzionale)
+ */
 function openModal(user = null) {
     currentUser = user;
     const modal = document.getElementById('userModal');
@@ -138,6 +155,10 @@ function openModal(user = null) {
     modal.classList.add('show');
 }
 
+/**
+ * @function closeModal
+ * @description Chiude il modal per la gestione degli utenti
+ */
 function closeModal() {
     const modal = document.getElementById('userModal');
     modal.classList.remove('show');
@@ -146,11 +167,23 @@ function closeModal() {
     clearErrors();
 }
 
+/**
+ * @function showToast
+ * @description Mostra un toast
+ * @param {string} type - Tipo di toast
+ * @param {string} title - Titolo del toast
+ * @param {string} message - Messaggio del toast
+ */
 function showToast(type, title, message) {
     const toast = document.querySelector('toast-component');
     toast.showToast(type, title, message);
 }
 
+/**
+ * @function handleSubmit
+ * @description Gestione del submit del form degli utenti
+ * @param {Event} event - Evento di submit
+ */
 async function handleSubmit(event) {
     event.preventDefault();
     const form = event.target;
@@ -186,6 +219,11 @@ async function handleSubmit(event) {
     }
 }
 
+/**
+ * @function handleDelete
+ * @description Gestione dell'eliminazione di un utente
+ * @param {string} email - Email dell'utente da eliminare
+ */
 async function handleDelete(email) {
     if (confirm('Sei sicuro di voler eliminare questo utente?')) {
         try {
@@ -195,6 +233,19 @@ async function handleDelete(email) {
         } catch (error) {
             showToast('error', 'Errore', error.message);
         }
+    }
+}
+
+/**
+ * @function initUsers
+ * @description Inizializza la pagina degli utenti
+ */
+async function initUsers() {
+    try {
+        const users = await getAllUsers();
+        renderUsers(users);
+    } catch (error) {
+        showToast('error', 'Errore', error.message);
     }
 }
 

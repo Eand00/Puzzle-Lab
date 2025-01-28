@@ -9,8 +9,6 @@ import com.puzzle_lab.entities.Informazione;
 import com.puzzle_lab.entities.Status;
 import com.puzzle_lab.repos.InformazioneDAO;
 
-import jakarta.transaction.Transactional;
-
 @Service
 public class InformazioneService extends RichiestaService {
 
@@ -30,7 +28,6 @@ public class InformazioneService extends RichiestaService {
 	}
 
 	// Esegui la validazione di un'informazione
-	@Transactional
 	public void salvaInformazione(Informazione informazione) {
 		validaInformazione(informazione); // Valida prima di salvare
 		informazioneDAO.save(informazione);

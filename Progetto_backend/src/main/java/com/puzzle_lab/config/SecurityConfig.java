@@ -34,37 +34,34 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable) // Disables CSRF
             .cors(withDefaults()) // Abilita il CORS
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/back-office/**").authenticated() // Path sicuri
+                .requestMatchers("/back-office/**").authenticated() // Secure paths
                 .requestMatchers("/login", "/logout", "/swagger-ui/**", "/v3/api-docs/**").permitAll() // Public access to login/logout
-
-
-                .requestMatchers("back-office/utente").hasRole("ADMIN") // solo admin può accedere al back-office"
-                .anyRequest().permitAll() // Tutti gli altri request richiedono autenticazione
+                .anyRequest().permitAll() // All other requests require authentication
             )
 
             //.httpBasic(Customizer.withDefaults())
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Autenticazione stateless 
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // Aggiunge JWT filter
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Stateless authentication
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // Add JWT filter
 
-        return http.build(); // Costruisce e ritorna security filter chain
+        return http.build(); // Build and return the security filter chain
 
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Meccanismo di encoding password 
+        return new BCryptPasswordEncoder(); // Password encoding mechanism
     }
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder()); // Imposta password encoder
-        return authProvider; // Ritorna l'AuthenticationProvider configurato
+        authProvider.setPasswordEncoder(passwordEncoder()); // Set password encoder
+        return authProvider; // Return configured AuthenticationProvider
     }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager(); // Ritorna l'authentication manager da config
+        return config.getAuthenticationManager(); // Return the authentication manager from the config
     }
 }

@@ -32,11 +32,10 @@
 }
 
 #hero > div {
-    background-color: #101021B3;
+    background-color: #1F2041AA;
 }
 
 #hero h3 {
-    font-size: 2rem;
     margin: 1rem 0;
     line-height: 1.4em;
 }
@@ -45,7 +44,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 1rem 0;
+    margin: 0.5rem 0;
 }
 
 .star-container {
@@ -381,11 +380,6 @@
 #faq details[open] > summary::after {
     transform: translateY(-50%) rotate(180deg);
 }
-
-#faq > details > p > a {
-    color: var(--color-dark);
-    text-decoration: underline;
-}
 /* section cta */
 #cta {
     padding: 2rem;
@@ -395,25 +389,17 @@
     width: 20rem;
 }
 
-video {
-    width: 100%;
-    height: calc(100vh - var(--navbar-height));
-    object-fit: cover; /* Adatta il video al div */
-    position: absolute;
-
-}
-
 /*! Mobile */
-/* #hero > div::before {
+#hero > div::before {
     background-image: image-set(
         url(../images/img-libera/homepage-hero/mobile/homepage-hero.avif) type('image/avif'), 
         url(../images/img-libera/homepage-hero/mobile/homepage-hero.webp) type('image/webp'),
         url(../images/img-libera/homepage-hero/mobile/homepage-hero.jpg) type('image/jpeg') 
     );
-} */
+}
 
 /*! Tablet  */
-/* @media (min-width: 768px) {
+@media (min-width: 768px) {
     #hero > div::before {
         background-image: image-set(
             url(../images/img-libera/homepage-hero/tablet/homepage-hero.avif) type('image/avif'), 
@@ -421,10 +407,10 @@ video {
             url(../images/img-libera/homepage-hero/tablet/homepage-hero.jpg) type('image/jpeg') 
         );
     }
-} */
+}
 
 /*! Desktop  */
-/* @media (min-width: 992px) {
+@media (min-width: 992px) {
     #hero > div::before {
         background-image: image-set(
             url(../images/img-libera/homepage-hero/desktop/homepage-hero.avif) type('image/avif'), 
@@ -432,5 +418,5 @@ video {
             url(../images/img-libera/homepage-hero/desktop/homepage-hero.jpg) type('image/jpeg') 
         );
     }
-} */
+}
 

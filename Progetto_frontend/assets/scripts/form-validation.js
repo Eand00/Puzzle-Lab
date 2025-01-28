@@ -53,26 +53,6 @@ const VALIDATION_RULES = {
         message: 'Il campo non può essere vuoto',
         required: false
     },
-    tipologia: {
-        regex: /.*/,
-        message: '',
-        required: false
-    },
-    fasciaOraria: {
-        regex: /.*/,
-        message: '',
-        required: false
-    },
-    numeroGiorni: {
-        regex: /^\d+$/,
-        message: 'Il campo deve contenere un numero valido',
-        required: false //dynamically set by the conditional fields
-    },
-    'laboratori[]': {
-        regex: /.*/,
-        message: 'Nessun laboratorio selezionato',
-        required: false
-    },
     privacy: {
         regex: 'checked',
         message: 'Il campo deve essere selezionato',
@@ -122,23 +102,10 @@ function initErrorMessages(form) {
  */
 function validate(data, type) {
     const rule = VALIDATION_RULES[type];
-
-    //numeroGiorni conditional validation
-    if(type === 'numeroGiorni') {
-        const isSoggiorno = document.getElementById('tipologia_soggiorno').checked;
-        if(isSoggiorno) {
-            return [data >= 2, 'Il numero di giorni deve essere maggiore di 1'];
-        }
-    }
-
-    //laboratori
-    if(type === 'laboratori[]') {
-        return [true, ''];
-    }
     
     //checkboxes
     if(['privacy', 'sensibleData', 'tos'].includes(type)) {
-        return [data === 'on' || data === true, rule.message];
+        return [data === 'on' || data === true, 'Campo obbligatorio'];
     }
 
     //not recognized fields
@@ -182,25 +149,7 @@ function formValidation(form) {
     const errors = {};
     const formData = {};
     let isValid = true;
-    const laboratori = [];
     form.querySelectorAll('input, textarea').forEach(input => {
-        //Skip validation for radio buttons
-        if(input.type === 'radio') {
-            if(input.checked) {
-                formData[input.name] = input.value;
-            }
-            return;
-        }
-
-        //populate the laboratori array
-        if(input.name === 'laboratori[]') {
-            if(input.checked) {
-                laboratori.push(input.value);
-            }
-            return;
-        }
-
-        //get the value of the field
         if(input.type !== 'checkbox') {
             formData[input.name] = input.value;
         }
@@ -221,9 +170,6 @@ function formValidation(form) {
         }
     });
 
-    //controllo array laboratori
-    formData.laboratori = laboratori.length > 0 ? laboratori.join(',') : 'DECIDERO_DOPO';
-
     //error handling
     if(Object.keys(errors).length > 0) {
         
@@ -231,21 +177,25 @@ function formValidation(form) {
         const invalidFields = form.querySelector('.invalid');
         invalidFields.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
 
-        //focus the first invalid field (timeout to avoid blocking smooth scroll)
+        //focus the first invalid field
         setTimeout(() => invalidFields.focus(), 500);
 
         return false;
     }
+    console.log(formData);
     submitFormData(formData);
 }
 
 /**
- * @function isLoading
- * @param {boolean} state - The state of the loading
- * @description Adds or removes the loading state to the body
+ * @function addTimeToDate
+ * @param {string} dateString - The date string in YYYY-MM-DD format
+ * @returns {string} - The date string in ISO format (YYYY-MM-DDThh:mm:ss.sssZ)
+ * @description Converts a date string to ISO format with time
  */
-function isLoading(state = false) {
-    document.body.classList.toggle('loading', state);
+function addTimeToDate(dateString, isEndDate = false) {
+    const date = new Date(dateString);
+    date.setHours(0, 0, 0, 0);
+    return date.toISOString();
 }
 
 /**
@@ -254,13 +204,16 @@ function isLoading(state = false) {
  * @description Handles the API submission of the form data
  */
 function submitFormData(formData) {
-    // add loading state
-    isLoading(true);
+    //add loading state
+    document.body.classList.add('loading');
 
-    // process data and remove unnecessary fields based on conditions
+    // add time to the date fields
     const processedData = { ...formData };
-    if(processedData.tipologia === 'VISITA') {
-        delete processedData.numeroGiorni;
+    if (processedData.dataInizio) {
+        processedData.dataInizio = addTimeToDate(processedData.dataInizio);
+    }
+    if (processedData.dataFine) {
+        processedData.dataFine = addTimeToDate(processedData.dataFine, true);
     }
 
     // convert the processed data to JSON
@@ -282,7 +235,7 @@ function submitFormData(formData) {
 
     //XXX test di loading state, rimuovere in produzione
     const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-    delay(1000)
+    delay(2000)
         .then(() => fetch(API_URL, requestOptions))
         .then(response => {
             if(!response.ok) {
@@ -294,13 +247,14 @@ function submitFormData(formData) {
         })
         .then(data => {
             //remove loading state
-            isLoading(false);
+            document.body.classList.remove('loading');
             window.location.href = './feedback.html';
         })
         .catch(error => {
             //remove loading state
-            isLoading(false);
+            document.body.classList.remove('loading');
             //user feedback
+            console.error({error});
             showErrorToast(error.message);
         });
 }
@@ -347,8 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const input = event.target;
 
         //filter for only required input and textarea
-        if(['INPUT', 'TEXTAREA'].includes(input.tagName) && 
-            (VALIDATION_RULES[input.name].required || input.name === 'numeroGiorni')) {
+        if(['INPUT', 'TEXTAREA'].includes(input.tagName) && VALIDATION_RULES[input.name].required) {
             let value = getFieldValue(input);
             const [isValid, message] = validate(value, input.name);
             updateFieldStatus(input.name, isValid, message);

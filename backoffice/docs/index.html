@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>Documentazione Backoffice - Caccia SAPERI</h1>
+<h2>Indice</h2>
+<ol>
+<li>Struttura del progetto</li>
+<li>Informazioni generali</li>
+<li>Scelte progettuali
+<ul>
+<li>Web Components</li>
+<li>Services</li>
+<li>Gestione autenticazione</li>
+<li>API</li>
+<li>Messaggi di feedback</li>
+<li>Filtri</li>
+</ul>
+</li>
+<li>Note tecniche e sviluppi futuri</li>
+</ol>
+<h2>Struttura del progetto</h2>
+<pre class="prettyprint source"><code>backoffice/
+├── index.html                      # Dashboard
+├── login.html                      # Login page
+├── requests.html                   # Requests management
+├── users.html                      # Users management
+│
+├── assets/
+│   ├── css/
+│   │   ├── style.css               # Global styles
+│   │   ├── components/
+│   │   │   ├── header.css          # Header component styles
+│   │   │   └── toast.css           # Toast component styles
+│   │   └── pages/
+│   │       ├── index.css           # Dashboard specific styles
+│   │       ├── login.css           # Login page styles
+│   │       ├── requests.css        # Requests page styles
+│   │       └── users.css           # Users page styles
+│   │
+│   └── js/
+│       ├── config/
+│       │   └── config.js           # Global configuration
+│       │
+│       ├── components/
+│       │   ├── header-component.js # Navigation header
+│       │   └── toast-component.js  # Feedback messages
+│       │
+│       ├── services/
+│       │   ├── auth.service.js     # Authentication handling
+│       │   ├── requests.service.js # Requests CRUD operations
+│       │   └── users.service.js    # Users management
+│       │
+│       ├── utils/
+│       │   ├── api-client.js       # Fetch wrapper
+│       │   └── toast.util.js       # Toast utility
+│       │   └── validators.js       # Form validations
+│       │
+│       └── pages/
+│           ├── main.js             # Global logic
+│           ├── index.main.js       # Dashboard logic
+│           ├── login.main.js       # Login page logic
+│           ├── requests.main.js    # Requests page logic
+│           └── users.main.js       # Users page logic
+│
+└── README.md  
+</code></pre>
+<h2>Informazioni generali</h2>
+<p>Il backoffice è sviluppato in HTML, CSS e Javascript vanilla, senza dipendenze da framework esterni.
+L'architettura è basata su Web Components per la modularità dell'interfaccia e su Services per la gestione della logica di business.</p>
+<h2>Scelte progettuali</h2>
+<h3>Web Components</h3>
+<p>Si è scelto l'utilizzo dei Web Components per le parti di codice comuni, al fine di garantire:</p>
+<ul>
+<li>Modularità: approccio DRY per elementi riutilizzabili</li>
+<li>Manutenibilità: sviluppo indipendente dei componenti</li>
+<li>Organizzazione: logica centralizzata</li>
+</ul>
+<h4>Componenti utilizzati</h4>
+<ul>
+<li>
+<p><strong>header-component.js</strong>
+Header e navigazione del backoffice</p>
+<ul>
+<li>Gestione menu di navigazione</li>
+<li>Gestione logout</li>
+</ul>
+</li>
+<li>
+<p><strong>toast-component.js</strong>
+Sistema di notifiche</p>
+<ul>
+<li>Feedback operazioni</li>
+<li>Gestione errori</li>
+</ul>
+</li>
+</ul>
+<h3>Services</h3>
+<p>La logica di business è organizzata in services dedicati:</p>
+<ul>
+<li>
+<p><strong>auth.service.js</strong>
+Gestione autenticazione</p>
+<ul>
+<li>Login/Logout</li>
+<li>Gestione token JWT</li>
+</ul>
+</li>
+<li>
+<p><strong>requests.service.js</strong>
+Gestione richieste prenotazione</p>
+<ul>
+<li>Operazioni CRUD</li>
+<li>Filtri e ricerche</li>
+</ul>
+</li>
+<li>
+<p><strong>users.service.js</strong>
+Gestione utenti amministratori</p>
+<ul>
+<li>Operazioni CRUD</li>
+<li>Gestione permessi</li>
+</ul>
+</li>
+</ul>
+<h3>Autenticazione</h3>
+<p>L'autenticazione è implementata tramite JWT memorizzato in localStorage.
+La responsabilità della gestione della logica di business di autenticazione è delegata al service auth.service.js, che incapsula interamente la gestione del token JWT, mantenendo in metodi privati l'accesso in scrittura al localStorage.</p>
+<h4>Auth Guard</h4>
+<p>Si è implementato un sistema di guardia a protezione delle pagine accessibili solo agli utenti autenticati. Il sistema è gestito lato client atttraverso un controllo sull'esistenza del token e una splash screen di caricamento per inibire la visione delle pagine durante il tempo di verifica dell'autenticazione.
+A completamento, le richieste di dati via API richiedono l'autenticazione, pertanto non sono presenti sul client dati protetti, dunque la splash screen ha il solo scopo di proteggere la visualizzazione dell'interfaccia durante le operazioni di verifica.</p>
+<p>NOTA: Questa è una soluzione valida unicamente per gli scopi di questo prototipo, ulteriori valutazioni sono presenti al capitolo &quot;Sviluppi futuri&quot;.</p>
+<h3>API</h3>
+<p>L'API è implementata tramite fetch.
+La responsabilità della gestione della logica è delegata all'utility api-client.js.</p>
+<h3>Messaggi di feedback</h3>
+<p>I messaggi di feedback sono implementati tramite il componente toast.
+La responsabilità della gestione della logica è delegata all'utility toast.util.js.</p>
+<h2>Note tecniche e sviluppi futuri</h2>
+<h3>Auth Guard</h3>
+<p>La soluzione presentata, valida in fase di presentazione del prototipo, andrà ristrutturata e resa più robusta in produzione, sostituendola con un approccio server-side.</p>
+<h3>Filtri</h3>
+<p>Le funzioni di filtro sono implementate lato client, recuperando tutte le richieste e manipolandole localmente. Questa è una scelta progettuale data dal presupposto che non ci si aspetta che i dati cambino con elevatissima frequenza, quindi si è preferito ridurre le chiamate al server.
+In fase di produzione, bisognerà valutare il carico di lavoro del server e la frequenza di aggiornamento dei dati, per decidere se implementare un sistema di filtro lato server.</p>
+<h4>Debouncing</h4>
+<p>Per quanto descritto sopra, non si è ritenuto necessario implementare un sistema di debouncing per le funzioni di filtro, che andrà invece valutaato nel caso in cui i filtri richiedano frequenti chiamate al server.</p></article>
+    </section>
+
+
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>assets/js/components/header-component.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Header component with navigation and authentication features</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Puzzle Lab</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_header-component.js.html">components/header-component.js</a>, <a href="components_header-component.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>README.md per ulteriori informazioni</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li>HTMLElement</li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>assets/js/components/toast-component.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Componente toast per il backoffice.</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Puzzle Lab</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_toast-component.js.html">components/toast-component.js</a>, <a href="components_toast-component.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li>HTMLElement</li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>assets/js/pages/index.main.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Script per la pagina index</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Puzzle Lab</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pages_index.main.js.html">pages/index.main.js</a>, <a href="pages_index.main.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>README.md per ulteriori informazioni</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>assets/js/pages/requests.main.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Script per la pagina requests</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Puzzle Lab</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pages_requests.main.js.html">pages/requests.main.js</a>, <a href="pages_requests.main.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>README.md per ulteriori informazioni</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>assets/js/pages/users.main.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Gestione degli utenti</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Puzzle Lab</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pages_users.main.js.html">pages/users.main.js</a>, <a href="pages_users.main.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>README.md per ulteriori informazioni</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>assets/js/services/auth.service.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Service per la gestione dell'autenticazione</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Puzzle Lab</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_auth.service.js.html">services/auth.service.js</a>, <a href="services_auth.service.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>README.md per ulteriori informazioni</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>assets/js/services/requests.service.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Service per la gestione delle richieste</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Puzzle Lab</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_requests.service.js.html">services/requests.service.js</a>, <a href="services_requests.service.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>README.md per ulteriori informazioni</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>assets/js/services/users.service.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Service per la gestione degli utenti</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Puzzle Lab</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_users.service.js.html">services/users.service.js</a>, <a href="services_users.service.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>README.md per ulteriori informazioni</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>assets/js/utils/toast.util.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Utility per l'accesso centralizzato al componente toast</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Puzzle Lab</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_toast.util.js.html">utils/toast.util.js</a>, <a href="utils_toast.util.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>README.md per ulteriori informazioni</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="HeaderComponent.html">HeaderComponent</a></li><li><a href="ToastComponent.html">ToastComponent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#applyFilters">applyFilters</a></li><li><a href="global.html#calculateStats">calculateStats</a></li><li><a href="global.html#clearErrors">clearErrors</a></li><li><a href="global.html#closeModal">closeModal</a></li><li><a href="global.html#createPrenotazioneDetails">createPrenotazioneDetails</a></li><li><a href="global.html#createRequestCard">createRequestCard</a></li><li><a href="global.html#createStatusSelect">createStatusSelect</a></li><li><a href="global.html#createUser">createUser</a></li><li><a href="global.html#deleteRequest">deleteRequest</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#extractRequestDataFromCard">extractRequestDataFromCard</a></li><li><a href="global.html#formatDateForInput">formatDateForInput</a></li><li><a href="global.html#getAllRequests">getAllRequests</a></li><li><a href="global.html#getAllUsers">getAllUsers</a></li><li><a href="global.html#getAuthToken">getAuthToken</a></li><li><a href="global.html#getFormData">getFormData</a></li><li><a href="global.html#getRequestStats">getRequestStats</a></li><li><a href="global.html#getRequestsByStatus">getRequestsByStatus</a></li><li><a href="global.html#handleDelete">handleDelete</a></li><li><a href="global.html#handleDeleteRequest">handleDeleteRequest</a></li><li><a href="global.html#handleEditRequest">handleEditRequest</a></li><li><a href="global.html#handleStatusChange">handleStatusChange</a></li><li><a href="global.html#handleStatusUpdate">handleStatusUpdate</a></li><li><a href="global.html#handleSubmit">handleSubmit</a></li><li><a href="global.html#handleToggleDetails">handleToggleDetails</a></li><li><a href="global.html#initDashboard">initDashboard</a></li><li><a href="global.html#initEditModal">initEditModal</a></li><li><a href="global.html#initRequests">initRequests</a></li><li><a href="global.html#initUsers">initUsers</a></li><li><a href="global.html#isAuthenticated">isAuthenticated</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#openModal">openModal</a></li><li><a href="global.html#populateRecentRequests">populateRecentRequests</a></li><li><a href="global.html#populateRequests">populateRequests</a></li><li><a href="global.html#refreshRequests">refreshRequests</a></li><li><a href="global.html#renderUsers">renderUsers</a></li><li><a href="global.html#setupCardEventListeners">setupCardEventListeners</a></li><li><a href="global.html#setupEditFormListeners">setupEditFormListeners</a></li><li><a href="global.html#setupEventListeners">setupEventListeners</a></li><li><a href="global.html#setupFilterEventListeners">setupFilterEventListeners</a></li><li><a href="global.html#setupModalEventListeners">setupModalEventListeners</a></li><li><a href="global.html#setupStatuschangeListeners">setupStatuschangeListeners</a></li><li><a href="global.html#showError">showError</a></li><li><a href="global.html#showToast">showToast</a></li><li><a href="global.html#stickyFilters">stickyFilters</a></li><li><a href="global.html#toggleRequestCard">toggleRequestCard</a></li><li><a href="global.html#updateCard">updateCard</a></li><li><a href="global.html#updateDashboardStats">updateDashboardStats</a></li><li><a href="global.html#updateRequest">updateRequest</a></li><li><a href="global.html#updateRequestStatus">updateRequestStatus</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#validateForm">validateForm</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Jan 28 2025 11:48:53 GMT+0100 (Ora standard dell’Europa centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

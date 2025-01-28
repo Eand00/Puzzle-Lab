@@ -75,7 +75,13 @@ public class EmailService {
     }
 
     public void sendEmail(String to, String body, String subject, boolean isHTML) throws MessagingException {
-
+    	/*
+    	if(firstTime) { // alla prima esecuzione recupera i dati e configura mailSender
+    		getEmail();
+    		mailSender = createMailSender();
+    		firstTime = false;
+    		System.out.println("MailSender initialized");
+    	}*/
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 

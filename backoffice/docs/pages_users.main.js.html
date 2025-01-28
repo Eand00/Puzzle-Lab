@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/users.main.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/users.main.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file users.main.js
+ * @version 1.0.0
+ * @author Puzzle Lab
+ * @contributors Daniele Wei Chen, Eand Avdiu, Vincenzo Bonura
+ * @date 2025-01-22
+ * @update 2025-01-25
+ * @description Gestione degli utenti
+ * @see README.md per ulteriori informazioni
+ */
+
+import { getAllUsers, createUser, updateUser, deleteUser } from '../services/users.service.js';
+
+let currentUser = null;
+
+/**
+ * @function renderUsers
+ * @description Renderizza gli utenti nella tabella
+ * @param {Array} users - Array di utenti
+ */
+function renderUsers(users) {
+    const tbody = document.getElementById('usersTableBody');
+    
+    tbody.innerHTML = users.map(user => `
+        &lt;tr data-user='${JSON.stringify(user)}'>
+            &lt;td>${user.email}&lt;/td>
+            &lt;td>${user.nome}&lt;/td>
+            &lt;td>${user.cognome}&lt;/td>
+            &lt;td>${user.ruolo}&lt;/td>
+            &lt;td class="actions-cell">
+                &lt;button class="btn-secondary edit-btn">
+                    Modifica
+                &lt;/button>
+                &lt;button class="btn-primary danger delete-btn">
+                    Elimina
+                &lt;/button>
+            &lt;/td>
+        &lt;/tr>
+    `).join('');
+
+    // Add event listeners for edit and delete buttons
+    document.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const userData = JSON.parse(btn.closest('tr').dataset.user);
+            openModal(userData);
+        });
+    });
+
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const userData = JSON.parse(btn.closest('tr').dataset.user);
+            handleDelete(userData.email);
+        });
+    });
+}
+
+/**
+ * @function validateForm
+ * @description Validazione del form degli utenti
+ * @param {HTMLFormElement} form - Form degli utenti
+ * @returns {boolean} - True se la validazione è riuscita, false altrimenti
+ */
+function validateForm(form) {
+    const email = form.email.value;
+    const nome = form.nome.value;
+    const cognome = form.cognome.value;
+    const ruolo = form.ruolo.value;
+    const password = form.password.value;
+
+    // Email validation
+    if (!email.match(/^[\w.-]+@[\w.-]+\.[a-z]{2,}$/)) {
+        showError(form.email, 'Formato email non valido');
+        return false;
+    }
+
+    // Nome validation
+    if (!nome.match(/^[a-zA-Z\s]+$/)) {
+        showError(form.nome, 'Il nome può contenere solo lettere e spazi');
+        return false;
+    }
+
+    // Cognome validation
+    if (!cognome.match(/^[a-zA-Z\s]+$/)) {
+        showError(form.cognome, 'Il cognome può contenere solo lettere e spazi');
+        return false;
+    }
+
+    // Password validation (only required for new users)
+    if (!currentUser &amp;&amp; !password) {
+        showError(form.password, 'La password è obbligatoria per i nuovi utenti');
+        return false;
+    }
+
+    // Ruolo validation
+    if (!ruolo) {
+        showError(form.ruolo, 'Seleziona un ruolo valido');
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * @function showError
+ * @description Mostra un messaggio di errore sotto un input
+ * @param {HTMLElement} input - Input a cui associare l'errore
+ * @param {string} message - Messaggio di errore
+ */
+function showError(input, message) {
+    const errorSpan = input.nextElementSibling;
+    errorSpan.textContent = message;
+    errorSpan.style.display = 'block';
+}
+
+/**
+ * @function clearErrors
+ * @description Pulisce i messaggi di errore
+ */
+function clearErrors() {
+    document.querySelectorAll('.error-message').forEach(span => {
+        span.textContent = '';
+        span.style.display = 'none';
+    });
+}
+
+/**
+ * @function openModal
+ * @description Apre il modal per la gestione degli utenti
+ * @param {Object} user - Utente da modificare (opzionale)
+ */
+function openModal(user = null) {
+    currentUser = user;
+    const modal = document.getElementById('userModal');
+    const form = document.getElementById('userForm');
+    const title = document.getElementById('modalTitle');
+    const passwordHelp = document.getElementById('passwordHelp');
+    
+    clearErrors();
+    title.textContent = user ? 'Modifica Utente' : 'Nuovo Utente';
+    passwordHelp.textContent = user ? ' (lasciare vuoto per non modificare)' : '*';
+
+    if (user) {
+        form.email.value = user.email;
+        form.email.readOnly = true;
+        form.nome.value = user.nome;
+        form.cognome.value = user.cognome;
+        form.ruolo.value = user.ruolo;
+        form.password.required = false;
+    } else {
+        form.reset();
+        form.email.readOnly = false;
+        form.password.required = true;
+    }
+    
+    modal.classList.add('show');
+}
+
+/**
+ * @function closeModal
+ * @description Chiude il modal per la gestione degli utenti
+ */
+function closeModal() {
+    const modal = document.getElementById('userModal');
+    modal.classList.remove('show');
+    currentUser = null;
+    document.getElementById('userForm').reset();
+    clearErrors();
+}
+
+/**
+ * @function showToast
+ * @description Mostra un toast
+ * @param {string} type - Tipo di toast
+ * @param {string} title - Titolo del toast
+ * @param {string} message - Messaggio del toast
+ */
+function showToast(type, title, message) {
+    const toast = document.querySelector('toast-component');
+    toast.showToast(type, title, message);
+}
+
+/**
+ * @function handleSubmit
+ * @description Gestione del submit del form degli utenti
+ * @param {Event} event - Evento di submit
+ */
+async function handleSubmit(event) {
+    event.preventDefault();
+    const form = event.target;
+    
+    clearErrors();
+    if (!validateForm(form)) {
+        return;
+    }
+
+    const userData = {
+        email: form.email.value,
+        nome: form.nome.value,
+        cognome: form.cognome.value,
+        ruolo: form.ruolo.value
+    };
+
+    if (form.password.value) {
+        userData.password = form.password.value;
+    }
+    
+    try {
+        if (currentUser) {
+            await updateUser(userData);
+            showToast('success', 'Successo', 'Utente aggiornato correttamente');
+        } else {
+            await createUser(userData);
+            showToast('success', 'Successo', 'Utente creato correttamente');
+        }
+        closeModal();
+        initUsers();
+    } catch (error) {
+        showToast('error', 'Errore', error.message);
+    }
+}
+
+/**
+ * @function handleDelete
+ * @description Gestione dell'eliminazione di un utente
+ * @param {string} email - Email dell'utente da eliminare
+ */
+async function handleDelete(email) {
+    if (confirm('Sei sicuro di voler eliminare questo utente?')) {
+        try {
+            await deleteUser(email);
+            showToast('success', 'Successo', 'Utente eliminato correttamente');
+            initUsers();
+        } catch (error) {
+            showToast('error', 'Errore', error.message);
+        }
+    }
+}
+
+/**
+ * @function initUsers
+ * @description Inizializza la pagina degli utenti
+ */
+async function initUsers() {
+    try {
+        const users = await getAllUsers();
+        renderUsers(users);
+    } catch (error) {
+        showToast('error', 'Errore', error.message);
+    }
+}
+
+// Event Listeners
+document.getElementById('addUserBtn').addEventListener('click', () => openModal());
+document.getElementById('userForm').addEventListener('submit', handleSubmit);
+
+// Make closeModal available globally
+window.closeModal = closeModal;
+
+// Initialize page
+initUsers();</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="HeaderComponent.html">HeaderComponent</a></li><li><a href="ToastComponent.html">ToastComponent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#applyFilters">applyFilters</a></li><li><a href="global.html#calculateStats">calculateStats</a></li><li><a href="global.html#clearErrors">clearErrors</a></li><li><a href="global.html#closeModal">closeModal</a></li><li><a href="global.html#createPrenotazioneDetails">createPrenotazioneDetails</a></li><li><a href="global.html#createRequestCard">createRequestCard</a></li><li><a href="global.html#createStatusSelect">createStatusSelect</a></li><li><a href="global.html#createUser">createUser</a></li><li><a href="global.html#deleteRequest">deleteRequest</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#extractRequestDataFromCard">extractRequestDataFromCard</a></li><li><a href="global.html#formatDateForInput">formatDateForInput</a></li><li><a href="global.html#getAllRequests">getAllRequests</a></li><li><a href="global.html#getAllUsers">getAllUsers</a></li><li><a href="global.html#getAuthToken">getAuthToken</a></li><li><a href="global.html#getFormData">getFormData</a></li><li><a href="global.html#getRequestStats">getRequestStats</a></li><li><a href="global.html#getRequestsByStatus">getRequestsByStatus</a></li><li><a href="global.html#handleDelete">handleDelete</a></li><li><a href="global.html#handleDeleteRequest">handleDeleteRequest</a></li><li><a href="global.html#handleEditRequest">handleEditRequest</a></li><li><a href="global.html#handleStatusChange">handleStatusChange</a></li><li><a href="global.html#handleStatusUpdate">handleStatusUpdate</a></li><li><a href="global.html#handleSubmit">handleSubmit</a></li><li><a href="global.html#handleToggleDetails">handleToggleDetails</a></li><li><a href="global.html#initDashboard">initDashboard</a></li><li><a href="global.html#initEditModal">initEditModal</a></li><li><a href="global.html#initRequests">initRequests</a></li><li><a href="global.html#initUsers">initUsers</a></li><li><a href="global.html#isAuthenticated">isAuthenticated</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#openModal">openModal</a></li><li><a href="global.html#populateRecentRequests">populateRecentRequests</a></li><li><a href="global.html#populateRequests">populateRequests</a></li><li><a href="global.html#refreshRequests">refreshRequests</a></li><li><a href="global.html#renderUsers">renderUsers</a></li><li><a href="global.html#setupCardEventListeners">setupCardEventListeners</a></li><li><a href="global.html#setupEditFormListeners">setupEditFormListeners</a></li><li><a href="global.html#setupEventListeners">setupEventListeners</a></li><li><a href="global.html#setupFilterEventListeners">setupFilterEventListeners</a></li><li><a href="global.html#setupModalEventListeners">setupModalEventListeners</a></li><li><a href="global.html#setupStatuschangeListeners">setupStatuschangeListeners</a></li><li><a href="global.html#showError">showError</a></li><li><a href="global.html#showToast">showToast</a></li><li><a href="global.html#stickyFilters">stickyFilters</a></li><li><a href="global.html#toggleRequestCard">toggleRequestCard</a></li><li><a href="global.html#updateCard">updateCard</a></li><li><a href="global.html#updateDashboardStats">updateDashboardStats</a></li><li><a href="global.html#updateRequest">updateRequest</a></li><li><a href="global.html#updateRequestStatus">updateRequestStatus</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#validateForm">validateForm</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Jan 28 2025 11:48:53 GMT+0100 (Ora standard dell’Europa centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

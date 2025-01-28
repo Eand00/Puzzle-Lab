@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: services/requests.service.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: services/requests.service.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file requests.service.js
+ * @version 1.0.0
+ * @author Puzzle Lab
+ * @contributors Samuele, Sicura, Eand Avdiu, Vincenzo Bonura
+ * @date 2025-01-22
+ * @update 2025-01-25
+ * @description Service per la gestione delle richieste
+ * @see README.md per ulteriori informazioni
+ */
+
+import { apiClient } from '../utils/api-client.js';
+import { API_BACKOFFICE_URL, API_RICHIESTE_URL } from '../config/config.js';
+
+/**
+ * @function getAllRequests
+ * @description Recupera tutte le richieste
+ * @param {string} order - Ordine di visualizzazione delle richieste
+ * @returns {Promise&lt;Array>} Array di richieste
+ * @throws {Error} - Errore con messaggio di feedback
+ */
+export async function getAllRequests(order = 'DESC') {
+    try {
+        const requests = await apiClient(API_RICHIESTE_URL);
+        return requests.sort((a, b) => order === 'DESC' ? b.id - a.id : a.id - b.id);
+    } catch (error) {
+        throw new Error(error.message || 'Errore durante il recupero delle richieste');
+    }
+}
+
+/**
+ * @function getRequestsByStatus
+ * @description Recupera le richieste filtrate per status
+ * @param {string} status - Status della richiesta
+ * @param {string} order - Ordine di visualizzazione delle richieste
+ * @returns {Promise&lt;Array>} Array di richieste
+ * @throws {Error} - Errore con messaggio di feedback
+ */
+export async function getRequestsByStatus(status, order = 'DESC') {
+    try {
+        const requests = await apiClient(`${API_RICHIESTE_URL}/status?status=${status}`);
+        return requests.sort((a, b) => order === 'DESC' ? b.id - a.id : a.id - b.id);
+    } catch (error) {
+        throw new Error(error.message || 'Errore durante il recupero delle richieste');
+    }
+}
+
+/**
+ * @function updateRequest
+ * @description Aggiorna una richiesta
+ * @param {Object} request - Oggetto richiesta con dati aggiornati
+ * @returns {Promise&lt;Object>} Richiesta aggiornata
+ * @throws {Error} - Errore con messaggio di feedback
+ */
+export async function updateRequest(request) {
+    try {
+        const endpoint = `${API_BACKOFFICE_URL}/${request.tipo.slice(0, -1) + 'i'}`;
+        return await apiClient(endpoint, {
+            method: 'PUT',
+            body: JSON.stringify(request)
+        });
+    } catch (error) {
+        throw new Error(error.message || 'Errore durante l\'aggiornamento della richiesta');
+    }
+}
+
+/**
+ * @function updateRequestStatus
+ * @description Aggiorna lo status di una richiesta
+ * @param {string} id - ID della richiesta
+ * @param {string} status - Status della richiesta
+ * @returns {Promise&lt;Object>} Oggetto contenente la richiesta aggiornata
+ * @throws {Error} - Errore con messaggio di feedback
+ */
+export async function updateRequestStatus(id, status) {
+    try {
+        return await apiClient(`${API_RICHIESTE_URL}/status?id=${id}&amp;status=${status}`, {
+            method: 'PUT',
+        });
+    } catch (error) {
+        throw new Error(error.message || 'Errore durante l\'aggiornamento della richiesta');
+    }
+}
+
+/**
+ * @function deleteRequest
+ * @description Cancella una richiesta
+ * @param {string} id - ID della richiesta
+ * @returns {Promise&lt;Object>} Oggetto contenente la richiesta cancellata
+ * @throws {Error} - Errore con messaggio di feedback
+ */
+export async function deleteRequest(id) {
+    try {
+        return await apiClient(`${API_RICHIESTE_URL}`, {
+            method: 'DELETE',
+            body : JSON.stringify(id)
+        });
+    } catch (error) {
+        throw new Error(error.message || 'Errore durante la cancellazione della richiesta');
+    }
+}
+
+/**
+ * @function calculateStats
+ * @description Calcola le statistiche delle richieste
+ * @param {Array} requests - Array di richieste
+ * @returns {Object} Oggetto contenente le statistiche
+ */
+function calculateStats(requests) {
+    return {
+        ricevute: requests.filter(r => r.status === 'RICEVUTA').length,
+        inCarico: requests.filter(r => r.status === 'PRESA_IN_CARICO').length,
+        rifiutate: requests.filter(r => r.status === 'RIFIUTATA').length,
+        completate: requests.filter(r => r.status === 'CONFERMATA' || r.status === 'ARCHIVIATA').length,
+        totali: requests.length
+    };
+}
+
+/**
+ * @function getRequestStats
+ * @description Recupera le statistiche della dashboard
+ * @returns {Promise&lt;Object>} Dati delle statistiche
+ */
+export async function getRequestStats() {
+    const requests = await apiClient(`${API_RICHIESTE_URL}`);
+    return calculateStats(requests);
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="HeaderComponent.html">HeaderComponent</a></li><li><a href="ToastComponent.html">ToastComponent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#applyFilters">applyFilters</a></li><li><a href="global.html#calculateStats">calculateStats</a></li><li><a href="global.html#clearErrors">clearErrors</a></li><li><a href="global.html#closeModal">closeModal</a></li><li><a href="global.html#createPrenotazioneDetails">createPrenotazioneDetails</a></li><li><a href="global.html#createRequestCard">createRequestCard</a></li><li><a href="global.html#createStatusSelect">createStatusSelect</a></li><li><a href="global.html#createUser">createUser</a></li><li><a href="global.html#deleteRequest">deleteRequest</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#extractRequestDataFromCard">extractRequestDataFromCard</a></li><li><a href="global.html#formatDateForInput">formatDateForInput</a></li><li><a href="global.html#getAllRequests">getAllRequests</a></li><li><a href="global.html#getAllUsers">getAllUsers</a></li><li><a href="global.html#getAuthToken">getAuthToken</a></li><li><a href="global.html#getFormData">getFormData</a></li><li><a href="global.html#getRequestStats">getRequestStats</a></li><li><a href="global.html#getRequestsByStatus">getRequestsByStatus</a></li><li><a href="global.html#handleDelete">handleDelete</a></li><li><a href="global.html#handleDeleteRequest">handleDeleteRequest</a></li><li><a href="global.html#handleEditRequest">handleEditRequest</a></li><li><a href="global.html#handleStatusChange">handleStatusChange</a></li><li><a href="global.html#handleStatusUpdate">handleStatusUpdate</a></li><li><a href="global.html#handleSubmit">handleSubmit</a></li><li><a href="global.html#handleToggleDetails">handleToggleDetails</a></li><li><a href="global.html#initDashboard">initDashboard</a></li><li><a href="global.html#initEditModal">initEditModal</a></li><li><a href="global.html#initRequests">initRequests</a></li><li><a href="global.html#initUsers">initUsers</a></li><li><a href="global.html#isAuthenticated">isAuthenticated</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#openModal">openModal</a></li><li><a href="global.html#populateRecentRequests">populateRecentRequests</a></li><li><a href="global.html#populateRequests">populateRequests</a></li><li><a href="global.html#refreshRequests">refreshRequests</a></li><li><a href="global.html#renderUsers">renderUsers</a></li><li><a href="global.html#setupCardEventListeners">setupCardEventListeners</a></li><li><a href="global.html#setupEditFormListeners">setupEditFormListeners</a></li><li><a href="global.html#setupEventListeners">setupEventListeners</a></li><li><a href="global.html#setupFilterEventListeners">setupFilterEventListeners</a></li><li><a href="global.html#setupModalEventListeners">setupModalEventListeners</a></li><li><a href="global.html#setupStatuschangeListeners">setupStatuschangeListeners</a></li><li><a href="global.html#showError">showError</a></li><li><a href="global.html#showToast">showToast</a></li><li><a href="global.html#stickyFilters">stickyFilters</a></li><li><a href="global.html#toggleRequestCard">toggleRequestCard</a></li><li><a href="global.html#updateCard">updateCard</a></li><li><a href="global.html#updateDashboardStats">updateDashboardStats</a></li><li><a href="global.html#updateRequest">updateRequest</a></li><li><a href="global.html#updateRequestStatus">updateRequestStatus</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#validateForm">validateForm</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Jan 28 2025 11:48:53 GMT+0100 (Ora standard dell’Europa centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
