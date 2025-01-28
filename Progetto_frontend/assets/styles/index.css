@@ -286,21 +286,25 @@
 }
 
 #come-funziona .left-attached .step-label {
-    background-image: url("../images/index/compila-form.png");
+    background-image: url("../images/index/compila-form.jpg");
     background-size: cover;
+    background-position: center;
 }
 
 #come-funziona .right-attached .step-label {
-    background-image: url("../images/index/preparati-all-esperienza.png");
+    background-image: url("../images/index/preparati-all-esperienza.jpg");
     background-size: cover;
+    background-position: center;
 }
 
 #come-funziona .right-attached + .left-attached .step-label {
-    background-image: url("../images/index/giornata-in-cascina.png");
+    background-image: url("../images/index/giornata-in-cascina.jpg");
     background-size: cover;
+    background-position: center;
 }
 
 #come-funziona .step-content {
+    width: 50%;
     max-width: 20rem;
     margin: 0 2rem;
 }
