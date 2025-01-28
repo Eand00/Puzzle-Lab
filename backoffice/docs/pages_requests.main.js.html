@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/requests.main.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/requests.main.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @file requests.main.js
  * @version 1.0.0
  * @author Puzzle Lab
@@ -33,55 +61,55 @@ const REQUESTS_STATUS = {
  */
 function createRequestCard(request) {
     const cardInfo = `
-        <div class="card-info">
-            <div class="card-info-row">
-                <span class="card-info-id">#${request.id}</span>
-                <span class="card-info-tipo">${request.tipo.charAt(0).toUpperCase() + request.tipo.slice(1)}</span>
-            </div>
-            <div class="card-info-row">
-                <span class="card-info-date">${new Date(request.dataCreazione).toLocaleDateString()}</span>
-            </div>
-        </div>
+        &lt;div class="card-info">
+            &lt;div class="card-info-row">
+                &lt;span class="card-info-id">#${request.id}&lt;/span>
+                &lt;span class="card-info-tipo">${request.tipo.charAt(0).toUpperCase() + request.tipo.slice(1)}&lt;/span>
+            &lt;/div>
+            &lt;div class="card-info-row">
+                &lt;span class="card-info-date">${new Date(request.dataCreazione).toLocaleDateString()}&lt;/span>
+            &lt;/div>
+        &lt;/div>
     `;
     const basicInfo = `
-        <div class="basic-info">
-            <div class="basic-info-title">
-                <span class="label">Da</span> <span class="lastname">${request.cognome}</span> <span class="firstname">${request.nome}</span> || <span class="organization">${request.organizzazione}</span>
-            </div>
-            <div class="basic-info-row">
-                <span class="label">@</span> 
-                <a href="mailto:${request.email}">${request.email}</a>
-                <span class="label">T</span> <span class="number">${request.numero}</span>
-            </div>
-        </div>
+        &lt;div class="basic-info">
+            &lt;div class="basic-info-title">
+                &lt;span class="label">Da&lt;/span> &lt;span class="lastname">${request.cognome}&lt;/span> &lt;span class="firstname">${request.nome}&lt;/span> || &lt;span class="organization">${request.organizzazione}&lt;/span>
+            &lt;/div>
+            &lt;div class="basic-info-row">
+                &lt;span class="label">@&lt;/span> 
+                &lt;a href="mailto:${request.email}">${request.email}&lt;/a>
+                &lt;span class="label">T&lt;/span> &lt;span class="number">${request.numero}&lt;/span>
+            &lt;/div>
+        &lt;/div>
         `;
     const details = `
-        <div class="request-details">
-            <div class="request-details-container">
-                <div class="request-details-row">
-                    <span class="label">Messaggio</span>
-                    <p class="message"s>${request.testo}</p>
-                </div>
+        &lt;div class="request-details">
+            &lt;div class="request-details-container">
+                &lt;div class="request-details-row">
+                    &lt;span class="label">Messaggio&lt;/span>
+                    &lt;p class="message"s>${request.testo}&lt;/p>
+                &lt;/div>
                 ${request.tipo === 'prenotazione' ? createPrenotazioneDetails(request) : ''}
-            </div>
-            <div class="actions">
-                <button class="btn-secondary edit-btn">Modifica</button>
-                <button class="btn-primary danger delete-btn">Elimina</button>
-            </div>
-        </div>
+            &lt;/div>
+            &lt;div class="actions">
+                &lt;button class="btn-secondary edit-btn">Modifica&lt;/button>
+                &lt;button class="btn-primary danger delete-btn">Elimina&lt;/button>
+            &lt;/div>
+        &lt;/div>
     `;
 
     return `
-        <div class="request-card ${request.status.toLowerCase()}" data-id="${request.id}">
-            <div class="row-1">
+        &lt;div class="request-card ${request.status.toLowerCase()}" data-id="${request.id}">
+            &lt;div class="row-1">
                 ${cardInfo}
                 ${basicInfo}
                 ${createStatusSelect(request.status)}
-            </div>
-            <div class="row-2">
+            &lt;/div>
+            &lt;div class="row-2">
                 ${details}
-            </div>
-        </div>
+            &lt;/div>
+        &lt;/div>
     `;
 }
 
@@ -93,17 +121,17 @@ function createRequestCard(request) {
  */
 function createStatusSelect(currentStatus) {
     const statusOptions = Object.values(REQUESTS_STATUS).map(status => `
-        <option value="${status}" ${status === currentStatus ? 'selected' : ''}>${status.replace(/_/g, ' ')}</option>
+        &lt;option value="${status}" ${status === currentStatus ? 'selected' : ''}>${status.replace(/_/g, ' ')}&lt;/option>
     `).join('');
 
     return `
-        <div class="actions-container">
-            <div class="status-form">
-                <select data-original-status="${currentStatus}" class="statusSelect first" name="request-status">${statusOptions}</select>
-                <button class="btn-primary generic disabled save-status-btn" disabled>-</button>
-            </div>
-            <button class="btn-primary toggle-details-btn">Mostra dettagli</button>
-        </div>
+        &lt;div class="actions-container">
+            &lt;div class="status-form">
+                &lt;select data-original-status="${currentStatus}" class="statusSelect first" name="request-status">${statusOptions}&lt;/select>
+                &lt;button class="btn-primary generic disabled save-status-btn" disabled>-&lt;/button>
+            &lt;/div>
+            &lt;button class="btn-primary toggle-details-btn">Mostra dettagli&lt;/button>
+        &lt;/div>
     `;
 }
 
@@ -118,24 +146,24 @@ function createPrenotazioneDetails(request) {
     const labs = request.laboratori.split(',')
         .map(lab => {
             lab = lab.replace(/_/g, ' ');
-            return `<span class="lab-name">${lab}</span>`;
+            return `&lt;span class="lab-name">${lab}&lt;/span>`;
         })
         .join('');
     return `
-        <div class="request-details-row">
-            <span class="label">Tipologia</span> <span class="tipologia">${request.tipologia}</span><br/>
+        &lt;div class="request-details-row">
+            &lt;span class="label">Tipologia&lt;/span> &lt;span class="tipologia">${request.tipologia}&lt;/span>&lt;br/>
             ${request.tipologia === 'SOGGIORNO' 
-                ? `<span class="label">Numero giorni</span> <span class="data">${request.numeroGiorni}</span>` 
-                : `<span class="label">Fascia Oraria</span> <span class="data">${request.fasciaOraria}</span>`
+                ? `&lt;span class="label">Numero giorni&lt;/span> &lt;span class="data">${request.numeroGiorni}&lt;/span>` 
+                : `&lt;span class="label">Fascia Oraria&lt;/span> &lt;span class="data">${request.fasciaOraria}&lt;/span>`
             }
-        </div>
-        <div class="request-details-row">
-            <span class="label">Disponibilità dal</span> <span class="dataInizio">${new Date(request.dataInizio).toLocaleDateString()}</span>
-            <span class="label">al</span> <span class="dataFine">${new Date(request.dataFine).toLocaleDateString()}</span>
-        </div>
-        <div class="request-details-row">
-            <span class="label">Laboratori</span> ${labs}
-        </div>
+        &lt;/div>
+        &lt;div class="request-details-row">
+            &lt;span class="label">Disponibilità dal&lt;/span> &lt;span class="dataInizio">${new Date(request.dataInizio).toLocaleDateString()}&lt;/span>
+            &lt;span class="label">al&lt;/span> &lt;span class="dataFine">${new Date(request.dataFine).toLocaleDateString()}&lt;/span>
+        &lt;/div>
+        &lt;div class="request-details-row">
+            &lt;span class="label">Laboratori&lt;/span> ${labs}
+        &lt;/div>
            
     `;
 }
@@ -203,7 +231,7 @@ function setupCardEventListeners(container) {
                     const remainingCards = document.querySelectorAll('.request-card');
                     if (remainingCards.length === 0) {
                         const container = document.querySelector('#requests');
-                        container.innerHTML = '<p>Nessuna richiesta.</p>';
+                        container.innerHTML = '&lt;p>Nessuna richiesta.&lt;/p>';
                     }
                 }, 500);
                 return;
@@ -259,8 +287,8 @@ function setupCardEventListeners(container) {
         const confirmDeleteBtn = deleteModal.querySelector('#confirmDelete');
 
         deleteModal.querySelector('.modal-body').innerHTML = `
-            <p class="text-center">Sei sicuro di voler eliminare la richiesta #${requestId}?<br>
-            <strong>Questa azione non può essere annullata.</strong></p>
+            &lt;p class="text-center">Sei sicuro di voler eliminare la richiesta #${requestId}?&lt;br>
+            &lt;strong>Questa azione non può essere annullata.&lt;/strong>&lt;/p>
         `;
 
         deleteModal.style.display = 'block';
@@ -274,7 +302,7 @@ function setupCardEventListeners(container) {
                     const remainingCards = document.querySelectorAll('.request-card');
                     if (remainingCards.length === 0) {
                         const container = document.querySelector('#requests');
-                        container.innerHTML = '<p>Nessuna richiesta.</p>';
+                        container.innerHTML = '&lt;p>Nessuna richiesta.&lt;/p>';
                     }
                 }, 500);
                 showToast('success', 'Eliminazione completata', 'La richiesta è stata eliminata con successo');
@@ -430,7 +458,7 @@ function populateRequests(requests) {
     const requestsContainer = document.getElementById('requests');
 
     if (!requests.length) {
-        requestsContainer.innerHTML = '<p>Nessuna richiesta.</p>';
+        requestsContainer.innerHTML = '&lt;p>Nessuna richiesta.&lt;/p>';
         return;
     }
 
@@ -456,12 +484,12 @@ function applyFilters(requests) {
             request.organizzazione.toLowerCase().includes(search) ||
             request.email.toLowerCase().includes(search) ||
             request.testo.toLowerCase().includes(search) ||
-            (request.laboratori && 
+            (request.laboratori &amp;&amp; 
                 request.laboratori.toLowerCase().replace(/_/g, ' ').includes(search));
 
         const matchesTipo = tipo === 'all' || request.tipo.toLowerCase() === tipo;
         const matchesStatus = status === 'all' || request.status === status;
-        return matchesSearch && matchesTipo && matchesStatus;
+        return matchesSearch &amp;&amp; matchesTipo &amp;&amp; matchesStatus;
     });
 }
 
@@ -617,7 +645,7 @@ function stickyFilters() {
     window.addEventListener('scroll', () => {
         if (!header) return; 
         const headerRect = header.getBoundingClientRect();
-        const isStuck = headerRect.top <= 64;
+        const isStuck = headerRect.top &lt;= 64;
         header.classList.toggle('is-stuck', isStuck);
     });  
 }
@@ -640,4 +668,26 @@ async function initRequests() {
 document.addEventListener('DOMContentLoaded', () => {
     initRequests();
     stickyFilters();
-});
+});</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="HeaderComponent.html">HeaderComponent</a></li><li><a href="ToastComponent.html">ToastComponent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#applyFilters">applyFilters</a></li><li><a href="global.html#calculateStats">calculateStats</a></li><li><a href="global.html#clearErrors">clearErrors</a></li><li><a href="global.html#closeModal">closeModal</a></li><li><a href="global.html#createPrenotazioneDetails">createPrenotazioneDetails</a></li><li><a href="global.html#createRequestCard">createRequestCard</a></li><li><a href="global.html#createStatusSelect">createStatusSelect</a></li><li><a href="global.html#createUser">createUser</a></li><li><a href="global.html#deleteRequest">deleteRequest</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#extractRequestDataFromCard">extractRequestDataFromCard</a></li><li><a href="global.html#formatDateForInput">formatDateForInput</a></li><li><a href="global.html#getAllRequests">getAllRequests</a></li><li><a href="global.html#getAllUsers">getAllUsers</a></li><li><a href="global.html#getAuthToken">getAuthToken</a></li><li><a href="global.html#getFormData">getFormData</a></li><li><a href="global.html#getRequestStats">getRequestStats</a></li><li><a href="global.html#getRequestsByStatus">getRequestsByStatus</a></li><li><a href="global.html#handleDelete">handleDelete</a></li><li><a href="global.html#handleDeleteRequest">handleDeleteRequest</a></li><li><a href="global.html#handleEditRequest">handleEditRequest</a></li><li><a href="global.html#handleStatusChange">handleStatusChange</a></li><li><a href="global.html#handleStatusUpdate">handleStatusUpdate</a></li><li><a href="global.html#handleSubmit">handleSubmit</a></li><li><a href="global.html#handleToggleDetails">handleToggleDetails</a></li><li><a href="global.html#initDashboard">initDashboard</a></li><li><a href="global.html#initEditModal">initEditModal</a></li><li><a href="global.html#initRequests">initRequests</a></li><li><a href="global.html#initUsers">initUsers</a></li><li><a href="global.html#isAuthenticated">isAuthenticated</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#openModal">openModal</a></li><li><a href="global.html#populateRecentRequests">populateRecentRequests</a></li><li><a href="global.html#populateRequests">populateRequests</a></li><li><a href="global.html#refreshRequests">refreshRequests</a></li><li><a href="global.html#renderUsers">renderUsers</a></li><li><a href="global.html#setupCardEventListeners">setupCardEventListeners</a></li><li><a href="global.html#setupEditFormListeners">setupEditFormListeners</a></li><li><a href="global.html#setupEventListeners">setupEventListeners</a></li><li><a href="global.html#setupFilterEventListeners">setupFilterEventListeners</a></li><li><a href="global.html#setupModalEventListeners">setupModalEventListeners</a></li><li><a href="global.html#setupStatuschangeListeners">setupStatuschangeListeners</a></li><li><a href="global.html#showError">showError</a></li><li><a href="global.html#showToast">showToast</a></li><li><a href="global.html#stickyFilters">stickyFilters</a></li><li><a href="global.html#toggleRequestCard">toggleRequestCard</a></li><li><a href="global.html#updateCard">updateCard</a></li><li><a href="global.html#updateDashboardStats">updateDashboardStats</a></li><li><a href="global.html#updateRequest">updateRequest</a></li><li><a href="global.html#updateRequestStatus">updateRequestStatus</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#validateForm">validateForm</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Jan 28 2025 11:48:53 GMT+0100 (Ora standard dell’Europa centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

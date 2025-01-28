@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/index.main.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/index.main.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file index.main.js
+ * @version 1.0.0
+ * @author Puzzle Lab
+ * @contributors Bonura Vincenzo, Eand Avdiu
+ * @date 2025-01-15
+ * @update 2025-01-25
+ * @description Script per la pagina index
+ * @see README.md per ulteriori informazioni
+ */
+
+import { getRequestStats, getAllRequests, getRequestsByStatus } from '../services/requests.service.js';
+import { showToast } from '../utils/toast.util.js';
+
+
+/**
+ * @function populateRecentRequests
+ * @description Popola la lista delle richieste recenti
+ * @param {Array} requests - Array di richieste recenti
+ */
+function populateRecentRequests(requests) {
+    const container = document.querySelector('.requests-list');
+    
+    if (!requests.length) {
+        container.innerHTML = '&lt;p>Nessuna richiesta recente&lt;/p>';
+        return;
+    }
+
+    container.innerHTML = `
+        &lt;div class="requests-grid">
+            ${requests.map(request => `
+                &lt;div class="request-card" data-expanded="false">
+                    &lt;div class="request-card-header">
+                        &lt;div class="request-basic-info">
+                            &lt;div class="row-1">
+                                &lt;span class="request-id">#${request.id}&lt;/span>
+                                &lt;span class="request-type ${request.tipo.toLowerCase()}">${request.tipo.charAt(0).toUpperCase() + request.tipo.slice(1)}&lt;/span> | 
+                                &lt;span class="request-date">${new Date(request.dataCreazione).toLocaleDateString()}&lt;/span>
+                            &lt;/div>
+                            &lt;div class="row-2">
+                                &lt;span class="status-badge ${request.status.toLowerCase()}">${request.nome} ${request.cognome} || ${request.organizzazione}&lt;/span>
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+
+                    &lt;div class="request-card-content">
+                        &lt;div class="request-info">
+                            &lt;p>&lt;strong>Nome:&lt;/strong> ${request.nome} ${request.cognome}&lt;/p>
+                            &lt;p>&lt;strong>Email:&lt;/strong> ${request.email}&lt;/p>
+                            &lt;p>&lt;strong>Organizzazione:&lt;/strong> ${request.organizzazione}&lt;/p>
+                            &lt;p>&lt;strong>Numero:&lt;/strong> ${request.numero}&lt;/p>
+                            &lt;p>&lt;strong>Data:&lt;/strong> ${new Date(request.dataCreazione).toLocaleDateString()}&lt;/p>
+                            &lt;p>&lt;strong>Tipo:&lt;/strong> ${request.tipo}&lt;/p>
+                        &lt;/div>
+
+                        &lt;div class="request-details">
+                            ${request.tipo === 'informazione' ? `
+                                &lt;div class="info-request-details">
+                                    &lt;p>&lt;strong>Testo:&lt;/strong> ${request.testo}&lt;/p>
+                                &lt;/div>
+                            ` : request.tipo === 'prenotazione' ? `
+                                &lt;div class="booking-request-details">
+                                    &lt;p>&lt;strong>Data Inizio:&lt;/strong> ${new Date(request.dataInizio).toLocaleString()}&lt;/p>
+                                    &lt;p>&lt;strong>Data Fine:&lt;/strong> ${new Date(request.dataFine).toLocaleString()}&lt;/p>
+                                    &lt;p>&lt;strong>Testo:&lt;/strong> ${request.testo}&lt;/p>
+                                &lt;/div>
+                            ` : ''}
+                        &lt;/div>
+                    &lt;/div>
+                &lt;/div>
+            `).join('')}
+        &lt;/div>
+    `;
+
+    document.querySelectorAll('.request-card').forEach(card => {
+        card.addEventListener('click', () => toggleRequestCard(card));
+    });
+}
+
+/**
+ * @function toggleRequestCard
+ * @description Attiva o disattiva la visualizzazione dei dettagli della richiesta
+ * @param {HTMLElement} card - Card della richiesta
+ */
+function toggleRequestCard(card) {
+    card.setAttribute('data-expanded', card.getAttribute('data-expanded') === 'true' ? 'false' : 'true');
+}
+
+/**
+ * @function updateDashboardStats
+ * @description Aggiorna le statistiche della dashboard
+ * @param {Object} stats - Oggetto contenente le statistiche
+ */
+function updateDashboardStats(stats) {
+    const statsElements = {
+        ricevute: document.querySelector('.stat-card:nth-child(1) .stat-number'),
+        inCarico: document.querySelector('.stat-card:nth-child(2) .stat-number'),
+        rifiutate: document.querySelector('.stat-card:nth-child(3) .stat-number'),
+        completate: document.querySelector('.stat-card:nth-child(4) .stat-number'),
+        totali: document.querySelector('.stat-card.total .stat-number')
+    };
+
+    Object.entries(statsElements).forEach(([key, element]) => {
+        element.textContent = stats[key] || '-';
+    });
+}
+
+/**
+ * @function initDashboard
+ * @description Inizializza i componenti della dashboard
+ */
+async function initDashboard() {
+    try {
+        const stats = await getRequestStats();
+        updateDashboardStats(stats);
+        const requests = await getAllRequests();
+
+        //ordina dal più recente
+        requests.sort((a, b) => new Date(b.id) - new Date(a.id));
+
+        //prende le 15 più recenti
+        const recentRequests = requests.length > 15 ? requests.slice(0, 15) : requests;
+        populateRecentRequests(recentRequests);
+    } catch (error) {
+        showToast('error', 'Errore', error.message);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initDashboard);</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="HeaderComponent.html">HeaderComponent</a></li><li><a href="ToastComponent.html">ToastComponent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#applyFilters">applyFilters</a></li><li><a href="global.html#calculateStats">calculateStats</a></li><li><a href="global.html#clearErrors">clearErrors</a></li><li><a href="global.html#closeModal">closeModal</a></li><li><a href="global.html#createPrenotazioneDetails">createPrenotazioneDetails</a></li><li><a href="global.html#createRequestCard">createRequestCard</a></li><li><a href="global.html#createStatusSelect">createStatusSelect</a></li><li><a href="global.html#createUser">createUser</a></li><li><a href="global.html#deleteRequest">deleteRequest</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#extractRequestDataFromCard">extractRequestDataFromCard</a></li><li><a href="global.html#formatDateForInput">formatDateForInput</a></li><li><a href="global.html#getAllRequests">getAllRequests</a></li><li><a href="global.html#getAllUsers">getAllUsers</a></li><li><a href="global.html#getAuthToken">getAuthToken</a></li><li><a href="global.html#getFormData">getFormData</a></li><li><a href="global.html#getRequestStats">getRequestStats</a></li><li><a href="global.html#getRequestsByStatus">getRequestsByStatus</a></li><li><a href="global.html#handleDelete">handleDelete</a></li><li><a href="global.html#handleDeleteRequest">handleDeleteRequest</a></li><li><a href="global.html#handleEditRequest">handleEditRequest</a></li><li><a href="global.html#handleStatusChange">handleStatusChange</a></li><li><a href="global.html#handleStatusUpdate">handleStatusUpdate</a></li><li><a href="global.html#handleSubmit">handleSubmit</a></li><li><a href="global.html#handleToggleDetails">handleToggleDetails</a></li><li><a href="global.html#initDashboard">initDashboard</a></li><li><a href="global.html#initEditModal">initEditModal</a></li><li><a href="global.html#initRequests">initRequests</a></li><li><a href="global.html#initUsers">initUsers</a></li><li><a href="global.html#isAuthenticated">isAuthenticated</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#openModal">openModal</a></li><li><a href="global.html#populateRecentRequests">populateRecentRequests</a></li><li><a href="global.html#populateRequests">populateRequests</a></li><li><a href="global.html#refreshRequests">refreshRequests</a></li><li><a href="global.html#renderUsers">renderUsers</a></li><li><a href="global.html#setupCardEventListeners">setupCardEventListeners</a></li><li><a href="global.html#setupEditFormListeners">setupEditFormListeners</a></li><li><a href="global.html#setupEventListeners">setupEventListeners</a></li><li><a href="global.html#setupFilterEventListeners">setupFilterEventListeners</a></li><li><a href="global.html#setupModalEventListeners">setupModalEventListeners</a></li><li><a href="global.html#setupStatuschangeListeners">setupStatuschangeListeners</a></li><li><a href="global.html#showError">showError</a></li><li><a href="global.html#showToast">showToast</a></li><li><a href="global.html#stickyFilters">stickyFilters</a></li><li><a href="global.html#toggleRequestCard">toggleRequestCard</a></li><li><a href="global.html#updateCard">updateCard</a></li><li><a href="global.html#updateDashboardStats">updateDashboardStats</a></li><li><a href="global.html#updateRequest">updateRequest</a></li><li><a href="global.html#updateRequestStatus">updateRequestStatus</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#validateForm">validateForm</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Jan 28 2025 11:48:53 GMT+0100 (Ora standard dell’Europa centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

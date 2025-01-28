@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/toast-component.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/toast-component.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file toast-component.js
+ * @version 1.0.0
+ * @author Puzzle Lab
+ * @contributors Bonura Vincenzo
+ * @date 2025-01-15
+ * @update 2025-01-25
+ * @description Componente toast per il backoffice.
+ * @extends HTMLElement
+ */
+
+/**
+ * Tipi di toast supportati
+ * @typedef {'success' | 'error' | 'warning' | 'info'} ToastType
+ */
+
+/**
+ * Componente Toast per notifiche all'utente
+ * @customElement toast-component
+ * @extends HTMLElement
+ */
+class ToastComponent extends HTMLElement {
+    constructor() {
+        super();
+        this.toasts = [];
+    }
+
+    connectedCallback() {
+        this.render();
+    }
+
+    render() {
+        this.innerHTML = `&lt;div class="toast-container">&lt;/div>`;
+    }
+
+    /**
+     * Mostra un toast
+     * @param {ToastType} type - Tipo di toast (info, success, warning, error)
+     * @param {string} title - Titolo del toast
+     * @param {string} message - Messaggio del toast
+     * @param {number} [duration=5000] - Durata in millisecondi
+     */
+    showToast(type, title, message, duration = 5000) {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        
+        toast.innerHTML = `
+            &lt;div class="toast-icon">
+                ${this.getIcon(type)}
+            &lt;/div>
+            &lt;div class="toast-content">
+                &lt;h4 class="toast-title">${title}&lt;/h4>
+                &lt;p class="toast-message">${message}&lt;/p>
+            &lt;/div>
+            &lt;button class="toast-close" aria-label="Close">×&lt;/button>
+        `;
+
+        const container = this.querySelector('.toast-container');
+        container.appendChild(toast);
+
+        // event listener per il pulsante di chiusura
+        toast.querySelector('.toast-close')
+            ?.addEventListener('click', () => this.removeToast(toast));
+
+        // Rimuovi automaticamente dopo duration
+        setTimeout(() => {
+            this.removeToast(toast);
+        }, duration);
+    }
+
+    /**
+     * Rimuove un toast con animazione
+     * @param {HTMLElement} toast - Toast element da rimuovere
+     */
+    removeToast(toast) {
+        toast.classList.add('removing');
+        toast.addEventListener('animationend', () => {
+            toast.remove();
+        });
+    }
+
+    /**
+     * Recupera l'icona SVG in base al tipo di toast
+     * @param {string} type - Tipo di toast
+     * @returns {string} Markup SVG
+     */
+    getIcon(type) {
+        const icons = {
+            info: `&lt;svg viewBox="0 0 24 24" fill="currentColor">&lt;path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>&lt;/svg>`,
+            success: `&lt;svg viewBox="0 0 24 24" fill="currentColor">&lt;path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>&lt;/svg>`,
+            warning: `&lt;svg viewBox="0 0 24 24" fill="currentColor">&lt;path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>&lt;/svg>`,
+            error: `&lt;svg viewBox="0 0 24 24" fill="currentColor">&lt;path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>&lt;/svg>`
+        };
+        return icons[type] || icons.info;
+    }
+}
+
+customElements.define('toast-component', ToastComponent);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="HeaderComponent.html">HeaderComponent</a></li><li><a href="ToastComponent.html">ToastComponent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#applyFilters">applyFilters</a></li><li><a href="global.html#calculateStats">calculateStats</a></li><li><a href="global.html#clearErrors">clearErrors</a></li><li><a href="global.html#closeModal">closeModal</a></li><li><a href="global.html#createPrenotazioneDetails">createPrenotazioneDetails</a></li><li><a href="global.html#createRequestCard">createRequestCard</a></li><li><a href="global.html#createStatusSelect">createStatusSelect</a></li><li><a href="global.html#createUser">createUser</a></li><li><a href="global.html#deleteRequest">deleteRequest</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#extractRequestDataFromCard">extractRequestDataFromCard</a></li><li><a href="global.html#formatDateForInput">formatDateForInput</a></li><li><a href="global.html#getAllRequests">getAllRequests</a></li><li><a href="global.html#getAllUsers">getAllUsers</a></li><li><a href="global.html#getAuthToken">getAuthToken</a></li><li><a href="global.html#getFormData">getFormData</a></li><li><a href="global.html#getRequestStats">getRequestStats</a></li><li><a href="global.html#getRequestsByStatus">getRequestsByStatus</a></li><li><a href="global.html#handleDelete">handleDelete</a></li><li><a href="global.html#handleDeleteRequest">handleDeleteRequest</a></li><li><a href="global.html#handleEditRequest">handleEditRequest</a></li><li><a href="global.html#handleStatusChange">handleStatusChange</a></li><li><a href="global.html#handleStatusUpdate">handleStatusUpdate</a></li><li><a href="global.html#handleSubmit">handleSubmit</a></li><li><a href="global.html#handleToggleDetails">handleToggleDetails</a></li><li><a href="global.html#initDashboard">initDashboard</a></li><li><a href="global.html#initEditModal">initEditModal</a></li><li><a href="global.html#initRequests">initRequests</a></li><li><a href="global.html#initUsers">initUsers</a></li><li><a href="global.html#isAuthenticated">isAuthenticated</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#openModal">openModal</a></li><li><a href="global.html#populateRecentRequests">populateRecentRequests</a></li><li><a href="global.html#populateRequests">populateRequests</a></li><li><a href="global.html#refreshRequests">refreshRequests</a></li><li><a href="global.html#renderUsers">renderUsers</a></li><li><a href="global.html#setupCardEventListeners">setupCardEventListeners</a></li><li><a href="global.html#setupEditFormListeners">setupEditFormListeners</a></li><li><a href="global.html#setupEventListeners">setupEventListeners</a></li><li><a href="global.html#setupFilterEventListeners">setupFilterEventListeners</a></li><li><a href="global.html#setupModalEventListeners">setupModalEventListeners</a></li><li><a href="global.html#setupStatuschangeListeners">setupStatuschangeListeners</a></li><li><a href="global.html#showError">showError</a></li><li><a href="global.html#showToast">showToast</a></li><li><a href="global.html#stickyFilters">stickyFilters</a></li><li><a href="global.html#toggleRequestCard">toggleRequestCard</a></li><li><a href="global.html#updateCard">updateCard</a></li><li><a href="global.html#updateDashboardStats">updateDashboardStats</a></li><li><a href="global.html#updateRequest">updateRequest</a></li><li><a href="global.html#updateRequestStatus">updateRequestStatus</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#validateForm">validateForm</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Jan 28 2025 11:48:53 GMT+0100 (Ora standard dell’Europa centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
