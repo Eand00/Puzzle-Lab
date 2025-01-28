@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>Documentazione Frontend - Caccia SAPERI</h1>
+<h2>Indice</h2>
+<ol>
+<li>Struttura del progetto</li>
+<li>Informazioni generali</li>
+<li>Scelte progettuali
+<ul>
+<li>Menu mobile</li>
+<li>Web Components
+<ul>
+<li>Componenti utilizzati</li>
+</ul>
+</li>
+<li>Validazione forms
+<ul>
+<li>Regole di validazione</li>
+<li>Feedback all'utente</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2>Struttura del progetto</h2>
+<pre class="prettyprint source"><code>Progetto_frontend/
+├── index.html
+├── laboratori.html
+├── chi-siamo.html
+├── prenota-ora.html 
+├── contatti.html
+│
+├── assets/
+│   ├── images/
+│   ├── scripts/
+│   │   ├── form-validation.js
+│   │   ├── index.js
+│   │   └── main.js
+│   │
+│   └── styles/
+│       ├── normalize.css
+│       ├── style.css
+│       ├── utility.css       
+│       ├── index.css
+│       ├── laboratori.css
+│       ├── chi-siamo.css
+│       ├── contatti.css
+│       └── form.css             
+│
+├── components/
+│   ├── header-component.js
+│   ├── footer-component.js
+│   ├── lab-grid-component.js
+│   └── lab-card-component.js
+│
+├── laboratori/
+│   └── ... #pagine statiche per i laboratori
+│
+└── README.md  
+</code></pre>
+<h2>Informazioni generali</h2>
+<p>Il portale è sviluppato in HTML, CSS e Javascript, senza dipendenze da framework esterni. L'approccio di sviluppo è il mobile-first, e si è scelto di utilizzare i Web Components per la modularità dell'interfaccia.</p>
+<h2>Scelte progettuali</h2>
+<h3>Menu mobile</h3>
+<p>Su dispositivi mobili, si è optato per un menu a comparsa laterale attivabile da un pulsante hamburger.
+Per una migliore UX, la chiusura del menu è attivabile sia cliccando nuovamente sul pulsante, sia cliccando al di fuori del menu.</p>
+<h3>Web Components</h3>
+<p>Si è scelto l'utilizzo dei Web Components per le parti di codice che si ripetono più volte nel sito, al fine di garantire e migliorare:</p>
+<ul>
+<li>Modularità: consente un approccio DRY per le parti comuni del sito</li>
+<li>Manutenibilità: si può sviluppare e modificare un componente in modo indipendente</li>
+<li>Organizzazione: la logica centralizzata rende più semplice la gestione del codice</li>
+<li>Progressive Enhancement: se JS è disabilitato dall'utente, un fallback permette l'usabilità del sito</li>
+</ul>
+<p><strong>Nota</strong>: I componenti attuali non utilizzano Shadow DOM, condividendo lo scope CSS globale dell'applicazione. Questa scelta è stata fatta per mantenere la coerenza stilistica con il resto del sito, sfruttando il CSS già presente.</p>
+<h4>Componenti utilizzati</h4>
+<ul>
+<li>header-components.js
+header e menu di navigazione del sito</li>
+<li>footer-components.js
+footer del sito</li>
+<li>lab-grid-component.js
+visualizzazione delle card dei laboratori
+Proprietà:
+<ul>
+<li>data-labs: array di oggetti con le proprietà title, image, href</li>
+</ul>
+</li>
+<li>lab-card-component.js
+card di laboratorio
+Proprietà:
+<ul>
+<li>title: stringa</li>
+<li>image: stringa</li>
+<li>href: stringa</li>
+</ul>
+</li>
+</ul>
+<h3>Validazione forms</h3>
+<p>La validazione lato client dei form è implementata secondo il principio di Progressive enhancement, con un controllo in JavaScript che si occupa di validare il valore degli input al blur sul singolo campo oltre che al submit del form, e un fallback per la validazione nativa HTML5.<br>
+La validazione Javascript viene applicata selettivamente ai form che hanno l'attributo <code>data-validate</code>, evitando di applicarla anche a form che non ne necessitano.</p>
+<h4>Regole di validazione</h4>
+<p>Le regole di validazione sono centralizzate e dichiarate per ogni campo nell'oggetto <code>VALIDATION_RULES</code>, definito globalmente nel file <code>form-validation.js</code>. L'oggetto contiene, per ogni campo:</p>
+<ul>
+<li>il pattern regex di validazione</li>
+<li>un flag <code>required</code> per indicare se il campo è obbligatorio</li>
+<li>un messaggio di errore</li>
+</ul>
+<h4>Feedback all'utente</h4>
+<p>Il feedback visivo è gestito tramite il file <code>form.css</code> che definisce gli stili per lo stato valid/invalid dei campi e dalla funzione <code>updateFieldStatus</code> che aggiorna lo stato del campo obbligatorio in base alla validità del valore inserito.
+In fase di submit del form, in caso di campi non validi, il feedback include anche uno scroll e un focus verso il primo campo invalid, per migliorare l'esperienza utente.</p></article>
+    </section>
+
+
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>assets/scripts/form-validation.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">This script handles the client-side logic for the form validation</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Puzzle Lab</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_scripts_form-validation.js.html">assets/scripts/form-validation.js</a>, <a href="assets_scripts_form-validation.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>README_FRONTEND.md for additional information.</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>assets/scripts/index.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">This script handles the client-side logic for the index page</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Puzzle Lab</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_scripts_index.js.html">assets/scripts/index.js</a>, <a href="assets_scripts_index.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>README_FRONTEND.md for additional information.</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>assets/scripts/main.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">This script handles the client-side logic for the site, including form submissions and interactions with the API.</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Puzzle Lab</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_scripts_main.js.html">assets/scripts/main.js</a>, <a href="assets_scripts_main.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>README_FRONTEND.md for additional information.</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>components/footer-component.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">This script handles the footer component of the site.</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Puzzle Lab</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_footer-component.js.html">components/footer-component.js</a>, <a href="components_footer-component.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>README_FRONTEND.md for additional information.</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li>HTMLElement</li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>components/header-component.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">This script handles the header component of the site.</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Puzzle Lab</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_header-component.js.html">components/header-component.js</a>, <a href="components_header-component.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>README_FRONTEND.md for additional information.</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li>HTMLElement</li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>components/lab-card-component.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">A custom element that displays a laboratory card</div>
+        
+
+        
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>title</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The title of the laboratory</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>image</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The image of the laboratory</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>href</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The link to the laboratory</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Puzzle Lab</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_lab-card-component.js.html">components/lab-card-component.js</a>, <a href="components_lab-card-component.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>README_FRONTEND.md for additional information.</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li>HTMLElement</li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>components/lab-grid-component.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">A custom element that renders iterated lab-card-component elements</div>
+        
+
+        
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>data-labs</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The data of the laboratories</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Puzzle Lab</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_lab-grid-component.js.html">components/lab-grid-component.js</a>, <a href="components_lab-grid-component.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>README_FRONTEND.md for additional information.</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li>HTMLElement</li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#VALIDATION_RULES">VALIDATION_RULES</a></li><li><a href="global.html#acceptCookies">acceptCookies</a></li><li><a href="global.html#addTimeToDate">addTimeToDate</a></li><li><a href="global.html#carousel">carousel</a></li><li><a href="global.html#carouselIndex">carouselIndex</a></li><li><a href="global.html#closeCookieBanner">closeCookieBanner</a></li><li><a href="global.html#connectedCallback">connectedCallback</a></li><li><a href="global.html#containerScroll">containerScroll</a></li><li><a href="global.html#formValidation">formValidation</a></li><li><a href="global.html#getFieldValuefield">getFieldValue</a></li><li><a href="global.html#handleMediaQueries">handleMediaQueries</a></li><li><a href="global.html#initErrorMessagesform">initErrorMessages</a></li><li><a href="global.html#rejectCookies">rejectCookies</a></li><li><a href="global.html#scroll">scroll</a></li><li><a href="global.html#scrollIndex">scrollIndex</a></li><li><a href="global.html#showCookieBanner">showCookieBanner</a></li><li><a href="global.html#showErrorToast">showErrorToast</a></li><li><a href="global.html#submitFormDataformData">submitFormData</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Jan 28 2025 12:40:05 GMT+0100 (Ora standard dell’Europa centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

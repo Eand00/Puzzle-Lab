@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/header-component.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/header-component.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file header-components.js
+ * @version 1.0.0
+ * @author Puzzle Lab
+ * @contributors Bonura Vincenzo, Lupano Alberto, Picciotto Luca
+ * @date 2024-12-14
+ * @description This script handles the header component of the site.
+ * @extends HTMLElement
+ * @see README_FRONTEND.md for additional information.
+ */
+
+class HeaderComponent extends HTMLElement {
+    constructor() {
+        super();
+        const basePath = this.getAttribute('base-path') || '.';
+
+        this.template = document.createElement('template');
+        this.template.innerHTML = `
+            &lt;header class="bg-dark fixed-top">
+                &lt;nav class="navbar">
+                    &lt;a class="navbar-brand" href="${basePath}/index.html">
+                        &lt;div class="row1 text-white">CACCIA&lt;/div>
+                        &lt;div class="row2 text-white">SAPERI&lt;/div>
+                    &lt;/a>
+                    &lt;button class="navbar-toggle" id="navbarBtn" type="button" aria-label="Toggle navigation">
+                        &lt;span class="navbar-toggler-icon">&lt;/span>
+                    &lt;/button>
+                    &lt;div class="collapse navbar-collapse bg-dark text-gray" id="navbarText">
+                        &lt;svg class="logo-brand">
+                            &lt;use href="${basePath}/assets/images/sprite.svg#logo-brand">&lt;/use>
+                        &lt;/svg>
+                        &lt;ul class="navbar-nav">
+                            &lt;li class="nav-item text-gray">
+                                &lt;a class="nav-link" href="${basePath}/index.html">HOME&lt;/a>
+                            &lt;/li>
+                            &lt;li class="nav-item text-gray">
+                                &lt;a class="nav-link" href="${basePath}/laboratori.html">LABORATORI&lt;/a>
+                            &lt;/li>
+                            &lt;li class="nav-item text-gray">
+                                &lt;a class="nav-link" href="${basePath}/chi-siamo.html">CHI SIAMO&lt;/a>
+                            &lt;/li>
+                            &lt;li class="nav-item text-gray">
+                                &lt;a class="nav-link" href="${basePath}/prenota-ora.html">PRENOTA ORA!&lt;/a>
+                            &lt;/li>
+                            &lt;li class="nav-item text-gray">
+                                &lt;a class="nav-link" href="${basePath}/contatti.html">CONTATTI&lt;/a>
+                            &lt;/li>
+                        &lt;/ul>
+                        &lt;div class="social-icons">
+                            &lt;p class="text-gray">SEGUICI SUI SOCIAL&lt;/p>
+                            &lt;div class="social-icons-container text-white">
+                                &lt;a href="#">
+                                    &lt;svg width="32" height="32" fill="currentColor">
+                                        &lt;use href="${basePath}/assets/images/sprite.svg?v=1#icon-facebook">&lt;/use>
+                                    &lt;/svg>
+                                &lt;/a>
+                                &lt;a href="#">
+                                    &lt;svg width="32" height="32" fill="currentColor">
+                                        &lt;use href="${basePath}/assets/images/sprite.svg?v=1#icon-instagram">&lt;/use>
+                                    &lt;/svg>
+                                &lt;/a>
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+                &lt;/nav>
+            &lt;/header>
+        `;
+    }
+
+    /**
+     * This method is called when the component is connected to the DOM.
+     * It is used to initialize the component.
+     */
+    connectedCallback() {
+        // Clone the template content and append it to the DOM
+        const content = this.template.content.cloneNode(true);
+        this.appendChild(content);
+
+        // Set active page
+        this.setActivePage();
+
+        // Setup event listeners
+        this.setupEventListeners();
+    }
+
+    /**
+     * Sets the active page in the navigation
+     */
+    setActivePage() {
+        const activePage = this.getAttribute('active-page');
+        if (!activePage) return;
+
+        const navLinks = this.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            if (link.href.includes(activePage)) {
+                link.parentElement.classList.add('active');
+            }
+        });
+    }
+
+    /**
+     * Sets up all event listeners for the component
+     */
+    setupEventListeners() {
+        this.setupNavbarToggle();
+        this.setupScrollHandler();
+    }
+
+    /**
+     * Sets up the navbar toggle functionality
+     */
+    setupNavbarToggle() {
+        const navbarToggle = this.querySelector('#navbarBtn');
+        const navbarCollapse = this.querySelector('#navbarText');
+
+        if (!navbarToggle || !navbarCollapse) return;
+
+        const toggleNavbar = () => {
+            navbarCollapse.classList.toggle('show');
+            navbarToggle.classList.toggle('show');
+        };
+
+        navbarToggle.addEventListener('click', toggleNavbar);
+        navbarCollapse.addEventListener('click', toggleNavbar);
+    }
+
+    /**
+     * Sets up the scroll handler for header styling
+     */
+    setupScrollHandler() {
+        const header = this.querySelector('header');
+        if (!header) return;
+
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('header-scroll', window.scrollY > 0);
+        });
+    }
+}
+
+customElements.define("header-component", HeaderComponent);</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#VALIDATION_RULES">VALIDATION_RULES</a></li><li><a href="global.html#acceptCookies">acceptCookies</a></li><li><a href="global.html#addTimeToDate">addTimeToDate</a></li><li><a href="global.html#carousel">carousel</a></li><li><a href="global.html#carouselIndex">carouselIndex</a></li><li><a href="global.html#closeCookieBanner">closeCookieBanner</a></li><li><a href="global.html#connectedCallback">connectedCallback</a></li><li><a href="global.html#containerScroll">containerScroll</a></li><li><a href="global.html#formValidation">formValidation</a></li><li><a href="global.html#getFieldValuefield">getFieldValue</a></li><li><a href="global.html#handleMediaQueries">handleMediaQueries</a></li><li><a href="global.html#initErrorMessagesform">initErrorMessages</a></li><li><a href="global.html#rejectCookies">rejectCookies</a></li><li><a href="global.html#scroll">scroll</a></li><li><a href="global.html#scrollIndex">scrollIndex</a></li><li><a href="global.html#showCookieBanner">showCookieBanner</a></li><li><a href="global.html#showErrorToast">showErrorToast</a></li><li><a href="global.html#submitFormDataformData">submitFormData</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Jan 28 2025 12:40:05 GMT+0100 (Ora standard dell’Europa centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

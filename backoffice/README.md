@@ -132,3 +132,10 @@ La responsabilità della gestione della logica è delegata all'utility toast.uti
 
 ### Auth Guard
 La soluzione presentata, valida in fase di presentazione del prototipo, andrà ristrutturata e resa più robusta in produzione, sostituendola con un approccio server-side.
+
+### Filtri
+Le funzioni di filtro sono implementate lato client, recuperando tutte le richieste e manipolandole localmente. Questa è una scelta progettuale data dal presupposto che non ci si aspetta che i dati cambino con elevatissima frequenza, quindi si è preferito ridurre le chiamate al server.
+In fase di produzione, bisognerà valutare il carico di lavoro del server e la frequenza di aggiornamento dei dati, per decidere se implementare un sistema di filtro lato server.
+
+#### Debouncing
+Per quanto descritto sopra, non si è ritenuto necessario implementare un sistema di debouncing per le funzioni di filtro, che andrà invece valutaato nel caso in cui i filtri richiedano frequenti chiamate al server.
