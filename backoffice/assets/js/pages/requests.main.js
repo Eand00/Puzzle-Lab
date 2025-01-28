@@ -418,7 +418,8 @@ function setupEventListeners(container) {
  */
 async function refreshRequests() {
     const requests = await getAllRequests();
-    populateRequests(requests);
+    const filteredRequests = applyFilters(requests);
+    populateRequests(filteredRequests);
 }   
 
 /**
