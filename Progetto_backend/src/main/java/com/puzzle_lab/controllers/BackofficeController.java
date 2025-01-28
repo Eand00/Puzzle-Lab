@@ -193,7 +193,7 @@ public class BackofficeController {
             if (richiesta.isPresent()) {
             	Richiesta richiestaAggiornata = richiesta.get();
             	richiestaAggiornata.setStatus(status);
-            	richiestaService.save(richiestaAggiornata);
+            	richiestaService.salvaRichiesta(richiestaAggiornata);
             }
             return ResponseEntity.ok(richiesta);
         } catch (Exception ex) {

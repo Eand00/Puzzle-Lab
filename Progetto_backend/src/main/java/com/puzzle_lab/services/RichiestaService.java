@@ -111,4 +111,10 @@ public class RichiestaService {
 		richiesta.setDataPrevistaCancellazione(LocalDateTime.now().plusYears(1));
 		richiestaDAO.save(richiesta);
 	}
+
+	@Transactional
+	public Richiesta salvaRichiesta(Richiesta richiesta) {
+        validaRichiesta(richiesta);
+        return richiestaDAO.save(richiesta);
+	}
 }
